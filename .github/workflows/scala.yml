@@ -1,0 +1,33 @@
+name: Partner Connect CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      IS_REPO_PUBLIC: true
+      BASIC_USER: test
+      BASIC_PASSWORD: passw0rd
+      PAT_TOKEN: test_token
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: 'maven'
+    - name: Check Format
+      run: mvn -B spotless:check
+    - name: Run tests
+      run: |
+            mvn -B -Dorg.slf4j.simpleLogger.defaultLogLevel=info test -DCONFIG=test.json &&\
+            mvn -B -Dorg.slf4j.simpleLogger.defaultLogLevel=info test -DCONFIG=interactive.json &&\
+            mvn -B -Dorg.slf4j.simpleLogger.defaultLogLevel=info test -DCONFIG=new_user_error.json &&\
+            mvn -B -Dorg.slf4j.simpleLogger.defaultLogLevel=info test -DCONFIG=new_user_invite.json &&\
+            mvn -B -Dorg.slf4j.simpleLogger.defaultLogLevel=info test -DCONFIG=new_user_not_found.json
+    - name: Generate code coverage
+      run: mvn -B scoverage:report -DCONFIG=test.json
+    - name: Publish code coverage
+      uses: codecov/codecov-action@v1
