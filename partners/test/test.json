@@ -1,0 +1,38 @@
+{
+  "api_version": "2.0.1",
+  "name": "test partner with sql endpoint",
+  "description_blurb": "Partner Connect api test",
+  "category": "INGEST",
+  "base_url": "http://localhost:8080",
+  "endpoints" : {
+    "connect_path": "/connect",
+    "get_connectors_path": "/connectors",
+    "test_connection_path": "/test-connection",
+    "delete_account_path": "/delete-account",
+    "delete_connection_path": "/delete-connection",
+    "expire_account_path": "/expire-account"
+  },
+  "sign_up_page": "http://localhost/signup",
+  "privacy_policy": "http://localhost/privacy",
+  "terms_of_service": "http://localhost/tos",
+  "logo_file": "logo.png",
+  "icon_file": "icon.png",
+  "resources_to_provision": [
+    {"resource_type": "SqlEndpoint"}
+  ],
+  "object_permissions": [{"name": "SQL_Endpoint", "level": "CAN_MANAGE"}],
+  "data_permissions": [{"permission":  "USAGE"}, {"permission":  "CREATE"}],
+  "supported_clouds": [
+    "aws", "azure", "gcp"
+  ],
+  "new_user_action": "auto_add",
+  "trial_type": "account",
+  "supports_demo": true,
+  "test_workspace_detail": {
+    "hostname": "testworkspace.databricks.com",
+    "port": 443,
+    "jdbc_url": "jdbc:spark://testworkspace.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/endpoints/44a1419108002906;",
+    "http_path": "/sql/1.0/endpoints/44a1419108002906",
+    "cluster_id": "44a1419108002906"
+  }
+}
