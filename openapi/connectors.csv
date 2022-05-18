@@ -1,0 +1,403 @@
+Unique Identifier,Connector Name
+actions,Actions
+active_campaigns,Active Campaigns
+adaptive_insights,Adaptive Insights
+adaptv,AdapTV
+adjust,Adjust
+adobe_ads,Adobe Ads
+adobe_analytics,Adobe Analytics
+adobe_analytics_data_feed,Adobe Analytics Data Feed
+adp_workforce_now,ADP Workforce Now
+adquant,Adquant
+adroll,AdRoll
+airtable,Airtable
+amazon_marketplace_web_service,Amazon Marketplace Web Service
+amazon_rds_for_oracle,Amazon RDS for Oracle
+amazon_rds_for_sql_server,Amazon RDS for SQL Server
+amazon_redshift,Amazon Redshift
+amazon_s3,Amazon S3
+amazon_s3_compatible_storage,Amazon S3 Compatible Storage
+amazon_seller_partner,Amazon Seller Partner
+amplitude,Amplitude
+anaplan,Anaplan
+apache_impala,Apache Impala
+apache_kafka,Apache Kafka
+apify_dataset,Apify Dataset
+app_store_connect_-_apps_analytics,App Store Connect - Apps Analytics
+app_store_connect_-_sales,App Store Connect - Sales
+apple_app_store,Apple App Store
+apple_search_ads,Apple Search Ads
+apple_searchads,Apple SearchAds
+appnexus,AppNexus
+appreciate,Appreciate
+appsee,appsee
+appsflyer,AppsFlyer
+appstore,Appstore
+asana,Asana
+aurora_mysql,Aurora MySQL
+aurora_postgres,Aurora Postgres
+avantlink,Avantlink
+aws_cloudtrail,AWS CloudTrail
+aws_inventory,AWS Inventory
+aws_lambda,AWS Lambda
+aws_msk,AWS MSK
+aws_redshift_(source),AWS Redshift (Source)
+azure_blob_storage,Azure Blob Storage
+azure_cosmos_db_(sql_api),Azure Cosmos DB (SQL API)
+azure_cosmos_db's_api_for_mongodb,Azure Cosmos DB's API for MongoDB
+azure_data_explorer,Azure Data Explorer
+azure_data_lake_storage_gen1,Azure Data Lake Storage Gen1
+azure_data_lake_storage_gen2,Azure Data Lake Storage Gen2
+azure_database_for_mariadb,Azure Database for MariaDB
+azure_database_for_mysql,Azure Database for MySQL
+azure_database_for_postgresql,Azure Database for PostgreSQL
+azure_databricks_delta_lake,Azure Databricks Delta Lake
+azure_event_hubs,Azure Event Hubs
+azure_files,Azure Files
+azure_function,Azure Function
+azure_mariadb,Azure MariaDB
+azure_mysql,Azure MySQL
+azure_postgresql_database,Azure PostgreSQL Database
+azure_sql_database,Azure SQL Database
+azure_sql_managed_instance,Azure SQL Managed Instance
+azure_synapse_analytics,Azure Synapse Analytics
+azure_table_storage,Azure Table Storage
+bamboohr,BambooHR
+bigcommerce,BigCommerce
+bigquery,BigQuery
+binary_log,Binary Log
+bing_ads,Bing Ads
+bluesnap,BlueSnap
+box,Box
+braintree,Braintree
+braintree_sandbox,Braintree Sandbox
+branch,Branch
+brandwatch,Brandwatch
+braze,Braze
+bronto,Bronto
+callrail,CallRail
+cart,Cart
+cassandra,Cassandra
+cedato,Cedato
+chargebee,Chargebee
+chargify,Chargify
+clickhouse,ClickHouse
+closecom,Closecom
+cloudfront,Cloudfront
+cockroachdb,CockroachDB
+concur,Concur
+confluent_cloud,Confluent Cloud
+consumer_dropbox,Consumer Dropbox
+convert_media,Convert Media
+couchbase,Couchbase
+coupa,Coupa
+crimson_hexagon,Crimson Hexagon
+criteo,Criteo
+criteo_version_2021,Criteo version 2021
+customer_gauge,Customer Gauge
+datastore,Datastore
+dataverse,Dataverse
+db2,DB2
+db2_for_luw,Db2 for LUW
+dear_systems,Dear Systems
+delighted,Delighted
+delta_projects,Delta Projects
+display_&_video_360,Display & Video 360
+dixa,Dixa
+docebo,Docebo
+doubleclick_campaign_manager,DoubleClick Campaign Manager
+drift,Drift
+drill,Drill
+dropbox,Dropbox
+drupal,Drupal
+dynamics_365,Dynamics 365
+dynamics_365_finance_and_operations,Dynamics 365 Finance and Operations
+dynamics_ax,Dynamics AX
+dynamics_crm,Dynamics CRM
+dynamodb,DynamoDB
+eloqua,Eloqua
+email,Email
+exchange_rates_api,Exchange Rates API
+facebook_ad_account,Facebook Ad Account
+facebook_ad_insights,Facebook Ad Insights
+facebook_ads,Facebook Ads
+facebook_audience_network,Facebook Audience Network
+facebook_marketing,Facebook Marketing
+facebook_pages,Facebook Pages
+facebook_social,Facebook Social
+file_system,File System
+files,Files
+financialforce,FinancialForce
+fivetran_log,Fivetran Log
+freshdesk,Freshdesk
+front,Front
+ftp,FTP
+generic_http,Generic HTTP
+generic_odata,Generic OData
+generic_odbc,Generic ODBC
+generic_rest,Generic REST
+github,GitHub
+gitlab,GitLab
+gmail,Gmail
+gmp365,GMP365
+google_ad_manager,Google Ad Manager
+google_ads,Google Ads
+google_ads_-_looker_prebuilt_reports,Google Ads - Looker Prebuilt Reports
+google_ads_account,Google Ads Account
+google_adwords,Google AdWords
+google_analytics,Google Analytics
+google_analytics_(mcf),Google Analytics (MCF)
+google_analytics_360,Google Analytics 360
+google_analytics_v4,Google Analytics v4
+google_bigquery,Google BigQuery
+google_campaign_manager_360,Google Campaign Manager 360
+google_cloud_function,Google Cloud Function
+google_cloud_mysql,Google Cloud MySQL
+google_cloud_postgresql,Google Cloud PostgreSQL
+google_cloud_sql_-_sql_server,Google Cloud SQL - SQL Server
+google_cloud_storage,Google Cloud Storage
+google_directory,Google Directory
+google_display_&_video_360,Google Display & Video 360
+google_drive,Google Drive
+google_play,Google Play
+google_play_store,Google Play Store
+google_search_console,Google Search Console
+google_sheets,Google Sheets
+google_workspace_admin_reports,Google Workspace Admin Reports
+gothamads,GothamAds
+greenhouse,Greenhouse
+greenplum,Greenplum
+harvest,Harvest
+hasoffers,HasOffers
+hbase,HBase
+hdfs,HDFS
+heap,Heap
+height,Height
+help_scout,Help Scout
+helpscout,HelpScout
+heroku_kafka,Heroku Kafka
+heroku_postgres,Heroku Postgres
+hive,Hive
+hivestack,Hivestack
+hubspot,HubSpot
+impact_radius,Impact Radius
+index_exchange_client_audit_logs,Index Exchange Client Audit Logs
+informix,Informix
+innovid,Innovid
+insight_squared,Insight Squared
+instagram,Instagram
+instagram_business,Instagram Business
+instagram_social,Instagram Social
+intercom,Intercom
+ironsource,IronSource
+iterable,Iterable
+jira,Jira
+jwplayer_analytics,JWPlayer Analytics
+jwplayer_management,JWPlayer Management
+keepcon,keepcon
+kinesis,Kinesis
+klaviyo,Klaviyo
+kochava,Kochava
+kustomer,Kustomer
+lever,Lever
+lever_hiring,Lever Hiring
+lightspeed_retail,Lightspeed Retail
+linkedin_ad_analytics,LinkedIn Ad Analytics
+linkedin_ads,LinkedIn Ads
+linkedin_company_pages,LinkedIn Company Pages
+linkedin_social,LinkedIn Social
+liverail,Liverail
+lkqd,LKQD
+logic,Logic
+looker,Looker
+looker_-_bing_ads,Looker - Bing Ads
+looker_-_facebook_ad_insights,Looker - Facebook Ad Insights
+looker_-_linkedin_ad_analytics,Looker - LinkedIn Ad Analytics
+magento,Magento
+magento_mysql,Magento MySQL
+magento_mysql_rds,Magento MySQL RDS
+mailchimp,Mailchimp
+mandrill,Mandrill
+mariadb,MariaDB
+mariadb_rds,MariaDB RDS
+marin_software,Marin Software
+marketo,Marketo
+mavenlink,Mavenlink
+mediamath,MediaMath
+microsoft_365,Microsoft 365
+microsoft_access,Microsoft Access
+microsoft_advertising,Microsoft Advertising
+microsoft_dynamics_ax,Microsoft Dynamics AX
+microsoft_dynamics_customer_engagement,Microsoft Dynamics Customer Engagement
+microsoft_dynamics_gp,Microsoft Dynamics GP
+microsoft_dynamics_nav,Microsoft Dynamics NAV
+microsoft_sql_server_mssql,Microsoft SQL Server MSSQL
+microsoft_teams,Microsoft Teams
+mixpanel,Mixpanel
+moat_analytics,Moat Analytics
+mobileaction,MobileAction
+monday,Monday
+mongo_db,Mongo DB
+mongodb,MongoDB
+mongodb_atlas,MongoDB Atlas
+mongodb_sharded,MongoDB Sharded
+ms_sql_server,MS SQL Server
+myaffiliates,MyAffiliates
+mysql,MySQL
+mysql_rds,MySQL RDS
+netezza,Netezza
+netsuite,Netsuite
+netsuite_reporting,Netsuite Reporting
+netsuite_restlets,Netsuite RESTlets
+netsuite_suiteanalytics,NetSuite SuiteAnalytics
+new_relic,New Relic
+nuviad,Nuviad
+oath,Oath
+okta,Okta
+onedrive,OneDrive
+openx,OpenX
+optimizely,Optimizely
+optimove,Optimove
+oracle,Oracle
+oracle_cloud_customer_experience,Oracle Cloud Customer Experience
+oracle_cloud_erp_&_scm,Oracle Cloud ERP & SCM
+oracle_cloud_storage,Oracle Cloud Storage
+oracle_db,Oracle DB
+oracle_ebs,Oracle EBS
+oracle_eloqua,Oracle Eloqua
+oracle_peoplesoft,Oracle PeopleSoft
+oracle_rac,Oracle RAC
+oracle_rds,Oracle RDS
+oracle_responsys,Oracle Responsys
+oracle_service_cloud,Oracle Service Cloud
+oracle_siebel_crm,Oracle Siebel CRM
+outbrain,Outbrain
+outreach,Outreach
+pardot,Pardot
+paypal,PayPal
+paypal_reports,PayPal Reports
+paypal_sandbox,Paypal Sandbox
+paypal_transaction,PayPal Transaction
+pendo,Pendo
+phoenix,Phoenix
+picasso_labs,Picasso Labs
+pinterest,Pinterest
+pinterest_ads,Pinterest Ads
+pipedrive,Pipedrive
+plaid,Plaid
+pokapi,PokAPI
+postgres,Postgres
+postgres_rds,Postgres RDS
+postgresql,PostgreSQL
+posthog,PostHog
+prestashop,PrestaShop
+presto,Presto
+qualtrics,Qualtrics
+quickbooks,QuickBooks
+recharge,Recharge
+recurly,Recurly
+redis,Redis
+redshift,Redshift
+rest_api_source,Rest API Source
+revcontent,Revcontent
+s3,S3
+sage_intacct,Sage Intacct
+sailthru,Sailthru
+salesforce,Salesforce
+salesforce_audience,Salesforce Audience
+salesforce_commerce_cloud,Salesforce Commerce Cloud
+salesforce_for_looker,Salesforce for Looker
+salesforce_for_looker_sandbox,Salesforce for Looker Sandbox
+salesforce_marketing_cloud,Salesforce Marketing Cloud
+salesforce_pardot,Salesforce Pardot
+salesforce_sandbox,Salesforce sandbox
+salesforce_service_cloud,Salesforce Service Cloud
+sap_business_bydesign,SAP Business ByDesign
+sap_business_one,SAP Business One
+sap_business_warehouse_open_hub,SAP Business Warehouse Open Hub
+sap_business_warehouse_via_mdx,SAP Business Warehouse via MDX
+sap_cloud_for_customer_(c4c),SAP Cloud for Customer (C4C)
+sap_concur,SAP Concur
+sap_ecc,SAP ECC
+sap_hana,SAP HANA
+sap_s/4hana,SAP S/4HANA
+sap_table,SAP Table
+search_ads_360,Search Ads 360
+segment,Segment
+sendgrid,Sendgrid
+sensor_tower,sensor Tower
+servicenow,ServiceNow
+sftp,SFTP
+shareasale,ShareASale
+sharepoint,SharePoint
+sharepoint_online_list,SharePoint Online List
+shiphero,ShipHero
+shopify,Shopify
+shortio,Shortio
+simple_postgres,Simple Postgres
+sitescout,Sitescout
+slack,Slack
+smartsheets,Smartsheets
+snapchat_ads,Snapchat Ads
+snapchat_marketing,Snapchat Marketing
+snowflake,Snowflake
+snowplow,Snowplow
+social_studio,Social Studio
+socialbakers,Socialbakers
+spark,Spark
+splunk,Splunk
+spotx,SpotX
+spree_commerce,Spree Commerce
+sprinklr,Sprinklr
+sql_server,SQL Server
+sql_server_rds,SQL Server RDS
+square,Square
+stackadapt,StackAdapt
+streamrail,Streamrail
+stripe,Stripe
+stripe_test_mode,Stripe test mode
+sugar_crm,Sugar CRM
+surveygizmo,SurveyGizmo
+surveymonkey,SurveyMonkey
+sybase,Sybase
+taboola,Taboola
+tempo,Tempo
+teradata,Teradata
+the_trade_desk,The Trade Desk
+tiger_pistol,Tiger Pistol
+tiktok,Tiktok
+tiktok_ads,Tiktok Ads
+trello,Trello
+trendkite,TrendKite
+twilio,Twilio
+twitter,Twitter
+twitter_ads,Twitter Ads
+typeform,Typeform
+us_census,US Census
+uservoice,UserVoice
+verizon_media,Verizon Media
+verta_media,Verta Media
+vertica,Vertica
+voluum,Voluum
+web_table_(html_table),Web Table (HTML table)
+webhooks,Webhooks
+woocommerce,WooCommerce
+wordpress,Wordpress
+workday,Workday
+workday_hcm,Workday HCM
+xero,Xero
+yotpo,Yotpo
+youtube,YouTube
+youtube_analytics,YouTube Analytics
+zencart,Zencart
+zendesk,Zendesk
+zendesk_chat,Zendesk Chat
+zendesk_sell,Zendesk Sell
+zendesk_sunshine,Zendesk Sunshine
+zendesk_support,Zendesk Support
+zendesk_talk,Zendesk Talk
+zoho,Zoho
+zoho_crm,Zoho CRM
+zoom,Zoom
+zuora,Zuora
+zuora_sandbox,Zuora Sandbox
