@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+      # Open api code gen requires scala 2.12.
+      - dependency-name: "org.scala-lang:scala-library"
+      - dependency-name: "org.scala-lang.modules:scala-collection-compat_2.12"

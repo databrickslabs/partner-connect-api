@@ -1,0 +1,927 @@
+openapi: 3.0.0
+servers:
+  - url: https://domainnameofpartner/
+    description: Base address for the api server
+info:
+  version: "2.0.1"
+  title: Partner Connect API
+  description: |
+    # Introduction
+    Partner Connect API is a service that partners implement and host to enable integration with Databricks Partner Connect (https://databricks.com/partnerconnect).
+    The API will be invoked by Databricks to enable Databricks to provision resources and establish a connection with the partner product.
+    The Partner Connect API is hosted by the partner. The partner has full flexibility on the exact domain name and API path to use for the endpoint.
+
+    # Authentication
+    Partner connect currently supports basic auth using the Authorization header. The partner will provide an API key for Databricks to use.
+
+    <SecurityDefinitions />
+tags:
+  - name: connection
+    description: The connection resource is used to manage Databricks connection partners provision.
+  - name: account
+    description: The account resource is used to manage accounts partners provision.
+  - name: datasource
+    description: The datasource resource represents connectors that the partners support for the integration.
+paths:
+  '/connect':
+    parameters:
+      - $ref: '#/components/parameters/user_agent'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/content_type'
+    post:
+      tags:
+        - connection
+      operationId: connect
+      description:
+        "The Connect API is used to sign-in or sign-up a user with a partner with Databricks resources pre-configured."
+      requestBody:
+        description: The connection payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ConnectionResponse'
+        '201':
+          $ref: '#/components/responses/ConnectionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Bad Credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: The user connection or account can not be found. This error is only expected to be returned if is_connection_established is true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error. This status should be returned when error occurs on the partner side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/test-connection':
+    parameters:
+      - $ref: '#/components/parameters/user_agent'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/content_type'
+    post:
+      tags:
+        - connection
+      operationId: testConnection
+      description:
+        "Test the connection created by calling connect endpoint."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectionInfo'
+      responses:
+        '200':
+          $ref: '#/components/responses/TestConnectionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Bad Credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/delete-connection':
+    parameters:
+      - $ref: '#/components/parameters/user_agent'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/content_type'
+    delete:
+      tags:
+        - connection
+      operationId: deleteConnection
+      description:
+        "Delete the connection created by partner. Currently this API is only used for automated tests."
+      requestBody:
+        description: The test connection payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectionInfo'
+      responses:
+        '200':
+          description: Successfully delete the connection
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Bad Credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/delete-account':
+    parameters:
+      - $ref: '#/components/parameters/user_agent'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/content_type'
+    delete:
+      tags:
+        - account
+      operationId: deleteAccount
+      description:
+        "Delete the account related to a given domain. This API should remove all users and connections associated with all users under this domain.
+         This API is only used for automated tests. Partners should only allow this API call on Databricks related test domain names (databricks-test.com and databricks-demo.com). If any other domain is used, api call should fail with 400 Bad Request"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountInfo'
+      responses:
+        '200':
+          description: Successfully delete the account
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Bad Credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/expire-account':
+    parameters:
+      - $ref: '#/components/parameters/user_agent'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/content_type'
+    put:
+      tags:
+        - account
+      operationId: expireAccount
+      description:
+        "Expire account api is used to expire a user trial. After this api is called,
+        the partner is expected to return the redirect uri for handling expired users.
+         The account_status should be set to expired. This api is only used for automated verification of the
+         partner connect flow for expired accounts. This api needs to be limited to databricks test
+         domain names (databricks-test.com and databricks-demo.com). Partners should return 400 bad request  if it's called for any other domain name."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUserInfo'
+      responses:
+        '200':
+          description: Successfully expired the account
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Bad Credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/connectors':
+    parameters:
+      - $ref: '#/components/parameters/user_agent'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/pagination_token'
+    get:
+      tags:
+        - datasource
+      operationId: getConnectors
+      description:
+        "Returns list of connectors supported by the partner. This is only applicable to Data ingestion partners."
+      responses:
+        '200':
+          $ref: '#/components/responses/ConnectorResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Bad Credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    user_agent:
+      name: User-Agent
+      in: header
+      description: The user agent making the call. This will be set to databricks.
+      required: true
+      schema:
+        type: string
+        default: databricks
+        enum:
+          - databricks
+    accept_language:
+      name: Accept-Language
+      in: header
+      description: Prefered lanaguage
+      schema:
+        type: string
+        default: en-US
+    content_type:
+      name: Content-Type
+      in: header
+      description: Content type
+      schema:
+        type: string
+        default: application/json; charset=utf-8
+    pagination_token:
+      name: pagination_token
+      in: query
+      schema:
+        type: string
+      description: Optional pagination token to get more results.
+      required: false
+  schemas:
+    Auth:
+      type: object
+      required:
+        - personal_access_token
+      properties:
+        personal_access_token:
+          type: string
+          description: Personal Access Token created for the Service Principal
+          example: "token"
+        oauth_token:
+          type: string
+          description: Oauth token. For future use.
+        oauth_scope:
+          type: string
+          description: Oauth scope. For future use.
+    UserInfo:
+      type: object
+      required:
+        - email
+        - first_name
+        - last_name
+        - databricks_user_id
+        - databricks_organization_id
+        - is_connection_established
+      properties:
+        auth:
+          description: This field is present when is_connection_established is false.
+          $ref: "#/components/schemas/Auth"
+        email:
+          type: string
+          description: Valid email address.
+          example: "test@databricks.com"
+        first_name:
+          type: string
+          description: First name. Non-null String, may be empty string
+          example: "John"
+        last_name:
+          type: string
+          description: Last name. Non-null String, may be empty string
+          example: "Doe"
+        databricks_user_id:
+          type: integer
+          format: int64
+          description: Databricks user id.
+          example: 1234567890
+        databricks_organization_id:
+          type: integer
+          format: int64
+          description: Databricks organization id. This is the same as workspace_id.
+          example: 1234567890
+        is_connection_established:
+          type: boolean
+          description: Flag to indicate if connection is established on databricks side.
+          example: true
+    ConnectRequest:
+      type: object
+      required:
+        - user_info
+        - hostname
+        - port
+        - workspace_id
+        - workspace_url
+        - demo
+        - cloud_provider
+        - is_free_trial
+      properties:
+        user_info:
+          $ref: '#/components/schemas/UserInfo'
+        connection_id:
+          type: string
+          description: The partner connection id returned on initial connection. This will only be set when is_connection_established is true
+          example: "fb28a8e8-8946-11ec-a8a3-0242ac120002"
+        hostname:
+          type: string
+          description: Hostname for the Databricks connection.
+          example: "organization.cloud.databricks.com"
+        port:
+          type: integer
+          format: int32
+          description: Port for the Databricks connection.
+          example: 443
+        workspace_url:
+          type: string
+          description: Workspace Url to access the Databricks connection.
+          example: "https://[organization/prefix-workspace_id/string].cloud.databricks.com/?o=12345677890"
+        http_path:
+          type: string
+          description: Http path for the Databricks connection. Only present if is_sql_endpoint is true.
+          example: "sql/protocol/o/0/0222-185802-deny427"
+        jdbc_url:
+          type: string
+          description: JDBC connection url
+          example: "jdbc:spark://organization.cloud.databricks.com:443/..."
+        workspace_id:
+          type: integer
+          format: int64
+          description: Workspace id for the Databricks connection. Same as the user_info.databricks_organization_id
+          example: 1234567890
+        demo:
+          type: boolean
+          description: True if this is a demo experience.
+          example: false
+        cloud_provider:
+          type: string
+          description: The cloud provider for the Databricks workspace.
+          enum:
+            - aws
+            - azure
+            - gpc
+          example: aws
+        is_free_trial:
+          type: boolean
+          description: Flag to indicate if this is a Databricks free trial.
+          example: false
+        staging_location:
+          type: string
+          description: Optional staging location URI
+          example: "<cloud>://<location_1>"
+        destination_location:
+          type: string
+          description: Optional destination location URI
+          example: "<cloud>://<location_2>"
+        catalog_name:
+          type: string
+          description: Optional catalog name.
+          example: "my_catalog"
+        database_name:
+          type: string
+          description: Optional Database name
+          example: "my_db"
+        cluster_id:
+          type: string
+          description: Sql endpoint id if is_sql_endpoint is true otherwise cluster id.
+          example: "0222-185802-deny427"
+        is_sql_endpoint:
+          type: boolean
+          description: Determines whether cluster_id refers to Interactive Cluster or Sql Endpoint.
+          example: true
+        data_source_connector:
+          type: string
+          description: For data connector tools, the name of the data source that the user should be referred to in their tool
+          example: "Oracle"
+    Connection:
+      type: object
+      required:
+        - redirect_uri
+        - redirect_value
+        - account_status
+        - configured_resources
+        - user_status
+      properties:
+        redirect_uri:
+          type: string
+          description: The URL to launch in a new browser tab. This is required on 200/201 OK response.
+          example: "https://..."
+        redirect_value:
+          type: string
+          description: An enum that identifies the redirect_uri scenario.  This will be used to verify correct behavior in automated testing.
+          enum:
+            - create_trial
+            - purchase_product
+            - sign_in
+            - contact_admin
+            - not_applicable
+          example: create_trial
+        connection_id:
+          type: string
+          description: Connection id representing the resource the partner provisioned. This field is required when configured_resources is true.
+          example: "7f2e4c43-9714-47cf-9011-d8148eaa27a2"
+        user_status:
+          type: string
+          description: Enum that represents whether the partner has seen the user before.
+          enum:
+            - new
+            - existing
+            - not_applicable
+          example: new
+        account_status:
+          type: string
+          description: Enum that represents whether the partner has seen the account (i.e. the company or email domain) before.
+          enum:
+            - new
+            - active
+            - expired
+            - not_applicable
+          example: active
+        configured_resources:
+          type: boolean
+          description: A boolean that represents whether the partner configured/persisted the Databricks resources on this Connect API request.  If the value is false and is_connection_established is false, Databricks will clean up the resources it provisioned
+          example: true
+    ErrorResponse:
+      type: object
+      required:
+        - error_reason
+      properties:
+        error_reason:
+          type: string
+          description: Enum to classify the error from the partner.
+          enum:
+            - unauthorized
+            - bad_request
+            - account_not_found
+            - connection_not_found
+            - general_error
+          example: account_not_found
+        display_message:
+          type: string
+          description: An error message to be displayed to the user on what kind of action the user needs to take on the partner product. Only for 404 and 500 response.
+          example: Please contact your admin with Ticket xyz
+        debugging_message:
+          type: string
+          description: Debugging message that will NOT be shown to the user but will be logged by Databricks to track errors.
+          example: Unknown error. Status code 123
+    ConnectionInfo:
+      type: object
+      required:
+        -  connection_id
+      properties:
+         connection_id:
+          type: string
+          description: The connection id to use for the test.
+          example: "7f2e4c43-9714-47cf-9011-d8148eaa27a2"
+    TestResult:
+      type: object
+      required:
+        - test_name
+        - status
+      properties:
+        test_name:
+          type: string
+          description: Name of the test
+          example: "Connection Test"
+        status:
+          type: string
+          description: Test Status
+          example: PASS
+          enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+        message:
+          type: string
+          description: Detail about the test result
+
+          example: "Successfully connected to host"
+    ConnectionTestResult:
+      type: object
+      required:
+        - test_results
+      properties:
+        test_results:
+          type: array
+          description: Test connection results.
+          items:
+            $ref: '#/components/schemas/TestResult'
+    AccountInfo:
+      type: object
+      required:
+        - domain
+        - cloud_provider
+        - databricks_organization_id
+      properties:
+        domain:
+          type: string
+          description: Domain name
+          example: "abc123.databricks-test.com"
+        cloud_provider:
+          # TODO: Make this enum after code gen bug is fixed.
+          type: string
+          description: The cloud provider for the Databricks workspace. Valid values are aws, azure, gcp.
+        databricks_organization_id:
+          type: integer
+          format: int64
+          description: Databricks organization id. This is the same as workspace_id.
+          example: 1234567890
+    AccountUserInfo:
+      type: object
+      required:
+        - email
+        - databricks_user_id
+        - cloud_provider
+        - databricks_organization_id
+      properties:
+        email:
+          type: string
+          description: User email
+          example: "test@test123.com"
+        databricks_user_id:
+          type: integer
+          format: int64
+          description: Databricks user id.
+          example: 1234567890
+        cloud_provider:
+          type: string
+          description: The cloud provider for the Databricks workspace. Valid values are aws, azure, gcp.
+        databricks_organization_id:
+          type: integer
+          format: int64
+          description: Databricks organization id. This is the same as workspace_id.
+          example: 1234567890
+    Connector:
+      type: object
+      required:
+        - identifier
+        - name
+        - type
+      properties:
+        identifier:
+          type: string
+          description: Databricks defined identifier for the connector. List of valid identifiers can be found in openapi/connectors.csv file.
+        name:
+          type: string
+          description: Name of the connector
+        type:
+          type: string
+          description: Type of the connector
+          enum:
+            - source
+            - target
+        description:
+          type: string
+          description: Description of the connector
+    ConnectorResponse:
+      type: object
+      required:
+        - connectors
+      properties:
+        connectors:
+          type: array
+          description: List of supported connectors
+          items:
+            $ref: '#/components/schemas/Connector'
+        pagination_token:
+          type: string
+          description: A token to continue listing.
+    PartnerConfig:
+      type: object
+      required:
+        - api_version
+        - name
+        - description_blurb
+        - category
+        - base_url
+        - endpoints
+        - sign_up_page
+        - privacy_policy
+        - terms_of_service
+        - logo_file
+        - icon_file
+        - allow_editable_email
+        - resources_to_provision
+        - supported_clouds
+        - new_user_action
+      properties:
+        api_version:
+          type: string
+          description: The partner api version supported by the partner. Format major.minor.patch
+          example: 2.0.1
+        name:
+          type: string
+          description: Name of the partner
+        description_blurb:
+          type: string
+          description: Description text to show in the UI.
+        category:
+          type: string
+          description: The partner category.
+          enum:
+            - INGEST
+            - DATA_PREP_AND_TRANSFORM
+            - SECURITY_AND_GOVERNANCE
+            - BI_AND_VIZ
+            - ML
+            - DATA_QUALITY
+            - REVERSE_ETL
+        base_url:
+          type: string
+          description: Base URL for the partner service
+        endpoints:
+          type: object
+          description: Endpoints supported by the partner
+          required:
+            - connect_path
+          properties:
+            connect_path:
+              type: string
+              description: Connect api path
+            get_connectors_path:
+              type: string
+              description: Get Connectors api path
+            test_connection_path:
+              type: string
+              description: Test connection api path
+            delete_account_path:
+              type: string
+              description: Delete account api path
+            expire_account_path:
+              type: string
+              description: Expire the user account api path
+            delete_connection_path:
+              type: string
+              description: Delete connection api path
+        sign_up_page:
+          type: string
+          description: Sign up web page
+        privacy_policy:
+          type: string
+          description: Link to privacy policy
+        terms_of_service:
+          type: string
+          description: Terms of service
+        logo_file:
+          type: string
+          description: "Logo file (Format: .png or .svg; Dimensions: W px * H px where W=~4.4*H.
+          The multiplier is roughly 4.4, but 4.0~4.5 should be acceptable as some of the partner
+           names may be long and require more horizontal space.)"
+        icon_file:
+          type: string
+          description: "Square icon file (Format: .png or .svg; Dimensions: N px* N px where N>=128)"
+        resources_to_provision:
+          type: array
+          description: List of resources to provision
+          items:
+            # Using object due to code gen bug not supporting array of enums.
+            $ref: '#/components/schemas/ResourceToProvision'
+        data_permissions:
+          type: array
+          description: Required list of Data ACLs
+          items:
+            $ref: '#/components/schemas/DataPermission'
+        object_permissions:
+          type: array
+          description: Required list of Object ACLs
+          items:
+            $ref: '#/components/schemas/ObjectPermission'
+        supported_clouds:
+          type: array
+          description: Supported clouds.
+          items:
+            type: string
+        new_user_action:
+          type: string
+          description: Action taken by partner when a new user tries to join an existing account. Options are auto_add, invite, not_found, error. auto_add and invite should return 200 OK with redirect url. not_found should return 404 and error should return 500
+          enum:
+            - auto_add
+            - invite
+            - not_found
+            - error
+          example: auto_add
+        trial_type:
+          type: string
+          description: Enum describing the type of trials the partner support. Partners can chose to support trial account expiration at the individual user or account level. If trial level is user, expiring one user connection should not expire another user in the same account.
+          enum:
+            - user
+            - account
+          example: auto_add
+        supports_demo:
+          type: boolean
+          description: True if partner supports the demo flag in the connect api call.
+        test_workspace_detail:
+          type: object
+          description: Optional field to specify the workspace detail tests should use when calling partners. This field need to be set for partners that require a valid JDBC/ODBC endpoint in the connect api.
+          required:
+            - hostname
+            - port
+            - jdbc_url
+            - http_path
+            - cluster_id
+          properties:
+            hostname:
+              type: string
+              description: Name of the host to connect
+            port:
+              type: integer
+              description: Port number to connect to.
+            jdbc_url:
+              type: string
+              description: JDBC connection string
+            http_path:
+              type: string
+              description: Http path to use for sql endpoint
+            cluster_id:
+              type: string
+              description: Cluster Id for either SQL endpoint or interactive cluster.
+    ResourceToProvision:
+      type: object
+      required:
+        - resource_type
+      properties:
+        resource_type:
+          type: string
+          enum:
+            - PAT
+            - SqlEndpoint
+            - DestLocation
+            - InteractiveCluster
+    DataPermission:
+      type: object
+      required:
+        - permission
+      properties:
+        permission:
+          type: string
+          description: |
+            Data permission https://docs.databricks.com/security/access-control/table-acls/object-privileges.html#privileges
+            * SELECT: gives read access to an object.
+            * CREATE: gives ability to create an object (for example, a table in a schema).
+            * MODIFY: gives ability to add, delete, and modify data to or from an object.
+            * USAGE: does not give any abilities, but is an additional requirement to perform any action on a schema object.
+            * READ_METADATA: gives ability to view an object and its metadata.
+            * CREATE_NAMED_FUNCTION: gives ability to create a named UDF in an existing catalog or schema.
+            * MODIFY_CLASSPATH: gives ability to add files to the Spark class path.
+            * ALL PRIVILEGES: gives all privileges (is translated into all the above privileges)."
+          enum:
+            - SELECT
+            - CREATE
+            - MODIFY
+            - USAGE
+            - READ_METADATA
+            - CREATE_NAMED_FUNCTION
+            - MODIFY_CLASSPATH
+            - ALL PRIVILEGES
+    ObjectPermission:
+      type: object
+      required:
+        - name
+        - level
+      properties:
+        name:
+            type: string
+            description: |
+              Databricks object and endpoint permission https://docs.databricks.com/dev-tools/api/latest/permissions.html
+                * Token — Manage which users can create or use tokens.
+                * Password — Manage which users can use password login when SSO is enabled.
+                * Cluster — Manage which users can manage, restart, or attach to clusters.
+                * Pool — Manage which users can manage or attach to pools. Some APIs and documentation refer to pools as instance pools.
+                * Job — Manage which users can view, manage, trigger, cancel, or own a job.
+                * DLT_Pipeline — Manage which users can view, manage, run, cancel, or own a Delta Live Tables pipeline.
+                * Notebook — Manage which users can read, run, edit or manage a notebook.
+                * Directory — Manage which users can read, run, edit, or manage all notebooks in a directory.
+                * MLflow_Experiment — Manage which users can read, edit, or manage MLflow experiments.
+                * MLflow_Registered_Model — Manage which users can read, edit, or manage MLflow registered models.
+                * SQL_Endpoint — Manage which users can use or manage SQL endpoints.
+                * Repo — Manage which users can read, run, edit, or manage a repo.
+            enum:
+              - Token
+              - Password
+              - Cluster
+              - Pool
+              - Job
+              - DLT_Pipeline
+              - Notebook
+              - Directory
+              - MLflow_Experiment
+              - MLflow_Registered_Model
+              - SQL_Endpoint
+              - Repo
+        level:
+          type: string
+          description: Permission level
+          enum:
+            - CAN_MANAGE
+            - CAN_RESTART
+            - CAN_ATTACH_TO
+            - IS_OWNER
+            - CAN_MANAGE_RUN
+            - CAN_VIEW
+            - CAN_READ
+            - CAN_RUN
+            - CAN_EDIT
+            - CAN_USE
+            - CAN_MANAGE_STAGING_VERSIONS
+            - CAN_MANAGE_PRODUCTION_VERSIONS
+            - CAN_EDIT_METADATA
+            - CAN_VIEW_METADATA
+  responses:
+    ConnectionResponse:
+      description: Connection Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Connection'
+    TestConnectionResponse:
+      description: Test connection response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConnectionTestResult'
+    ConnectorResponse:
+      description: Get Connectors response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConnectorResponse'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+security:
+  - basicAuth: [ ]

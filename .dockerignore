@@ -1,0 +1,12 @@
+.git/
+generated/
+target/
+*/target/
+*/*/target/
+.idea/
+.bsp/
+.DS_Store
+*.class
+*.log
+*.sh
+*.md

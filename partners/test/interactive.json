@@ -1,0 +1,28 @@
+{
+  "api_version": "2.0.1",
+  "name": "test partner with interactive cluster",
+  "description_blurb": "Partner Connect api test",
+  "category": "DATA_PREP_AND_TRANSFORM",
+  "base_url": "http://localhost:8080",
+  "endpoints" : {
+  "connect_path": "/connect",
+  "get_connectors_path": "/connectors",
+  "test_connection_path": "/test-connection",
+  "delete_account_path": "/delete-account",
+  "delete_connection_path": "/delete-connection"
+  },
+  "sign_up_page": "http://localhost/signup",
+  "privacy_policy": "http://localhost/privacy",
+  "terms_of_service": "http://localhost/tos",
+  "logo_file": "logo.png",
+  "icon_file": "icon.png",
+  "resources_to_provision": [
+    {"resource_type": "InteractiveCluster"}
+  ],
+  "object_permissions": [{"name": "Cluster", "level": "CAN_RESTART"}],
+  "data_permissions": [{"permission":  "USAGE"}, {"permission":  "SELECT"}, {"permission":  "READ_METADATA"}],
+  "supported_clouds": [
+    "aws"
+  ],
+  "new_user_action": "auto_add"
+}
