@@ -4,11 +4,14 @@
 # Partner Connect API Contract
 
 - [Partner Connect API Contract](#partner-connect-api-contract)
+  - [Partner Onboarding Document](#partner-onboarding-document)
   - [API Spec](#api-spec)
   - [API Documentation](#api-documentation)
+  - [System Requirements.](#system-requirements)
   - [Partner Connect Certification](#partner-connect-certification)
     - [1. Create partner config](#1-create-partner-config)
     - [2. Run certification tests](#2-run-certification-tests)
+      - [Partner Certification test cases.](#partner-certification-test-cases)
     - [3. Upload artifacts](#3-upload-artifacts)
   - [Build and Run sample tests](#build-and-run-sample-tests)
     - [Using Docker](#using-docker)

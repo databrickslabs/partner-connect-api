@@ -80,7 +80,7 @@ paths:
         - connection
       operationId: testConnection
       description:
-        "Test the connection created by calling connect endpoint."
+        "Test the connection created by calling connect endpoint. This api is currently only used in automated tests. In the future it may be included in the partner connect experience."
       requestBody:
         required: true
         content:
@@ -124,9 +124,9 @@ paths:
         - connection
       operationId: deleteConnection
       description:
-        "Delete the connection created by partner. Currently this API is only used for automated tests."
+        "**Test Only** Delete the connection created by partner. Currently this API is only used for automated tests."
       requestBody:
-        description: The test connection payload.
+        description: The delete connection payload.
         required: true
         content:
           application/json:
@@ -169,7 +169,7 @@ paths:
         - account
       operationId: deleteAccount
       description:
-        "Delete the account related to a given domain. This API should remove all users and connections associated with all users under this domain.
+        "**Test Only** Delete the account related to a given domain. This API should remove all users and connections associated with all users under this domain.
          This API is only used for automated tests. Partners should only allow this API call on Databricks related test domain names (databricks-test.com and databricks-demo.com). If any other domain is used, api call should fail with 400 Bad Request"
       requestBody:
         required: true
@@ -214,7 +214,7 @@ paths:
         - account
       operationId: expireAccount
       description:
-        "Expire account api is used to expire a user trial. After this api is called,
+        "**Test Only** Expire account api is used to expire a user trial. After this api is called,
         the partner is expected to return the redirect uri for handling expired users.
          The account_status should be set to expired. This api is only used for automated verification of the
          partner connect flow for expired accounts. This api needs to be limited to databricks test

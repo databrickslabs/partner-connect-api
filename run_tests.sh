@@ -26,4 +26,4 @@ docker run -it --name partner-test --rm \
 zip -r -q $report_file $report_dir
 echo "Test run completed. Please upload the following artifacts to the partner Artifacts Intake Form here: https://docs.google.com/forms/d/e/1FAIpQLSc2vcAqAOVlE7Llo3GMhLrK3klzYXQ5LeWyqaR6L20RjHpygQ/viewform.
          - Test report: $(pwd)/$report_file
-         - Partner config: $(pwd)/partners/$1"
+         - Partner config: $(pwd)/partners/test/$1"
