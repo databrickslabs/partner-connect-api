@@ -2,11 +2,11 @@
 
 All URIs are relative to *https://domainnameofpartner*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**connect**](ConnectionApi.md#connect) | **POST** /connect | 
-[**deleteConnection**](ConnectionApi.md#deleteConnection) | **DELETE** /delete-connection | 
-[**testConnection**](ConnectionApi.md#testConnection) | **POST** /test-connection | 
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**connect**](ConnectionApi.md#connect) | **POST** /connect |  |
+| [**deleteConnection**](ConnectionApi.md#deleteConnection) | **DELETE** /delete-connection |  |
+| [**testConnection**](ConnectionApi.md#testConnection) | **POST** /test-connection |  |
 
 
 <a name="connect"></a>
@@ -19,12 +19,12 @@ Method | HTTP request | Description
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks]
- **ConnectRequest** | [**ConnectRequest**](../Models/ConnectRequest.md)| The connection payload. |
- **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US]
- **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8]
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
+| **ConnectRequest** | [**ConnectRequest**](../Models/ConnectRequest.md)| The connection payload. | |
+| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 
 ### Return type
 
@@ -45,16 +45,16 @@ Name | Type | Description  | Notes
 
 
 
-    Delete the connection created by partner. Currently this API is only used for automated tests.
+    **Test Only** Delete the connection created by partner. Currently this API is only used for automated tests.
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks]
- **ConnectionInfo** | [**ConnectionInfo**](../Models/ConnectionInfo.md)| The test connection payload. |
- **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US]
- **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8]
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
+| **ConnectionInfo** | [**ConnectionInfo**](../Models/ConnectionInfo.md)| The delete connection payload. | |
+| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 
 ### Return type
 
@@ -75,16 +75,16 @@ null (empty response body)
 
 
 
-    Test the connection created by calling connect endpoint.
+    Test the connection created by calling connect endpoint. This api is currently only used in automated tests. In the future it may be included in the partner connect experience.
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks]
- **ConnectionInfo** | [**ConnectionInfo**](../Models/ConnectionInfo.md)|  |
- **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US]
- **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8]
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
+| **ConnectionInfo** | [**ConnectionInfo**](../Models/ConnectionInfo.md)|  | |
+| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 
 ### Return type
 

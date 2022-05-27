@@ -40,7 +40,6 @@ class MultipleWorkspaceTests extends PartnerTestBase {
       userId,
       connectionId = connectResult.content.connection_id
     )
-    val signInResult = executeConnectRequest(signIn)
-    validateSignIn(signInResult)
+    signInAndValidate(signIn)
   }
 }

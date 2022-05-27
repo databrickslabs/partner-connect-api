@@ -50,15 +50,16 @@ class ExpireAccountTests extends PartnerTestBase {
       userId2,
       connectionId = connection1.connection_id
     )
-    val signInResult = executeConnectRequest(signIn)
-    validateSignIn(signInResult)
-    // If trial account is at the user level, we expect active account.
-    // If it is at the account level, we expect the account_status to be in expired state.
-    assert(
-      signInResult.content.account_status == secondUserStatusMap(
-        config.trial_type.get
+    val signInResult = signInAndValidate(signIn)
+    if (!config.require_manual_signup.getOrElse(false)) {
+      // If trial account is at the user level, we expect active account.
+      // If it is at the account level, we expect the account_status to be in expired state.
+      assert(
+        signInResult.get.content.account_status == secondUserStatusMap(
+          config.trial_type.get
+        )
       )
-    )
+    }
   }
 
   private def createExpiredConnection(
@@ -86,9 +87,11 @@ class ExpireAccountTests extends PartnerTestBase {
       userId,
       connectionId = res.content.connection_id
     )
-    val signInResult = executeConnectRequest(signIn)
-    validateSignIn(signInResult, Some(RedirectValue.PurchaseProduct))
-    assert(signInResult.content.account_status == AccountStatus.Expired)
+    val signInResult =
+      signInAndValidate(signIn, Seq(RedirectValue.PurchaseProduct))
+    if (!config.require_manual_signup.getOrElse(false)) {
+      assert(signInResult.get.content.account_status == AccountStatus.Expired)
+    }
     res.content
   }
 

@@ -5,14 +5,14 @@
 
 All URIs are relative to *https://domainnameofpartner*
 
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*AccountApi* | [**deleteAccount**](Apis/AccountApi.md#deleteaccount) | **DELETE** /delete-account | Delete the account related to a given domain. This API should remove all users and connections associated with all users under this domain. This API is only used for automated tests. Partners should only allow this API call on Databricks related test domain names (databricks-test.com and databricks-demo.com). If any other domain is used, api call should fail with 400 Bad Request
-*AccountApi* | [**expireAccount**](Apis/AccountApi.md#expireaccount) | **PUT** /expire-account | Expire account api is used to expire a user trial. After this api is called, the partner is expected to return the redirect uri for handling expired users. The account_status should be set to expired. This api is only used for automated verification of the partner connect flow for expired accounts. This api needs to be limited to databricks test domain names (databricks-test.com and databricks-demo.com). Partners should return 400 bad request  if it's called for any other domain name.
-*ConnectionApi* | [**connect**](Apis/ConnectionApi.md#connect) | **POST** /connect | The Connect API is used to sign-in or sign-up a user with a partner with Databricks resources pre-configured.
-*ConnectionApi* | [**deleteConnection**](Apis/ConnectionApi.md#deleteconnection) | **DELETE** /delete-connection | Delete the connection created by partner. Currently this API is only used for automated tests.
-*ConnectionApi* | [**testConnection**](Apis/ConnectionApi.md#testconnection) | **POST** /test-connection | Test the connection created by calling connect endpoint.
-*DatasourceApi* | [**getConnectors**](Apis/DatasourceApi.md#getconnectors) | **GET** /connectors | Returns list of connectors supported by the partner. This is only applicable to Data ingestion partners.
+| Class | Method | HTTP request | Description |
+|------------ | ------------- | ------------- | -------------|
+| *AccountApi* | [**deleteAccount**](Apis/AccountApi.md#deleteaccount) | **DELETE** /delete-account | **Test Only** Delete the account related to a given domain. This API should remove all users and connections associated with all users under this domain. This API is only used for automated tests. Partners should only allow this API call on Databricks related test domain names (databricks-test.com and databricks-demo.com). If any other domain is used, api call should fail with 400 Bad Request |
+*AccountApi* | [**expireAccount**](Apis/AccountApi.md#expireaccount) | **PUT** /expire-account | **Test Only** Expire account api is used to expire a user trial. After this api is called, the partner is expected to return the redirect uri for handling expired users. The account_status should be set to expired. This api is only used for automated verification of the partner connect flow for expired accounts. This api needs to be limited to databricks test domain names (databricks-test.com and databricks-demo.com). Partners should return 400 bad request  if it's called for any other domain name. |
+| *ConnectionApi* | [**connect**](Apis/ConnectionApi.md#connect) | **POST** /connect | The Connect API is used to sign-in or sign-up a user with a partner with Databricks resources pre-configured. |
+*ConnectionApi* | [**deleteConnection**](Apis/ConnectionApi.md#deleteconnection) | **DELETE** /delete-connection | **Test Only** Delete the connection created by partner. Currently this API is only used for automated tests. |
+*ConnectionApi* | [**testConnection**](Apis/ConnectionApi.md#testconnection) | **POST** /test-connection | Test the connection created by calling connect endpoint. This api is currently only used in automated tests. In the future it may be included in the partner connect experience. |
+| *DatasourceApi* | [**getConnectors**](Apis/DatasourceApi.md#getconnectors) | **GET** /connectors | Returns list of connectors supported by the partner. This is only applicable to Data ingestion partners. |
 
 
 <a name="documentation-for-models"></a>

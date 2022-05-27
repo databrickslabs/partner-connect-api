@@ -107,6 +107,16 @@ object ConnectHelper {
           Some(s"Connection id ${connectRequest.connection_id.get}")
         )
       )
+    } else if (config.require_manual_signup.getOrElse(false)) {
+      // Simulate partner that would need a manual signup
+      complete(
+        StatusCodes.NotFound,
+        ErrorResponse(
+          ErrorReason.AccountNotFound,
+          None,
+          Some(s"User account not found. Requires signup.")
+        )
+      )
     } else {
       val existingAccount: Option[AccountInfo] =
         accountService.getAccount(existingConnection.get.accountId)

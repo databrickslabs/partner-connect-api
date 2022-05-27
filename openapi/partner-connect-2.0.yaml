@@ -774,6 +774,10 @@ components:
             - not_found
             - error
           example: auto_add
+        require_manual_signup:
+          type: boolean
+          description: True if the partner requies a manual signup after connect api is called. When set to true,
+            connect api call with is_connection_established (sign in) is expected to return 404 account_not_found or connection_not_found until the user completes the manual signup step.
         trial_type:
           type: string
           description: Enum describing the type of trials the partner support. Partners can chose to support trial account expiration at the individual user or account level. If trial level is user, expiring one user connection should not expire another user in the same account.

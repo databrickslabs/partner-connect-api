@@ -57,14 +57,18 @@ class NewUserTests extends PartnerTestBase with BeforeAndAfterEach {
       )
       // Sign in second user.
       val expected = successMap(x)
-      val signInResult = executeConnectRequest(signIn)
-      assert(!signInResult.content.configured_resources)
+      val signInResult = signInAndValidate(signIn, expected._2)
+      if (!config.require_manual_signup.getOrElse(false)) {
+        assert(!signInResult.get.content.configured_resources)
 
-      assert(signInResult.content.user_status.toString == expected._1.toString)
-      assert(
-        expected._2.contains(signInResult.content.redirect_value),
-        s"Invalid redirect_value for redirect_uri: ${signInResult.content.redirect_uri}"
-      )
+        assert(
+          signInResult.get.content.user_status.toString == expected._1.toString
+        )
+        assert(
+          expected._2.contains(signInResult.get.content.redirect_value),
+          s"Invalid redirect_value for redirect_uri: ${signInResult.get.content.redirect_uri}"
+        )
+      }
     }
   })
 
