@@ -26,6 +26,7 @@
     "aws", "azure", "gcp"
   ],
   "new_user_action": "auto_add",
+  "require_manual_signup": true,
   "trial_type": "account",
   "supports_demo": true,
   "test_workspace_detail": {

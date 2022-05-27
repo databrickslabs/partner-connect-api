@@ -52,7 +52,6 @@ class DemoFlowTests extends PartnerTestBase {
       userId,
       connectionId = demoResponse.content.connection_id
     )
-    val signInResult = executeConnectRequest(signIn)
-    validateSignIn(signInResult)
+    signInAndValidate(signIn)
   }
 }

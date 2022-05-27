@@ -91,7 +91,7 @@ object JsonFormatters extends DefaultJsonProtocol {
     jsonFormat5(
       PartnerConfigTestWorkspaceDetail
     )
-  implicit val partnerConfig: RootJsonFormat[PartnerConfig] = jsonFormat19(
+  implicit val partnerConfig: RootJsonFormat[PartnerConfig] = jsonFormat20(
     PartnerConfig
   )
   implicit val testResult: RootJsonFormat[TestResult] = jsonFormat3(TestResult)

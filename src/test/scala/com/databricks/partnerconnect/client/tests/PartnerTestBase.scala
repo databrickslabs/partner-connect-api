@@ -185,39 +185,64 @@ class PartnerTestBase
       accountStatuses.contains(connectionResult.content.account_status.toString)
     )
     validateRedirectValue(
-      expectedRedirectValue,
+      expectedRedirectValue.map(Seq(_)).getOrElse(Seq.empty),
       connectionResult.content.redirect_value
     )
     validateRedirectUri(connectionResult.content.redirect_uri)
   }
 
-  def validateSignIn(
-      connectionResult: ApiResponse[Connection],
-      expectedRedirectValue: Option[RedirectValue] = None
+  def signInAndValidate(
+      request: ApiRequest[Connection],
+      expectedRedirectValues: Seq[RedirectValue] = Seq()
+  ): Option[ApiResponse[Connection]] = {
+    if (config.require_manual_signup.getOrElse(false)) {
+      // if manual signup is required connect should throw 404 account_not_found
+      val error = intercept[ApiError[String]] {
+        executeConnectRequest(request)
+      }
+      validateError(
+        error,
+        404,
+        Seq(ErrorReason.AccountNotFound, ErrorReason.ConnectionNotFound)
+      )
+      None
+    } else {
+      val signInResult = executeConnectRequest(request)
+      validateSignIn(signInResult)
+      validateRedirectValue(
+        expectedRedirectValues,
+        signInResult.content.redirect_value
+      )
+      Some(signInResult)
+    }
+  }
+
+  private def validateSignIn(
+      connectionResult: ApiResponse[Connection]
   ): Unit = {
     assert(connectionResult.code == 200)
     assert(!connectionResult.content.configured_resources)
     // Connection id should not be returned for existing connection.
     assert(connectionResult.content.connection_id.isEmpty)
     assert(connectionResult.content.redirect_uri.nonEmpty)
-    assert(userStatuses.contains(connectionResult.content.user_status.toString))
     assert(
-      accountStatuses.contains(connectionResult.content.account_status.toString)
+      userStatuses.contains(connectionResult.content.user_status.toString)
     )
-    validateRedirectValue(
-      expectedRedirectValue,
-      connectionResult.content.redirect_value
+    assert(
+      accountStatuses.contains(
+        connectionResult.content.account_status.toString
+      )
     )
     validateRedirectUri(connectionResult.content.redirect_uri)
   }
 
-  def validateRedirectValue(
-      expectedRedirectValue: Option[RedirectValue],
+  private def validateRedirectValue(
+      expectedRedirectValues: Seq[RedirectValue],
       actualRedirect: RedirectValue
   ): Unit = {
-    if (expectedRedirectValue.isDefined) {
+    if (expectedRedirectValues.nonEmpty) {
       assert(
-        actualRedirect == expectedRedirectValue.get
+        expectedRedirectValues.contains(actualRedirect)
       )
     } else {
       // If not specified redirect value should be sign in or create trial in successful connections.
@@ -241,6 +266,14 @@ class PartnerTestBase
       expectedCode: Int,
       expectedErrorReason: ErrorReason
   ): Unit = {
+    validateError(caught, expectedCode, Seq(expectedErrorReason))
+  }
+
+  def validateError(
+      caught: ApiError[String],
+      expectedCode: Int,
+      expectedErrorReasons: Seq[ErrorReason]
+  ): Unit = {
     assert(
       caught.code == expectedCode,
       s"Unexpected status code. Error: ${caught}"
@@ -252,7 +285,7 @@ class PartnerTestBase
       s"Invalid error response: ${caught.responseContent.get}"
     )
     assert(
-      error.get.error_reason == expectedErrorReason,
+      expectedErrorReasons.contains(error.get.error_reason),
       "Invalid error reason."
     )
   }

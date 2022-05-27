@@ -2,9 +2,9 @@
 
 All URIs are relative to *https://domainnameofpartner*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**getConnectors**](DatasourceApi.md#getConnectors) | **GET** /connectors | 
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**getConnectors**](DatasourceApi.md#getConnectors) | **GET** /connectors |  |
 
 
 <a name="getConnectors"></a>
@@ -17,12 +17,12 @@ Method | HTTP request | Description
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks]
- **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US]
- **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8]
- **pagination\_token** | **String**| Optional pagination token to get more results. | [optional] [default to null]
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
+| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
+| **pagination\_token** | **String**| Optional pagination token to get more results. | [optional] [default to null] |
 
 ### Return type
 
