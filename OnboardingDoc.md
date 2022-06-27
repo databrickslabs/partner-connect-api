@@ -47,6 +47,8 @@ The following phrases will help you understand the Databricks product and this d
 - **Databricks Account:** This is the customer-level object. Each customer has only 1 account. Customers can have multiple workspaces in an account.
 - **Databricks Workspace:** This is the product-level object that users interact with when they use Databricks. All users, user-created content (for example dashboards, jobs, and notebooks), and access controls for that content are part of a workspace. Customer data is not tied to a workspace, and the same data can be made available in multiple workspaces. API calls from partners are made to a workspace.
 - **Persona Switcher:** The component on the upper left of the UI that allows the user to choose the active Databricks product. This controls which features are available in the UI, and not all users have access to all 3 options. Partner Connect is available to all 3 personas.
+- **Personal Access Token (PAT):** A token that a partner product can use to authenticate with Databricks
+- **Service Principal:** An account that a partner product can use when calling Databricks APIs. Service Principals have access controls associated with them.
 
 ![](img/persona.png)
 
@@ -55,8 +57,6 @@ The persona switcher can take on 1 of 3 values, which are a good categorization 
 - **SQL** (aka **DBSQL** ), is primarily focused on SQL workloads and dashboarding. **SQL Endpoints** can be made available to partner products via JDBC/ODBC for SQL workloads.
 - **Data Science &amp; Engineering** is primarily focused on the notebook interface and scheduling jobs. SQL, Python, Scala, and R are available. The **All Purpose Clusters** API (aka **REST API 1.2** aka **Interactive Clusters** API) is typically used for development, and the **Databricks Jobs** API (aka **REST API 2.0** ) is typically used for scheduling production jobs, and partner products can call both these APIs. A **Cluster** is a compute resource that has been provisioned to execute both of the above categories of Data Science &amp; Engineering workloads.
 - **Machine Learning** has a similar notebook interface and APIs to the Data Science and Engineering persona, but the home page is focused on resources necessary for machine learning use cases and additional features are available, such as Repos and Experiments.
-- **Personal Access Token (PAT):** A token that a partner product can use to authenticate with Databricks
-- **Service Principal:** An account that a partner product can use when calling Databricks APIs. Service Principals have access controls associated with them.
 
 ## What is Partner Connect?
 
@@ -86,13 +86,13 @@ The steps below are an example Partner Connect integration. Your implementation 
 
 **Image 2**
 
-1. The user clicks &#39;Next&#39; in the screen above, and Databricks provisions a Service Principal, PAT, and SQL Endpoint. Clusters can also be provisioned if needed, and users can set destination location under &#39;advanced options&#39;.
+3. The user clicks &#39;Next&#39; in the screen above, and Databricks provisions a Service Principal, PAT, and SQL Endpoint. Clusters can also be provisioned if needed, and users can set destination location under &#39;advanced options&#39;.
 
 ![](img/image3.png)
 
 **Image 3**
 
-1. The user clicks &#39;Connect to [partner]&#39; (see Image 3), and Databricks calls the partner&#39;s Connect API with the user&#39;s email address, workspace ID, and additional fields. Databricks will redirect the user to the URL provided by the partner in the response to the Connect API.
+4. The user clicks &#39;Connect to [partner]&#39; (see Image 3), and Databricks calls the partner&#39;s Connect API with the user&#39;s email address, workspace ID, and additional fields. Databricks will redirect the user to the URL provided by the partner in the response to the Connect API.
 
 The key to creating a seamless user experience is to respond in the best way to the user&#39;s specific context. **Partners can and should respond with different redirect URLs** depending on variables such as:
 
@@ -103,8 +103,8 @@ The key to creating a seamless user experience is to respond in the best way to 
 
 See the Requirements section for details on the above.
 
-1. Often the correct partner response will be to create a new free trial account for the user and connect it to the Databricks workspace. In this case, the partner need only ask the user to set their password. (See Image 4).
-2. Once the user is in the partner product, they should have access to connect to Databricks using the connection string and credentials without requiring manual configuration.
+5. Often the correct partner response will be to create a new free trial account for the user and connect it to the Databricks workspace. In this case, the partner need only ask the user to set their password. (See Image 4).
+6. Once the user is in the partner product, they should have access to connect to Databricks using the connection string and credentials without requiring manual configuration.
 
 ![](img/image4.png)
 
@@ -154,12 +154,12 @@ The order of events when connecting Databricks to a partner is as follows:
 1. The user clicks the Partner tile.
 2. The user confirms the Databricks resources that will be provisioned for the connection (e.g. the Service Principal, the PAT, the SQL Endpoint).
 3. The user clicks Connect.
-1. Databricks calls the partner&#39;s **Connect API** with all of the Databricks data that the partner needs.
-2. The partner provisions any accounts and resources needed. (e.g. persisting the Databricks workspace\_id, provisioning a Databricks output node).
-3. The partner responds with
-   1. **HTTP status code** - for determining success, Databricks failure, and partner failure.
-   2. **Redirect URL** - for Databricks to launch in a new browser tab.
-   3. **Additional data** - see below.
+   1. Databricks calls the partner&#39;s **Connect API** with all of the Databricks data that the partner needs.
+   2. The partner provisions any accounts and resources needed. (e.g. persisting the Databricks workspace\_id, provisioning a Databricks output node).
+   3. The partner responds with
+      1. **HTTP status code** - for determining success, Databricks failure, and partner failure.
+      2. **Redirect URL** - for Databricks to launch in a new browser tab.
+      3. **Additional data** - see below.
 4. Databricks launches the **Redirect URL** in a new browser tab.
 
 ![](img/image5.png)
@@ -183,21 +183,21 @@ The Redirect URL can be customized by the partner to handle different cases. Par
 
 |Scenario                                                           |Partner operations during Connect API|Response                                                                                                                                                                                                                                                                                                 |
 |-------------------------------------------------------------------|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|New user, new account                                              |Set up free trial for new account  Configure Databricks integration in account|Status_code = 200 Connection_id = abcd Configured_resources = true User_status = new Account_status = new Redirect Value = create_trial Redirect URL = www.partner.com/create-trial                                                                                                                      |
-|Expired account                                                    |If the partner requires the product to be purchased…  N/A  If it allows another free trial  Set up free trial  Configure Databricks integration|Status_code = 200 Connection_id = omitted OR abcd Configured_resources = false OR true User_status = new OR existing Account_status = expired Redirect Value = purchase_product OR create_trial Redirect URL = www.partner.com/purchase-product OR www.partner.com/create-trial                          |
-|New user, existing account                                         |If the user can be added dynamically…  Add the user  Configure Databricks integration  If not…  No action OR  Set up free trial for new user and configure Databricks integration|Status_code = 200 Connection_id = abcd or omitted Configured_resources = true OR false User_status = new Account_status = active Redirect Value = sign_in OR contact_admin OR create_trial Redirect URL =  www.partner.com/sign-in  OR www.partner.com/contact-your-admin OR www.partner.com/create-trial|
-|Existing user, existing account                                    |Configure Databricks integration     |Status_code = 200 Connection_id = abcd or omitted Configured_resources = true OR false User_status = existing Account_status = active Redirect Value = sign_in Redirect URL =  www.partner.com/sign-in                                                                                                   |
+|New user, new account                                              |<ul><li>Set up free trial for new account</li><li>Configure Databricks integration in account</li></ul>|**Status_code** = 200<br />**Connection_id** = abcd<br />**Configured_resources** = true<br />**User_status** = new<br />**Account_status** = new<br />**Redirect Value** = create_trial<br />**Redirect URL** = www.partner.com/create-trial                                                                                                                      |
+|Expired account                                                    |<ul><li>If the partner requires the product to be purchased…<ul><li>N/A</li></ul><li>If it allows another free trial</li><ul><li>Set up free trial</li><li>Configure Databricks integration</li></ul></ul>|**Status_code** = 200<br />**Connection_id** = omitted OR abcd<br />**Configured_resources** = false OR true<br />**User_status** = new OR existing<br />**Account_status** = expired<br />**Redirect Value** = purchase_product OR create_trial<br />**Redirect URL** = www.partner.com/purchase-product OR www.partner.com/create-trial                          |
+|New user, existing account                                         |<ul><li>If the user can be added dynamically…</li><ul><li>Add the user</li><li>Configure Databricks integration</li></ul><li>If not…<ul><li>No action OR</li><li>Set up free trial for new user and configure Databricks integration</li></ul></ul>|**Status_code** = 200<br />**Connection_id** = abcd or omitted<br />**Configured_resources** = true OR false<br />**User_status** = new<br />**Account_status** = active<br />**Redirect Value** = sign_in OR contact_admin OR create_trial<br />**Redirect URL** =  www.partner.com/sign-in  OR www.partner.com/contact-your-admin OR www.partner.com/create-trial|
+|Existing user, existing account                                    |<ul><li>Configure Databricks integration</li></ul>     |**Status_code** = 200<br />**Connection_id** = abcd or omitted<br />**Configured_resources** = true OR false<br />**User_status** = existing<br />**Account_status** = active<br />**Redirect Value** = sign_in<br />**Redirect URL** =  www.partner.com/sign-in                                                                                                   |
 
 #### A note on established connections
 
 Databricks and the partner may have different values for whether the connection is established. A user may delete the connection on either the Databricks-side or the partner-side causing this mismatch. Here&#39;s what should happen with the Connect API in each of the 4 cases.
 
 1. If Databricks has no connection configured, it will send a payload with **is\_connection\_established** set to **false**.
-1. If the partner has no connection configured, they will configure the connection.
-2. If the partner has a connection configured, they will configure a new, separate connection. This can happen if a connection was previously deleted on the Databricks-side or if a connection was manually configured from the partner to Databricks outside of Partner Connect.
+   1. If the partner has no connection configured, they will configure the connection.
+   2. If the partner has a connection configured, they will configure a new, separate connection. This can happen if a connection was previously deleted on the Databricks-side or if a connection was manually configured from the partner to Databricks outside of Partner Connect.
 2. If Databricks has a connection configured, it will send a payload with **is\_connection\_established** set to **true**.
-1. If the partner has no connection configured, the partner responds with 404 connection\_not\_found so that Databricks can tell the user to take action.
-2. If the partner has a connection configured, no new connection needs to be configured.
+   1. If the partner has no connection configured, the partner responds with 404 connection\_not\_found so that Databricks can tell the user to take action.
+   2. If the partner has a connection configured, no new connection needs to be configured.
 
 #### API Specification
 
@@ -266,14 +266,14 @@ Return values:
 1. **redirect\_uri** - the URL to launch in a new browser tab
 2. **redirect\_value** - a String that identifies the redirect\_uri scenario. This will be used to verify correct behavior in automated testing. Valid values are &quot;create\_trial&#39;, &quot;purchase\_product&quot;, &quot;sign\_in&quot;, &quot;contact\_admin&quot;, and &quot;not\_applicable&quot;.
 3. **connection\_id** - a String that identifies the connection in the Partner&#39;s system. This may be used as part of future improvements (See Optional section below).
-1. If **is\_connection\_established** is true in the request, **connection\_id** should be omitted in the response.
-2. If **is\_connection\_established** is false and **configured\_resources** is true, **connection\_id** must be present in the response
-3. If **is\_connection\_established** is false and **configured\_resources** if false, **connection\_id** should be omitted in the response.
+   1. If **is\_connection\_established** is true in the request, **connection\_id** should be omitted in the response.
+   2. If **is\_connection\_established** is false and **configured\_resources** is true, **connection\_id** must be present in the response
+   3. If **is\_connection\_established** is false and **configured\_resources** if false, **connection\_id** should be omitted in the response.
 4. **user\_status** - a String that represents whether the partner has seen the user before. Valid values are &quot;new&quot;, &quot;existing&quot;, and &quot;not\_applicable&quot;.
 5. **account\_status** - a String that represents whether the partner has seen the account (i.e. the company or email domain) before. Valid values are &quot;new&quot;, &quot;active&quot;, &quot;expired&quot;, and &quot;not\_applicable&quot;.
 6. **configured\_resources** - a boolean that represents whether the partner configured/persisted the Databricks resources on this Connect API request.
-1. If **is\_connection\_established** is true, **configured\_resources** must be set, but will be ignored.
-2. If **is\_connection\_established** is false and **configured\_resources** is false, Databricks will delete the resources it provisioned.
+   1. If **is\_connection\_established** is true, **configured\_resources** must be set, but will be ignored.
+   2. If **is\_connection\_established** is false and **configured\_resources** is false, Databricks will delete the resources it provisioned.
 
 **Failure Responses:**
 
