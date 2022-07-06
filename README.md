@@ -48,10 +48,10 @@ This project supports the following system.
  - macOS (Tested with BigSur 11.6.4)
 
 ## Partner Connect Certification 
-In order to onboard as a partner in partner connect, we require partners to validate their api implementation
-using the tests suites provided in this project. Before running the tests against your api, 
-its recommended that you run the [sample tests](#build-and-run-sample-tests) to make sure your environment is setup correctly.
-To run the tests against your api follow the below steps.
+In order to onboard as a partner in Databricks Partner Connect, we require partners to validate their API implementation
+using the test suites provided in this project. Before running the tests against your API,
+it is recommended that you run the [sample tests](#build-and-run-sample-tests) to make sure your environment is set up correctly.
+Follow the below steps to run the tests against your API.
 1. Create a partner config file.
 2. Run certification tests.
 3. Upload artifacts.
