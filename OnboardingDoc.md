@@ -240,11 +240,12 @@ POST <partners/databricks/v1/connect>: [example, can be customized]
   "is_free_trial": true|false, [is Databricks free trial]
   "staging_location": "<cloud>://<location_1>", [optional, reserved for future use]
   "destination_location": "<cloud>://<location_2>", [optional]
-  "catalog_name" : "catalog name or namespace name",[optional, reserved for future use]
+  "catalog_name" : "my_catalog",[optional, it could be a custom name if using Unity Catalog, or "hive_metastore" if not.]
   "database_name" : "default database to use", [optional, reserved for future use]
   "cluster_id": "0222-185802-deny427", [optional: set only if jdbc/interactive cluster is required.]
   "is_sql_endpoint" : true|false, [optional: set if cluster_id is set.  Determines whether cluster_id refers to Interactive Cluster or SQL Endpoint] 
-  "data_source_connector": "Oracle" [optional, reserved for future use: for data connector tools, the name of the data source that the user should be referred to in their tool]
+  "data_source_connector": "Oracle", [optional, reserved for future use: for data connector tools, the name of the data source that the user should be referred to in their tool]
+  "service_principal_id": "a2a25a05-3d59-4515-a73b-b8bc5ab79e31" [optional, the UUID (username) of the service principal identity]
 }
 ```
 
@@ -567,6 +568,10 @@ The Connect API request includes a &quot; **demo**&quot; boolean flag that we wi
 - [Connectors List](openapi/connectors.csv)
 
 # Changelog
+
+## V2.0.3
+- Added service_principal_id to the connect request.
+- Removed 'reserved for future use' for custom_name and clarified the possible value.
 
 ## V2.0.2
 - Separated delete-account and delete-connection apis.

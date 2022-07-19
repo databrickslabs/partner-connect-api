@@ -67,7 +67,7 @@ object JsonFormatters extends DefaultJsonProtocol {
   implicit val errorResponse: RootJsonFormat[ErrorResponse] = jsonFormat3(
     ErrorResponse
   )
-  implicit val connectRequest: RootJsonFormat[ConnectRequest] = jsonFormat18(
+  implicit val connectRequest: RootJsonFormat[ConnectRequest] = jsonFormat19(
     ConnectRequest
   )
   implicit val connectionInfo: RootJsonFormat[ConnectionInfo] = jsonFormat1(

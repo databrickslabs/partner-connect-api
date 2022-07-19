@@ -115,7 +115,8 @@ class PartnerTestBase
             workspace.jdbc_url
           )
         else None,
-      is_sql_endpoint = Some(requiresSqlEndpoint)
+      is_sql_endpoint = Some(requiresSqlEndpoint),
+      service_principal_id = Some("a2a25a05-3d59-4515-a73b-b8bc5ab79e31")
     )
     val request = connectionApi.connect(
       connectRequest = connectionRequest,

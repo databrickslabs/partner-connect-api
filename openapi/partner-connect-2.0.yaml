@@ -449,7 +449,7 @@ components:
           example: "<cloud>://<location_2>"
         catalog_name:
           type: string
-          description: Optional catalog name.
+          description: Optional catalog name. It could be a custom name if using Unity Catalog, or "hive_metastore" if not.
           example: "my_catalog"
         database_name:
           type: string
@@ -467,6 +467,10 @@ components:
           type: string
           description: For data connector tools, the name of the data source that the user should be referred to in their tool
           example: "Oracle"
+        service_principal_id:
+          type: string
+          description: The UUID (username) of the service principal identity that a partner product can use to call Databricks APIs. Note the format is different from the databricks_user_id field in user_info.
+          example: "a2a25a05-3d59-4515-a73b-b8bc5ab79e31"
     Connection:
       type: object
       required:
