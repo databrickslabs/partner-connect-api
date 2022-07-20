@@ -1,5 +1,8 @@
 package com.databricks.partnerconnect.example.validators
 
+import java.util.UUID
+import scala.util.Try
+
 import org.openapitools.client.model.ResourceToProvisionEnums.ResourceType.{
   InteractiveCluster,
   SqlEndpoint
@@ -16,8 +19,12 @@ class ConnectValidator(partnerConfig: PartnerConfig)
     partnerConfig.resources_to_provision.exists(
       _.resource_type == InteractiveCluster
     )
-  val requiredClusterId: Boolean =
+  val requiresClusterId: Boolean =
     requiresSqlEndpoint || requiresInteractiveCluster
+
+  def hasValidServicePrincipalId(request: ConnectRequest): Boolean =
+    request.service_principal_id.isEmpty ||
+      Try(UUID.fromString(request.service_principal_id.get)).isSuccess
 
   def connectionIdRequired(request: ConnectRequest): Boolean =
     request.user_info.is_connection_established
@@ -42,8 +49,9 @@ class ConnectValidator(partnerConfig: PartnerConfig)
     "cluster_id" -> (r =>
       r.cluster_id
         .getOrElse("")
-        .nonEmpty == requiredClusterId
-    )
+        .nonEmpty == requiresClusterId
+    ),
+    "service_principal_id" -> (r => hasValidServicePrincipalId(r))
     // TODO: Add more request validation
   )
 
