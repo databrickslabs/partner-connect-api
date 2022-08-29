@@ -230,8 +230,9 @@ POST <partners/databricks/v1/connect>: [example, can be customized]
   "hostname": "organization.cloud.databricks.com",
   "port": 443,
   "workspace_url": "https://[organization/prefix-workspaceid/string].cloud.databricks.com/?o=12345677890",
-  "http_path": "sql/protocolv1/o/0/0222-185802-deny427", [optional, set if is_sql_endpoint is true]
-  "jdbc_url": "jdbc:spark://organization.cloud.databricks.com:443/...", [optional, set if is_sql_endpoint is true]                 
+  "http_path": "sql/protocolv1/o/0/0222-185802-deny427", [optional, set if is_sql_warehouse is true]
+  "jdbc_url": "jdbc:spark://organization.cloud.databricks.com:443/...", [optional, set if is_sql_warehouse is true, used for legacy JDBC spark driver]
+  "databricks_jdbc_url": "jdbc:databricks://organization.cloud.databricks.com:443/...", [optional, set if is_sql_warehouse is true, used for new JDBC databricks driver]
   "connection_id": "7f2e4c43-9714-47cf-9011-d8148eaa27a2", [example, optional, only present when is_connection_established is true]
   "workspace_id": 1234567890, [same as user_info.organization_id]
   "demo": true|false, [see Demos section below]
@@ -240,10 +241,11 @@ POST <partners/databricks/v1/connect>: [example, can be customized]
   "is_free_trial": true|false, [is Databricks free trial]
   "staging_location": "<cloud>://<location_1>", [optional, reserved for future use]
   "destination_location": "<cloud>://<location_2>", [optional]
-  "catalog_name" : "my_catalog",[optional, it could be a custom name if using Unity Catalog, or "hive_metastore" if not.]
-  "database_name" : "default database to use", [optional, reserved for future use]
+  "catalog_name": "my_catalog",[optional, it could be a custom name if using Unity Catalog, or "hive_metastore" if not.]
+  "database_name": "default database to use", [optional, reserved for future use]
   "cluster_id": "0222-185802-deny427", [optional: set only if jdbc/interactive cluster is required.]
-  "is_sql_endpoint" : true|false, [optional: set if cluster_id is set.  Determines whether cluster_id refers to Interactive Cluster or SQL Endpoint] 
+  "is_sql_endpoint": true|false, [optional: same value as is_sql_warehouse] 
+  "is_sql_warehouse": true|false, [optional: set if cluster_id is set.  Determines whether cluster_id refers to Interactive Cluster or SQL Warehouse] 
   "data_source_connector": "Oracle", [optional, reserved for future use: for data connector tools, the name of the data source that the user should be referred to in their tool]
   "service_principal_id": "a2a25a05-3d59-4515-a73b-b8bc5ab79e31" [optional, the UUID (username) of the service principal identity]
 }
@@ -568,6 +570,11 @@ The Connect API request includes a &quot; **demo**&quot; boolean flag that we wi
 - [Connectors List](openapi/connectors.csv)
 
 # Changelog
+
+## V2.0.4
+- Added databricks_jdbc_url to the connect api. It is used for new databricks JDBC driver. 
+- Added is_sql_warehouse to the connect request.  
+- Updated the doc to show the recent renaming from SQL endpoint to SQL warehouse. 
 
 ## V2.0.3
 - Added service_principal_id to the connect request.
