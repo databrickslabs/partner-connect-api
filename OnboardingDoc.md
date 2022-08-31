@@ -54,7 +54,7 @@ The following phrases will help you understand the Databricks product and this d
 
 The persona switcher can take on 1 of 3 values, which are a good categorization of the 3 broad types of Databricks usage:
 
-- **SQL** (aka **DBSQL** ), is primarily focused on SQL workloads and dashboarding. **SQL Endpoints** can be made available to partner products via JDBC/ODBC for SQL workloads.
+- **SQL** (aka **DBSQL** ), is primarily focused on SQL workloads and dashboarding. **SQL Warehouses** can be made available to partner products via JDBC/ODBC for SQL workloads.
 - **Data Science &amp; Engineering** is primarily focused on the notebook interface and scheduling jobs. SQL, Python, Scala, and R are available. The **All Purpose Clusters** API (aka **REST API 1.2** aka **Interactive Clusters** API) is typically used for development, and the **Databricks Jobs** API (aka **REST API 2.0** ) is typically used for scheduling production jobs, and partner products can call both these APIs. A **Cluster** is a compute resource that has been provisioned to execute both of the above categories of Data Science &amp; Engineering workloads.
 - **Machine Learning** has a similar notebook interface and APIs to the Data Science and Engineering persona, but the home page is focused on resources necessary for machine learning use cases and additional features are available, such as Repos and Experiments.
 
@@ -68,7 +68,7 @@ Partner Connect is a destination inside of a Databricks workspace that allows Da
 
 We made Partner Connect for 2 reasons:
 
-1. We want to give our customers access to the value provided by the best data products in the market. Partner Connect removes the complexity from connecting products to Databricks by automatically configuring resources such as SQL endpoints, clusters, PAT tokens, service principals, and connection files. It can also initiate a free trial of partner products.
+1. We want to give our customers access to the value provided by the best data products in the market. Partner Connect removes the complexity from connecting products to Databricks by automatically configuring resources such as SQL Warehouses, clusters, PAT tokens, service principals, and connection files. It can also initiate a free trial of partner products.
 2. We want to help our partners build their businesses and incentivize them to create the best possible product experience for Databricks customers. For more on this topic, see [this blog post](https://databricks.com/blog/2021/11/18/build-your-business-on-databricks-with-partner-connect.html).
 
 ## Sample marketing materials and user experience demo
@@ -86,7 +86,7 @@ The steps below are an example Partner Connect integration. Your implementation 
 
 **Image 2**
 
-3. The user clicks &#39;Next&#39; in the screen above, and Databricks provisions a Service Principal, PAT, and SQL Endpoint. Clusters can also be provisioned if needed, and users can set destination location under &#39;advanced options&#39;.
+3. The user clicks &#39;Next&#39; in the screen above, and Databricks provisions a Service Principal, PAT, and SQL Warehouse. Clusters can also be provisioned if needed, and users can set destination location under &#39;advanced options&#39;.
 
 ![](img/image3.png)
 
@@ -152,7 +152,7 @@ The Connect API is used to sign-in or sign-up a user with a partner with Databri
 The order of events when connecting Databricks to a partner is as follows:
 
 1. The user clicks the Partner tile.
-2. The user confirms the Databricks resources that will be provisioned for the connection (e.g. the Service Principal, the PAT, the SQL Endpoint).
+2. The user confirms the Databricks resources that will be provisioned for the connection (e.g. the Service Principal, the PAT, the SQL Warehouse).
 3. The user clicks Connect.
    1. Databricks calls the partner&#39;s **Connect API** with all of the Databricks data that the partner needs.
    2. The partner provisions any accounts and resources needed. (e.g. persisting the Databricks workspace\_id, provisioning a Databricks output node).
@@ -204,7 +204,7 @@ Databricks and the partner may have different values for whether the connection 
 ##### Databricks data model
 
 - A company or an organization has a Databricks **account**. We do not provide an identifier that represents the account to partners.
-- An account can have multiple Databricks **workspaces**. A workspace is the logical container and isolation boundary for Databricks resources (e.g. SQL Endpoints). Databricks\_organization\_id and workspace\_id are interchangeable as the appropriate identifier. Partner Connect is accessed within a workspace.
+- An account can have multiple Databricks **workspaces**. A workspace is the logical container and isolation boundary for Databricks resources (e.g. SQL Warehouses). Databricks\_organization\_id and workspace\_id are interchangeable as the appropriate identifier. Partner Connect is accessed within a workspace.
 - A **user** can belong to multiple workspaces. A user has a unique email address. A user&#39;s identifier is databricks\_user\_id which is unique within a cloud (e.g. Azure).
 - Partner Connect stores 0 or 1 **connections** per partner per workspace.
 
@@ -230,8 +230,9 @@ POST <partners/databricks/v1/connect>: [example, can be customized]
   "hostname": "organization.cloud.databricks.com",
   "port": 443,
   "workspace_url": "https://[organization/prefix-workspaceid/string].cloud.databricks.com/?o=12345677890",
-  "http_path": "sql/protocolv1/o/0/0222-185802-deny427", [optional, set if is_sql_endpoint is true]
-  "jdbc_url": "jdbc:spark://organization.cloud.databricks.com:443/...", [optional, set if is_sql_endpoint is true]                 
+  "http_path": "sql/protocolv1/o/0/0222-185802-deny427", [optional, set if is_sql_warehouse is true]
+  "jdbc_url": "jdbc:spark://organization.cloud.databricks.com:443/...", [optional, set if is_sql_warehouse is true, used for legacy JDBC spark driver]
+  "databricks_jdbc_url": "jdbc:databricks://organization.cloud.databricks.com:443/...", [optional, set if is_sql_warehouse is true, used for new JDBC databricks driver]
   "connection_id": "7f2e4c43-9714-47cf-9011-d8148eaa27a2", [example, optional, only present when is_connection_established is true]
   "workspace_id": 1234567890, [same as user_info.organization_id]
   "demo": true|false, [see Demos section below]
@@ -240,10 +241,11 @@ POST <partners/databricks/v1/connect>: [example, can be customized]
   "is_free_trial": true|false, [is Databricks free trial]
   "staging_location": "<cloud>://<location_1>", [optional, reserved for future use]
   "destination_location": "<cloud>://<location_2>", [optional]
-  "catalog_name" : "my_catalog",[optional, it could be a custom name if using Unity Catalog, or "hive_metastore" if not.]
-  "database_name" : "default database to use", [optional, reserved for future use]
+  "catalog_name": "my_catalog",[optional, it could be a custom name if using Unity Catalog, or "hive_metastore" if not.]
+  "database_name": "default database to use", [optional, reserved for future use]
   "cluster_id": "0222-185802-deny427", [optional: set only if jdbc/interactive cluster is required.]
-  "is_sql_endpoint" : true|false, [optional: set if cluster_id is set.  Determines whether cluster_id refers to Interactive Cluster or SQL Endpoint] 
+  "is_sql_endpoint" : true|false, [optional: same value as is_sql_warehouse]
+  "is_sql_warehouse": true|false, [optional: set if cluster_id is set. Determines whether cluster_id refers to Interactive Cluster or SQL Warehouse]
   "data_source_connector": "Oracle", [optional, reserved for future use: for data connector tools, the name of the data source that the user should be referred to in their tool]
   "service_principal_id": "a2a25a05-3d59-4515-a73b-b8bc5ab79e31" [optional, the UUID (username) of the service principal identity]
 }
@@ -568,6 +570,11 @@ The Connect API request includes a &quot; **demo**&quot; boolean flag that we wi
 - [Connectors List](openapi/connectors.csv)
 
 # Changelog
+
+## V2.0.4
+- Added databricks_jdbc_url to the connect api for use with the new Databricks JDBC driver. 
+- Added is_sql_warehouse to the connect api.  
+- Updated the doc to show the recent renaming from SQL endpoint to SQL warehouse. 
 
 ## V2.0.3
 - Added service_principal_id to the connect request.
