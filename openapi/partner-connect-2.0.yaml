@@ -3,7 +3,7 @@ servers:
   - url: https://domainnameofpartner/
     description: Base address for the api server
 info:
-  version: "2.0.1"
+  version: "2.0.4"
   title: Partner Connect API
   description: |
     # Introduction
@@ -704,6 +704,7 @@ components:
             - ML
             - DATA_QUALITY
             - REVERSE_ETL
+            - SEMANTIC_LAYER
         base_url:
           type: string
           description: Base URL for the partner service
