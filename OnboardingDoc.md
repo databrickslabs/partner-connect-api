@@ -1,7 +1,7 @@
-# Partner Onboarding, Databricks Partner Connect (V2.0.2)
+# Partner Onboarding, Databricks Partner Connect (V2.0.4)
 
 # Overview
-- [Partner Onboarding, Databricks Partner Connect (V2.0.2)](#partner-onboarding-databricks-partner-connect-v202)
+- [Partner Onboarding, Databricks Partner Connect (V2.0.4)](#partner-onboarding-databricks-partner-connect-v204)
 - [Overview](#overview)
   - [Document scope](#document-scope)
   - [Glossary](#glossary)
@@ -34,7 +34,9 @@
       - [Demo boolean flag](#demo-boolean-flag)
 - [Resources](#resources)
 - [Changelog](#changelog)
-  - [V2.0.2](#v202)
+  - [v2.0.4](#v204)
+  - [v2.0.3](#v203) 
+  - [v2.0.2](#v202)
   - [v2.0.1](#v201)
 ## Document scope
 
