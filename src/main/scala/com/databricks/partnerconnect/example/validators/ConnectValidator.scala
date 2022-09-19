@@ -11,7 +11,7 @@ import org.openapitools.client.model.{ConnectRequest, PartnerConfig}
 
 class ConnectValidator(partnerConfig: PartnerConfig)
     extends Validator[ConnectRequest] {
-  val requiresSqlEndpoint: Boolean =
+  val requiresSqlWarehouse: Boolean =
     partnerConfig.resources_to_provision.exists(
       _.resource_type == SqlEndpoint
     )
@@ -20,7 +20,7 @@ class ConnectValidator(partnerConfig: PartnerConfig)
       _.resource_type == InteractiveCluster
     )
   val requiresClusterId: Boolean =
-    requiresSqlEndpoint || requiresInteractiveCluster
+    requiresSqlWarehouse || requiresInteractiveCluster
 
   def hasValidServicePrincipalId(request: ConnectRequest): Boolean =
     request.service_principal_id.isEmpty ||
@@ -34,17 +34,23 @@ class ConnectValidator(partnerConfig: PartnerConfig)
   val validationMap: Map[String, ConnectRequest => Boolean] = Map(
     "user_info" -> (r => r.user_info != null),
     "connection_id" -> (r => !missingConnectionId(r)),
-    // If requires sql endpoint, is_sql_endpoint should be set, jdbc_url and http_path should be set.
+    // If requires sql warehouse, is_sql_warehouse should be set, databricks_jdbc_url, jdbc_url and http_path should be set.
     "is_sql_endpoint" -> (r =>
-      r.is_sql_endpoint.getOrElse(false) == requiresSqlEndpoint
+      r.is_sql_endpoint.getOrElse(false) == requiresSqlWarehouse
+    ),
+    "is_sql_warehouse" -> (r =>
+      r.is_sql_warehouse.getOrElse(false) == requiresSqlWarehouse
     ),
     "jdbc_url" -> (r =>
-      r.jdbc_url.getOrElse("").nonEmpty == requiresSqlEndpoint
+      r.jdbc_url.getOrElse("").nonEmpty == requiresSqlWarehouse
+    ),
+    "databricks_jdbc_url" -> (r =>
+      r.databricks_jdbc_url.getOrElse("").nonEmpty == requiresSqlWarehouse
     ),
     "http_path" -> (r =>
       r.http_path
         .getOrElse("")
-        .nonEmpty == requiresSqlEndpoint
+        .nonEmpty == requiresSqlWarehouse
     ),
     "cluster_id" -> (r =>
       r.cluster_id
