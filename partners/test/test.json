@@ -1,5 +1,5 @@
 {
-  "api_version": "2.0.1",
+  "api_version": "2.0.4",
   "name": "test partner with sql endpoint",
   "description_blurb": "Partner Connect api test",
   "category": "INGEST",
@@ -33,6 +33,7 @@
     "hostname": "testworkspace.databricks.com",
     "port": 443,
     "jdbc_url": "jdbc:spark://testworkspace.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/endpoints/44a1419108002906;",
+    "databricks_jdbc_url": "jdbc:databricks://testworkspace.databricks.com:443/default;httpPath=/sql/1.0/endpoints/44a1419108002906;",
     "http_path": "/sql/1.0/endpoints/44a1419108002906",
     "cluster_id": "44a1419108002906"
   }

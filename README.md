@@ -37,17 +37,17 @@
 [Partner Onboarding](OnboardingDoc.md)
 
 ## API Spec
-[Api Spec](openapi/partner-connect-2.0.yaml) 
+[Api Spec](openapi/partner-connect-2.0.yaml)
 
 ## API Documentation
 [Api Doc](api-doc/README.md)
 
-## System Requirements. 
+## System Requirements.
 This project supports the following system.
  - Linux (Tested with ubuntu-20.04)
  - macOS (Tested with BigSur 11.6.4)
 
-## Partner Connect Certification 
+## Partner Connect Certification
 In order to onboard as a partner in Databricks Partner Connect, we require partners to validate their API implementation
 using the test suites provided in this project. Before running the tests against your API,
 it is recommended that you run the [sample tests](#build-and-run-sample-tests) to make sure your environment is set up correctly.
@@ -67,7 +67,7 @@ Partners need to create a config file to specify the partner service endpoint, a
 
 |name                  |type   |required|example                                                                                                                                                                                                                                       |description                                                                                                                                                                                                                                   |
 |----------------------|-------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|api_version           |string |yes     |2.0.1                                                                                                                                                                                                                                         |The partner api version supported by the partner. Format major.minor.patch                                                                                                                                                                    |
+|api_version           |string |yes     |2.0.4                                                                                                                                                                                                                                         |The partner api version supported by the partner. Format major.minor.patch                                                                                                                                                                    |
 |name                  |string |yes     |test partner                                                                                                                                                                                                                                  |Name of the partner                                                                                                                                                                                                                           |
 |description_blurb     |string |yes     |Partner Connect test partner                                                                                                                                                                                                                  |Description text to show in the UI.                                                                                                                                                                                                           |
 |category              |enum   |yes     |INGEST                                                                                                                                                                                                                                        |The partner category.                                                                                                                                                                                                                         |
@@ -84,7 +84,7 @@ Partners need to create a config file to specify the partner service endpoint, a
 |supported_clouds      |array  |yes     |["azure"]                                                                                                                                                                                                                                     |Supported clouds. Allowed values are aws, azure, gcp                                                                                                                                                                                          |
 |new_user_action       |enum   |yes     |auto_add                                                                                                                                                                                                                                      |Action taken by partner when a new user tries to join an existing account.  See below                                                                                                                                                         |
 |trial_type            |enum   |no      |user                                                                                                                                                                                                                                          |Enum describing the type of trials the partner supports. Partners can choose to support trial account expiration at the individual user or account level. If trial level is user, expiring one user connection should not expire another user in the same account.|
-|test_workspace_detail |object |no      |{"hostname": "testworkspace.databricks.com", "port": 443, "jdbc_url": "jdbc:spark://testworkspace.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/endpoints/44a1419108002906;","http_path": "/sql/1.0/endpoints/44a1419108002906", "cluster_id": "44a1419108002906"} |Optional field to specify the workspace detail tests should use when calling partners. This field need to be set for partners that require a valid JDBC/ODBC endpoint to be passed when calling the the connect api. |
+|test_workspace_detail |object |no      |{"hostname": "testworkspace.databricks.com", "port": 443, "jdbc_url": "jdbc:spark://testworkspace.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/endpoints/44a1419108002906;","http_path": "/sql/1.0/endpoints/44a1419108002906", "databricks_jdbc_url": "jdbc:databricks://testworkspace.databricks.com:443/default;httpPath=/sql/1.0/endpoints/44a1419108002906;", "cluster_id": "44a1419108002906"} |Optional field to specify the workspace detail tests should use when calling partners. This field need to be set for partners that require a valid JDBC/ODBC endpoint to be passed when calling the the connect api. |
 </details>
 
 The `new_user_action` in the partner config specifies the expected behavior on how to handle connect api call with a new user. When connect api is called with a new user_id and email address that the partner have not seen before, the partner has 4 valid options.
@@ -112,7 +112,7 @@ Run the certification tests against your partner connect server using the comman
 
 - Run the tests: `./run_tests.sh partner.json` where
     - partner.json (required) is the name of the partner config file created in step 1.
-    - Note: Make sure the credential environment variables are properly exported. 
+    - Note: Make sure the credential environment variables are properly exported.
 
 #### Partner Certification test cases.
 Below are the test cases that are used in the partner certification. In order to get the maximum test coverage,
@@ -142,14 +142,14 @@ partners are required to implement the test hooks like delete-connection, delete
 |P801|TestConnection     |Test connection api returns failing test result if the connection on the partner side is deleted.                                                 |Yes                                                                     |TestConnectonTests|
 |P900|ConnectorList      |Get connector list returns list of source and target datasources the partner supports                                                             |Yes                                                                     |GetConnectorsTests|
 
-    
+
 ### 3. Upload artifacts
 The final step is to upload the test report and configuration files to the [partner intake form](https://docs.google.com/forms/d/e/1FAIpQLSc2vcAqAOVlE7Llo3GMhLrK3klzYXQ5LeWyqaR6L20RjHpygQ/viewform).
 The required artifacts from the certification steps are:
 - Test report: <project-root>/target/test-reports.zip
 - Partner config: <project-root>/partners/test/partner.json where partner.json is the name of configuration file created in step 1.
 
-## Build and Run sample tests 
+## Build and Run sample tests
 There are two options for building and running the sample tests in this project. Both options will use the sample server implementing the partner connect api.
 - Using Docker: setup is recommended for partners as it requires minimal dependency on the host machine.
 - Using maven: setup is recommended for local development as it provides faster iteration.
@@ -192,7 +192,7 @@ There are two options for building and running the sample tests in this project.
   - export PAT_TOKEN=test_token
 ```
 - Run tests with specific partner config: `mvn test -DCONFIG=interactive.json`
-- Note: 
+- Note:
   - Partner config files are located at `./partners/test`
 
 #### Debug Tests
@@ -208,24 +208,24 @@ There are two options for building and running the sample tests in this project.
 
 #### Update dependencies to latest
 - run `mvn versions:use-latest-releases`
- 
+
 #### Generate api doc
 - run `./gen_doc.sh`
 - Api doc will be generated under `api-doc/`
 
 ## Troubleshooting
 - Changing logging level: By default the log level is set to warn. To enable request/response update logging level below:
-  - Run maven commands with `mvn test -Dorg.slf4j.simpleLogger.defaultLogLevel=debug` or 
+  - Run maven commands with `mvn test -Dorg.slf4j.simpleLogger.defaultLogLevel=debug` or
   - Update config files
     - Open `src/main/resources/simplelogger.properties`
     - Set debug level: `org.slf4j.simpleLogger.defaultLogLevel=debug`
-- Running tests fails with `[error] java.io.IOError: java.lang.RuntimeException: /packages cannot be represented as URI`. 
+- Running tests fails with `[error] java.io.IOError: java.lang.RuntimeException: /packages cannot be represented as URI`.
   - Resolution:
     - Install Java JDK 11(AdoptOpenJDK JDK 11)
     - `export JAVA_HOME=/Path_to_JDK_HOME`
 - Lots of compile error for missing imported classes. Eg. `[error] import org.openapitools.client.model.{PartnerConfig, ResourceToProvision}`
-  - Resolution: 
+  - Resolution:
     - Run code gen. `mvn compile`
- 
+
 ## Reference
 - OpenApi Codegen: https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin

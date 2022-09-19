@@ -416,8 +416,12 @@ components:
           example: "sql/protocol/o/0/0222-185802-deny427"
         jdbc_url:
           type: string
-          description: JDBC connection url
+          description: Legacy Spark JDBC connection url
           example: "jdbc:spark://organization.cloud.databricks.com:443/..."
+        databricks_jdbc_url:
+          type: string
+          description: New Databricks JDBC driver connection url
+          example: "jdbc:databricks://organization.cloud.databricks.com:443/..."
         workspace_id:
           type: integer
           format: int64
@@ -461,7 +465,11 @@ components:
           example: "0222-185802-deny427"
         is_sql_endpoint:
           type: boolean
-          description: Determines whether cluster_id refers to Interactive Cluster or Sql Endpoint.
+          description: This is using legacy name. sql endpoint is now sql warehouse. This field should be the same as is_sql_warehouse.
+          example: true
+        is_sql_warehouse:
+          type: boolean
+          description: Determines whether cluster_id refers to Interactive Cluster or Sql Warehouse.
           example: true
         data_source_connector:
           type: string
@@ -800,6 +808,7 @@ components:
             - hostname
             - port
             - jdbc_url
+            - databricks_jdbc_url
             - http_path
             - cluster_id
           properties:
@@ -811,7 +820,10 @@ components:
               description: Port number to connect to.
             jdbc_url:
               type: string
-              description: JDBC connection string
+              description: Legacy JDBC driver connection string
+            databricks_jdbc_url:
+              type: string
+              description: New JDBC driver connection string
             http_path:
               type: string
               description: Http path to use for sql endpoint

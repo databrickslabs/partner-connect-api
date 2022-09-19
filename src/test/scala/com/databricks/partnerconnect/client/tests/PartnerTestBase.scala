@@ -60,6 +60,7 @@ class PartnerTestBase
         "testworkspace.databricks.com",
         443,
         "jdbc:spark://testworkspace.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/endpoints/44a1419108002906;",
+        "jdbc:databricks://testworkspace.databricks.com:443/default;httpPath=/sql/1.0/endpoints/44a1419108002906;",
         "/sql/1.0/endpoints/44a1419108002906",
         "44a1419108002906"
       )
@@ -105,7 +106,7 @@ class PartnerTestBase
       catalog_name = None,
       database_name = None,
       connection_id = connectionId,
-      // Optional params only required for sql endpoint.
+      // Optional params only required for sql warehouse.
       http_path =
         if (requiresSqlEndpoint) Some(workspace.http_path)
         else None,
@@ -115,7 +116,14 @@ class PartnerTestBase
             workspace.jdbc_url
           )
         else None,
+      databricks_jdbc_url =
+        if (requiresSqlEndpoint)
+          Some(
+            workspace.databricks_jdbc_url
+          )
+        else None,
       is_sql_endpoint = Some(requiresSqlEndpoint),
+      is_sql_warehouse = Some(requiresSqlEndpoint),
       service_principal_id = Some("a2a25a05-3d59-4515-a73b-b8bc5ab79e31")
     )
     val request = connectionApi.connect(
