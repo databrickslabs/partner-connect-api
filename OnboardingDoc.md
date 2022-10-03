@@ -1,7 +1,7 @@
-# Partner Onboarding, Databricks Partner Connect (V2.0.4)
+# Partner Onboarding, Databricks Partner Connect (V2.0.5)
 
 # Overview
-- [Partner Onboarding, Databricks Partner Connect (V2.0.4)](#partner-onboarding-databricks-partner-connect-v204)
+- [Partner Onboarding, Databricks Partner Connect (V2.0.5)](#partner-onboarding-databricks-partner-connect-v205)
 - [Overview](#overview)
   - [Document scope](#document-scope)
   - [Glossary](#glossary)
@@ -573,6 +573,10 @@ The Connect API request includes a &quot; **demo**&quot; boolean flag that we wi
 
 # Changelog
 
+## V2.0.5
+- Added SEMANTIC_LAYER and DATA_GOVERNANCE categories
+- Added new UC data privileges to the Enum.  These are unused by the test suite, but reflect per-partner configuration in Databricks.
+
 ## V2.0.4
 - Added databricks_jdbc_url to the connect api for use with the new Databricks JDBC driver. 
 - Added is_sql_warehouse to the connect api.  
@@ -580,7 +584,7 @@ The Connect API request includes a &quot; **demo**&quot; boolean flag that we wi
 
 ## V2.0.3
 - Added service_principal_id to the connect request.
-- Removed 'reserved for future use' for custom_name and clarified the possible value.
+- Removed 'reserved for future use' for catalog_name and clarified the possible value.
 
 ## V2.0.2
 - Separated delete-account and delete-connection apis.

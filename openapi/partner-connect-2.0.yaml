@@ -3,7 +3,7 @@ servers:
   - url: https://domainnameofpartner/
     description: Base address for the api server
 info:
-  version: "2.0.4"
+  version: "2.0.5"
   title: Partner Connect API
   description: |
     # Introduction
@@ -465,11 +465,11 @@ components:
           example: "0222-185802-deny427"
         is_sql_endpoint:
           type: boolean
-          description: This is using legacy name. sql endpoint is now sql warehouse. This field should be the same as is_sql_warehouse.
+          description: This is using legacy name. SQL endpoint is now SQL warehouse. This field should be the same as is_sql_warehouse.
           example: true
         is_sql_warehouse:
           type: boolean
-          description: Determines whether cluster_id refers to Interactive Cluster or Sql Warehouse.
+          description: Determines whether cluster_id refers to Interactive Cluster or SQL warehouse.
           example: true
         data_source_connector:
           type: string
@@ -694,7 +694,7 @@ components:
         api_version:
           type: string
           description: The partner api version supported by the partner. Format major.minor.patch
-          example: 2.0.1
+          example: 2.0.5
         name:
           type: string
           description: Name of the partner
@@ -713,6 +713,7 @@ components:
             - DATA_QUALITY
             - REVERSE_ETL
             - SEMANTIC_LAYER
+            - DATA_GOVERNANCE
         base_url:
           type: string
           description: Base URL for the partner service
@@ -820,10 +821,10 @@ components:
               description: Port number to connect to.
             jdbc_url:
               type: string
-              description: Legacy JDBC driver connection string
+              description: Legacy Spark JDBC driver connection string
             databricks_jdbc_url:
               type: string
-              description: New JDBC driver connection string
+              description: New Databricks JDBC driver connection string
             http_path:
               type: string
               description: Http path to use for sql endpoint
@@ -850,15 +851,21 @@ components:
         permission:
           type: string
           description: |
-            Data permission https://docs.databricks.com/security/access-control/table-acls/object-privileges.html#privileges
-            * SELECT: gives read access to an object.
-            * CREATE: gives ability to create an object (for example, a table in a schema).
-            * MODIFY: gives ability to add, delete, and modify data to or from an object.
-            * USAGE: does not give any abilities, but is an additional requirement to perform any action on a schema object.
-            * READ_METADATA: gives ability to view an object and its metadata.
-            * CREATE_NAMED_FUNCTION: gives ability to create a named UDF in an existing catalog or schema.
-            * MODIFY_CLASSPATH: gives ability to add files to the Spark class path.
-            * ALL PRIVILEGES: gives all privileges (is translated into all the above privileges)."
+            - Unity Catalog data permissions (privileges)
+              - USE_CATALOG: does not give any abilities, but is an additional requirement to perform any action on a catalog object.
+              - USE_SCHEMA: does not give any abilities, but is an additional requirement to perform any action on a schema object.
+              - SELECT: gives read access to table or all tables in object
+              - CREATE_SCHEMA: gives ability to create table in object
+              - CREATE_TABLE: gives ability to create table in object
+            - Hive Metastore data permission https://docs.databricks.com/security/access-control/table-acls/object-privileges.html#privileges
+              - SELECT: gives read access to an object.
+              - CREATE: gives ability to create an object (for example, a table in a schema).
+              - MODIFY: gives ability to add, delete, and modify data to or from an object.
+              - USAGE: does not give any abilities, but is an additional requirement to perform any action on a schema object.
+              - READ_METADATA: gives ability to view an object and its metadata.
+              - CREATE_NAMED_FUNCTION: gives ability to create a named UDF in an existing catalog or schema.
+              - MODIFY_CLASSPATH: gives ability to add files to the Spark class path.
+              - ALL PRIVILEGES: gives all privileges (is translated into all the above privileges)."
           enum:
             - SELECT
             - CREATE
@@ -868,6 +875,10 @@ components:
             - CREATE_NAMED_FUNCTION
             - MODIFY_CLASSPATH
             - ALL PRIVILEGES
+            - USE_CATALOG
+            - USE_SCHEMA
+            - CREATE_SCHEMA
+            - CREATE_TABLE
     ObjectPermission:
       type: object
       required:
