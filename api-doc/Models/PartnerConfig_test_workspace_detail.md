@@ -11,3 +11,4 @@
 | **cluster\_id** | **String** | Cluster Id for either SQL endpoint or interactive cluster. | [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
