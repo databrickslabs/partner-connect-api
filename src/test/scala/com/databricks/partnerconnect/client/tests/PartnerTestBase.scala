@@ -21,6 +21,7 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.must.Matchers
 import spray.json._
 
+import java.net.URL
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -267,6 +268,13 @@ class PartnerTestBase
     assert(
       response.status.isSuccess() || response.status.isRedirection(),
       s"Invalid return code ${response.status} for redirect_uri: ${uri}"
+    )
+
+    val url = new URL(uri)
+    val urlHost = url.getHost
+    assert(
+      config.hostnames.exists(hostname => urlHost.contains(hostname)),
+      s"Hostname [$urlHost] not found in configured validHostnames.  Share all expected hostnames with Databricks for allow-listing."
     )
   }
 

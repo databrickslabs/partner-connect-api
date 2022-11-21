@@ -25,6 +25,9 @@
   "supported_clouds": [
     "aws", "azure", "gcp"
   ],
+  "hostnames" : [
+    "localhost"
+  ],
   "new_user_action": "auto_add",
   "require_manual_signup": true,
   "trial_type": "account",
