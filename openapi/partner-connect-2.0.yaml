@@ -3,7 +3,7 @@ servers:
   - url: https://domainnameofpartner/
     description: Base address for the api server
 info:
-  version: "2.0.5"
+  version: "2.0.6"
   title: Partner Connect API
   description: |
     # Introduction
@@ -445,7 +445,7 @@ components:
           example: false
         staging_location:
           type: string
-          description: Optional staging location URI
+          description: Optional staging location URI.  Unused today.
           example: "<cloud>://<location_1>"
         destination_location:
           type: string
@@ -453,11 +453,11 @@ components:
           example: "<cloud>://<location_2>"
         catalog_name:
           type: string
-          description: Optional catalog name. It could be a custom name if using Unity Catalog, or "hive_metastore" if not.
+          description: Optional catalog name. It could be a custom name if using Unity Catalog, or "hive_metastore" if not.  Note that Databricks APIs often require identifiers like this to be escaped with backticks if there are special characters in it.
           example: "my_catalog"
         database_name:
           type: string
-          description: Optional Database name
+          description: Optional Database name.  Unused today.
           example: "my_db"
         cluster_id:
           type: string
@@ -473,7 +473,7 @@ components:
           example: true
         data_source_connector:
           type: string
-          description: For data connector tools, the name of the data source that the user should be referred to in their tool
+          description: For data connector tools, the name of the data source that the user should be referred to in their tool.  Unused today.
           example: "Oracle"
         service_principal_id:
           type: string
@@ -689,12 +689,13 @@ components:
         - allow_editable_email
         - resources_to_provision
         - supported_clouds
+        - hostnames
         - new_user_action
       properties:
         api_version:
           type: string
           description: The partner api version supported by the partner. Format major.minor.patch
-          example: 2.0.5
+          example: 2.0.6
         name:
           type: string
           description: Name of the partner
@@ -777,6 +778,11 @@ components:
         supported_clouds:
           type: array
           description: Supported clouds.
+          items:
+            type: string
+        hostnames:
+          type: array
+          description: Redirect URL allow-list hostnames.
           items:
             type: string
         new_user_action:

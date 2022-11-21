@@ -20,5 +20,8 @@
   "supported_clouds": [
     "aws"
   ],
+  "hostnames" : [
+    "localhost"
+  ],
   "new_user_action": "invite"
 }
