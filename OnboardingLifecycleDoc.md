@@ -46,4 +46,4 @@ Databricks is always adding new features to both the general Databricks product 
 
 In addition, there are several regular maintenance tasks that may arise from time-to-time.  Examples may include rotating credentials, escalations, or changes in partner configuration (e.g. a partner adds support for GCP, a partner adds support for Unity Catalog, or a partner changes their hostname).
 
-Both parties are responsible for fixing bugs after launch.  Databricks will share a SOP for handling bugs after launch.
+Both parties are responsible for fixing bugs after launch. Please follow this [SOP](https://docs.google.com/document/d/1sZVMdGCHYrWFYUw-_uy8hPRzL-wJm9ActYh2L02SWjk/edit?usp=sharing) for handling Partner Connect integration issues. 
