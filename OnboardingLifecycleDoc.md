@@ -7,7 +7,7 @@
 ## Getting scheduled for onboarding
 
 1. The Databricks team will initially work with you to assess if your product is a fit for Partner Connect.
-2. Your team will fill out a [Tech due diligence form](https://docs.google.com/forms/d/e/1FAIpQLSftDtJiqKirOL81_4ZTRM-bu27lmjZcEvOl4mGryyZ1WpTBHg/viewform) to assess technical fit for Partner Connect.
+2. Your team will fill out a _Technical Due Diligence_ form provided by your PDM to assess technical fit for Partner Connect.
 3. Your team will commit engineering resources to completing this integration.
 4. Your team will meet with our team to go over technical details and usability requirements of the integration.
 5. The Databricks team will select a quarter to schedule engineering resources and to onboard your product to Partner Connect.
@@ -46,4 +46,4 @@ Databricks is always adding new features to both the general Databricks product 
 
 In addition, there are several regular maintenance tasks that may arise from time-to-time.  Examples may include rotating credentials, escalations, or changes in partner configuration (e.g. a partner adds support for GCP, a partner adds support for Unity Catalog, or a partner changes their hostname).
 
-Both parties are responsible for fixing bugs after launch.  Databricks will share a SOP for handling bugs after launch.
+Both parties are responsible for fixing bugs after launch. Please follow this [SOP](https://docs.google.com/document/d/1sZVMdGCHYrWFYUw-_uy8hPRzL-wJm9ActYh2L02SWjk/edit?usp=sharing) for handling Partner Connect integration issues. 
