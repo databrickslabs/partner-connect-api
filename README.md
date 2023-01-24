@@ -5,6 +5,7 @@
 
 - [Partner Connect API Contract](#partner-connect-api-contract)
   - [Partner Onboarding Document](#partner-onboarding-document)
+  - [Sequence Diagram](#sequence-diagram)
   - [API Spec](#api-spec)
   - [API Documentation](#api-documentation)
   - [System Requirements.](#system-requirements)
@@ -35,6 +36,12 @@
 
 ## Partner Onboarding Document
 [Partner Onboarding](OnboardingDoc.md)
+
+## Sequence Diagram
+
+![](img/image5.png)
+
+An explanation of the sequence of events when connecting Databricks and a partner can be found in [ApiSpecifications.md](ApiSpecifications.md#sequence-diagram).
 
 ## API Spec
 [Api Spec](openapi/partner-connect-2.0.yaml)
