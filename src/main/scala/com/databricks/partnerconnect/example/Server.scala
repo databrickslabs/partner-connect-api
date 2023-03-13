@@ -28,6 +28,7 @@ import com.databricks.partnerconnect.example.validators.{
   ConnectValidator,
   ConnectionInfoValidator,
   DeleteAccountValidator,
+  DeleteConnectionRequestValidator,
   ExpireAccountValidator
 }
 import com.typesafe.scalalogging.Logger
@@ -36,6 +37,7 @@ import org.openapitools.client.model.{
   AccountUserInfo,
   ConnectRequest,
   ConnectionInfo,
+  DeleteConnectionRequest,
   PartnerConfig
 }
 
@@ -64,6 +66,7 @@ case class Server(config: PartnerConfig) {
     new ExpireAccountHandler(accountService)
   val connectValidator = new ConnectValidator(config)
   val connectionInfoValidator = new ConnectionInfoValidator()
+  val deleteConnectionRequestValidator = new DeleteConnectionRequestValidator()
   val deleteAccountValidator = new DeleteAccountValidator()
   val testConnectionHandler = new TestConnectionHandler(connectionService)
   val getConnectorHandler = new GetConnectorHandler(config)
@@ -98,9 +101,9 @@ case class Server(config: PartnerConfig) {
 
   val deleteConnectionRoute: Route = path("delete-connection") {
     delete {
-      entity(as[ConnectionInfo]) { connection =>
+      entity(as[DeleteConnectionRequest]) { connection =>
         val validation =
-          connectionInfoValidator.validate(connection)
+          deleteConnectionRequestValidator.validate(connection)
         validate(validation.valid, validation.toString) {
           deleteConnectionHandler.handle(connection)
         }

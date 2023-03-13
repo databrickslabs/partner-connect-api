@@ -28,7 +28,7 @@
 Databricks OAuth support is under development.
 
 ### How can the partner tell if a connection has been deleted on the Databricks side?
-Databricks currently does not make an API call to partners when the connection is deleted on the Databricks side.  If a partner sees a Connect request with is_connection_established == false for a workspace where the partner has a connection configured, they can infer that the previous connection was deleted.
+Databricks will make an API call to the partner when a connection is deleted on the Databricks side if the partner provides a delete-connection endpoint.  Otherwise, if a partner sees a Connect request with is_connection_established == false for a workspace where the partner has a connection configured, they can infer that the previous connection was deleted.
 
 ### What should happen if a connection is deleted on either the Databricks side or the Partner side and user tries to create a new connection?
 Databricks and the partner may have different values for whether the connection is established. A user may delete the connection on either the Databricks-side or the partner-side causing this mismatch. Here&#39;s what should happen with the Connect API in each of the 4 cases.

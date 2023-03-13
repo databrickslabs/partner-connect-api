@@ -7,6 +7,7 @@ import com.databricks.partnerconnect.example.util.PartnerConfigUtil.{
 }
 import org.openapitools.client.core.{ApiError, ApiResponse, BasicCredentials}
 import org.openapitools.client.model.ConnectionEnums.RedirectValue
+import org.openapitools.client.model.ConnectRequestEnums.CloudProvider
 import org.openapitools.client.model.ErrorResponseEnums.ErrorReason
 import org.openapitools.client.model.TestResultEnums.Status
 import org.openapitools.client.model.{ConnectionInfo, ConnectionTestResult}
@@ -40,16 +41,19 @@ class TestConnectionApiTests extends PartnerTestBase {
   ) {
     assume(config.endpoints.test_connection_path.isDefined)
     assume(config.endpoints.delete_connection_path.isDefined)
+
+    val cloudProvider = CloudProvider.Aws
+    val workspaceId = nextLong()
     val request = createConnectRequest(
       false,
       email = newEmail("user1"),
-      workspaceId = nextLong(),
+      workspaceId = workspaceId,
       userId = nextLong()
     )
     val res = executeConnectRequest(request)
     validateNewConnection(res)
     // Delete connection
-    deleteConnection(res.content.connection_id.get)
+    deleteConnection(res.content.connection_id.get, cloudProvider, workspaceId)
     // Validate test result
     val result = intercept[ApiError[String]] {
       testConnection(res.content.connection_id.get)

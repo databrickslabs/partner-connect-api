@@ -399,7 +399,15 @@ Status Code: 500
 ## Delete Connection API
 
 This API should clean up a specific connection id in a given org id (workspace_id) and cloud provider.
-This API is currently only used in automated tests.
+This API is used in automation testing and is optional for the Partner Connect experience.
+
+### Partner Connect Experience
+In the Partner Connect experience, Databricks will use the Delete Connection API to notify partners about connection deletion from Databricks's side.
+If the partner has specified a delete-connection endpoint, Databricks will make a
+call to the Delete Connection API after deleting associated resources on the Databricks side.
+
+## Automated Testing
+If the partner confirms resource deletion through the `resources_deleted` resource status, automated testing will be done to ensure that new connections can be made.
 
 ```
 DELETE <partners/databricks/connection>:
@@ -412,11 +420,44 @@ DELETE <partners/databricks/connection>:
 
 **Successful Responses:**
 
-```Status Code: 200```
+The field **resource_status** is a String which identifies the action that the partner-side took, if any. Valid values are "resources_deleted",  "resources_pending_deletion", or "deletion_acknowledged".
+
+```Status Code: 200
+{
+  "resource_status": "resources_deleted" [or resources_pending_deletion or deletion_acknowledged]
+}
+```
 
 **Failure Responses**:
 
+_Bad credentials_
+
+Thrown when Databricks provides the wrong credentials to the partner. This should never happen, but may happen in cases where credentials need to be rotated.
+
+```
+Status Code: 401
+{
+  "error_reason": "unauthorized",
+  "display_message": "foobar", [optional]
+  "debugging_message": "foobar" [optional]
+}
+```
+
+_Connection not found_
+
+If the connection does not exist on the partner-side, return a 404 with **error\_reason** set to **connection\_not\_found**. This occurs when a connection has already been deleted on the partner side.
+```
+Status Code: 404
+{
+  "error_reason": “connection_not_found”
+  "display_message": "foobar", [optional]
+  "debugging_message": "foobar" [optional]
+}
+```
+
 _Unexpected failure_
+
+For any other unexpected failures, the partner will return a 500. Databricks will retry the request 3 times with exponential backoff: first request after 1 second, second request after 2 seconds, and third request after 4 seconds.
 
 ```
 Status Code: 500
