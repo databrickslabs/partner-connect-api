@@ -45,7 +45,7 @@ All URIs are relative to *https://domainnameofpartner*
 
 
 
-    Delete the connection created by partner. This API is used for automated tests and is optional in the Partner Connect experience. In the Partner Connect experience, Databricks calls this API to notify partners about connection deletion from Databricks&#39;s side.
+    Delete the connection created by partner. This API is used for automated tests and is required in the Partner Connect experience. In the Partner Connect experience, Databricks calls this API to notify partners about connection deletion from Databricks&#39;s side.
 
 ### Parameters
 

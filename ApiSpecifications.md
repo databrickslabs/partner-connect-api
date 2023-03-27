@@ -399,12 +399,12 @@ Status Code: 500
 ## Delete Connection API
 
 This API should clean up a specific connection id in a given org id (workspace_id) and cloud provider.
-This API is used in automation testing and is optional for the Partner Connect experience.
+This API is used in automation testing and is required for the Partner Connect experience.
 
 ### Partner Connect Experience
 In the Partner Connect experience, Databricks will use the Delete Connection API to notify partners about connection deletion from Databricks's side.
-If the partner has specified a delete-connection endpoint, Databricks will make a
-call to the Delete Connection API after deleting associated resources on the Databricks side.
+Databricks will call the partner's delete-connection endpoint after deleting associated resources on the Databricks side.
+Partners should return `deletion_acknowledged` if no action is taken upon receiving the notification.
 
 ## Automated Testing
 If the partner confirms resource deletion through the `resources_deleted` resource status, automated testing will be done to ensure that new connections can be made.
