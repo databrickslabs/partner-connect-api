@@ -11,6 +11,8 @@ Models/ConnectionTestResult.md
 Models/Connector.md
 Models/ConnectorResponse.md
 Models/DataPermission.md
+Models/DeleteConnectionRequest.md
+Models/DeleteConnectionResponse.md
 Models/ErrorResponse.md
 Models/ObjectPermission.md
 Models/PartnerConfig.md

@@ -20,7 +20,7 @@ All URIs are relative to *https://domainnameofpartner*
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
-| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Accept-Language** | **String**| Preferred language | [optional] [default to en-US] |
 | **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 | **pagination\_token** | **String**| Optional pagination token to get more results. | [optional] [default to null] |
 

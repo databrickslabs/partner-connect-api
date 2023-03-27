@@ -1,12 +1,16 @@
 package com.databricks.partnerconnect.example.formatters
 
-import org.openapitools.client.model.ConnectRequestEnums.CloudProvider
+import org.openapitools.client.model.ConnectRequestEnums.{
+  CloudProvider,
+  ConnectionScope
+}
 import org.openapitools.client.model.ConnectionEnums.{
   AccountStatus,
   RedirectValue,
   UserStatus
 }
 import org.openapitools.client.model.ConnectorEnums.{`Type` => ConnectorType}
+import org.openapitools.client.model.DeleteConnectionResponseEnums.ResourceStatus
 import org.openapitools.client.model.ErrorResponseEnums.ErrorReason
 import org.openapitools.client.model.PartnerConfigEnums.{
   Category,
@@ -24,6 +28,8 @@ object JsonFormatters extends DefaultJsonProtocol {
     new EnumJsonFormatter(ErrorReason)
   implicit val cloudProvider: EnumJsonFormatter[CloudProvider.type] =
     new EnumJsonFormatter(CloudProvider)
+  implicit val connectionScope: EnumJsonFormatter[ConnectionScope.type] =
+    new EnumJsonFormatter(ConnectionScope)
   implicit val userStatus: EnumJsonFormatter[UserStatus.type] =
     new EnumJsonFormatter(UserStatus)
   implicit val accountStatus: EnumJsonFormatter[AccountStatus.type] =
@@ -40,6 +46,8 @@ object JsonFormatters extends DefaultJsonProtocol {
   implicit val connectorType: EnumJsonFormatter[ConnectorType.type] = {
     new EnumJsonFormatter(ConnectorType)
   }
+  implicit val resourceStatus: EnumJsonFormatter[ResourceStatus.type] =
+    new EnumJsonFormatter(ResourceStatus)
 
   implicit val resourceType: EnumJsonFormatter[ResourceType.type] =
     new EnumJsonFormatter(ResourceType)
@@ -67,12 +75,21 @@ object JsonFormatters extends DefaultJsonProtocol {
   implicit val errorResponse: RootJsonFormat[ErrorResponse] = jsonFormat3(
     ErrorResponse
   )
-  implicit val connectRequest: RootJsonFormat[ConnectRequest] = jsonFormat21(
+  implicit val connectRequest: RootJsonFormat[ConnectRequest] = jsonFormat22(
     ConnectRequest
   )
   implicit val connectionInfo: RootJsonFormat[ConnectionInfo] = jsonFormat1(
     ConnectionInfo
   )
+  implicit val deleteConnectionRequest
+      : RootJsonFormat[DeleteConnectionRequest] = jsonFormat3(
+    DeleteConnectionRequest
+  )
+  implicit val deleteConnectionResponse
+      : RootJsonFormat[DeleteConnectionResponse] = jsonFormat1(
+    DeleteConnectionResponse
+  )
+
   implicit val accountInfo: RootJsonFormat[AccountInfo] = jsonFormat3(
     AccountInfo
   )

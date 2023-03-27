@@ -22,7 +22,7 @@ All URIs are relative to *https://domainnameofpartner*
 |------------- | ------------- | ------------- | -------------|
 | **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
 | **AccountInfo** | [**AccountInfo**](../Models/AccountInfo.md)|  | |
-| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Accept-Language** | **String**| Preferred language | [optional] [default to en-US] |
 | **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 
 ### Return type
@@ -44,7 +44,7 @@ null (empty response body)
 
 
 
-    **Test Only** Expire account api is used to expire a user trial. After this api is called, the partner is expected to return the redirect uri for handling expired users. The account_status should be set to expired. This api is only used for automated verification of the partner connect flow for expired accounts. This api needs to be limited to databricks test domain names (databricks-test.com and databricks-demo.com). Partners should return 400 bad request  if it&#39;s called for any other domain name.
+    **Test Only** Expire account api is used to expire a user trial. After this api is called, the partner is expected to return the redirect uri for handling expired users. The account_status should be set to expired. This api is only used for automated verification of the partner connect flow for expired accounts. This api needs to be limited to databricks test domain names (databricks-test.com and databricks-demo.com). Partners should return 400 bad request if it&#39;s called for any other domain name.
 
 ### Parameters
 
@@ -52,7 +52,7 @@ null (empty response body)
 |------------- | ------------- | ------------- | -------------|
 | **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
 | **AccountUserInfo** | [**AccountUserInfo**](../Models/AccountUserInfo.md)|  | |
-| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Accept-Language** | **String**| Preferred language | [optional] [default to en-US] |
 | **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 
 ### Return type

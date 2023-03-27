@@ -7,6 +7,7 @@ import com.databricks.partnerconnect.example.util.PartnerConfigUtil.{
 import org.openapitools.client.core.{ApiError, ApiResponse, BasicCredentials}
 import org.openapitools.client.model.ConnectionEnums.RedirectValue
 import org.openapitools.client.model.ConnectionInfo
+import org.openapitools.client.model.ConnectRequestEnums.CloudProvider
 import org.openapitools.client.model.ErrorResponseEnums.ErrorReason
 
 class DeleteConnectionTests extends PartnerTestBase {
@@ -15,18 +16,22 @@ class DeleteConnectionTests extends PartnerTestBase {
     s"P401 Admin is able to re-create connection after deleting existing PC connection and partner connection ${configName}"
   ) {
     assume(config.endpoints.delete_connection_path.isDefined)
+
+    val cloudProvider = CloudProvider.Aws
+    val workspaceId = nextLong()
+    val userId = nextLong()
     // Create a new connection.
     val request = createConnectRequest(
-      false,
-      newEmail("user1"),
-      nextLong(),
-      nextLong()
+      isConnectionEstablished = false,
+      email = newEmail("user1"),
+      workspaceId = workspaceId,
+      userId = userId
     )
     val res = executeConnectRequest(request)
     validateNewConnection(res)
 
     // Delete connection
-    deleteConnection(res.content.connection_id.get)
+    deleteConnection(res.content.connection_id.get, cloudProvider, workspaceId)
     // Create a new connection.
     val newConnection = executeConnectRequest(request)
     validateNewConnection(newConnection)
@@ -57,6 +62,7 @@ class DeleteConnectionTests extends PartnerTestBase {
     // Create a new connection.
     val userId = nextLong()
     val workspaceId = nextLong()
+    val cloudProvider = CloudProvider.Aws
     val email = newEmail("user3")
     val request = createConnectRequest(
       false,
@@ -68,7 +74,7 @@ class DeleteConnectionTests extends PartnerTestBase {
     validateNewConnection(res)
 
     // Delete connection from the partner side.
-    deleteConnection(res.content.connection_id.get)
+    deleteConnection(res.content.connection_id.get, cloudProvider, workspaceId)
 
     // Sign in with deleted connection.
     val signIn = createConnectRequest(

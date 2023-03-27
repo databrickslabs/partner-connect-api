@@ -1,4 +1,4 @@
-# Partner Onboarding, Databricks Partner Connect (V2.0.6)
+# Partner Onboarding, Databricks Partner Connect (V2.1.0)
 
 ## How does a partner onboard to Partner Connect?
 - [Partner Connect onboarding lifecycle](OnboardingLifecycleDoc.md)
@@ -90,6 +90,12 @@ While there's some customization available, most partners have one of the follow
 | Desktop application Partner | This is used by partners that have a Desktop application (as opposed to a SaaS offering).  In this integration, the user selects either an Interactive Cluster or SQL Warehouse and downloads a connection file to the partner product.  This is often used by **Partners with Desktop applications**.<br /><br />N.B.  For this type of integration, there is no need for the partner to implement the SaaS APIs mentioned elsewhere throughout this documentation.
 
 ## Changelog
+
+### V2.1.0
+- Added delete-connection API implementation on Databricks's side to notify partners about connection deletion.
+- Added cloud_provider and databricks_organization_id to the delete-connection api request.
+- Added field resource_status to delete-connection API success response.
+- Added additional supported error codes (401, 404) to delete-connection API failure response.
 
 ### V2.0.6
 - General restructuring of onboarding documentation until multiple subpages.

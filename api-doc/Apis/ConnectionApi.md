@@ -23,7 +23,7 @@ All URIs are relative to *https://domainnameofpartner*
 |------------- | ------------- | ------------- | -------------|
 | **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
 | **ConnectRequest** | [**ConnectRequest**](../Models/ConnectRequest.md)| The connection payload. | |
-| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Accept-Language** | **String**| Preferred language | [optional] [default to en-US] |
 | **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 
 ### Return type
@@ -41,24 +41,24 @@ All URIs are relative to *https://domainnameofpartner*
 
 <a name="deleteConnection"></a>
 # **deleteConnection**
-> deleteConnection(User-Agent, ConnectionInfo, Accept-Language, Content-Type)
+> DeleteConnectionResponse deleteConnection(User-Agent, DeleteConnectionRequest, Accept-Language, Content-Type)
 
 
 
-    **Test Only** Delete the connection created by partner. Currently this API is only used for automated tests.
+    Delete the connection created by partner. This API is used for automated tests and is optional in the Partner Connect experience. In the Partner Connect experience, Databricks calls this API to notify partners about connection deletion from Databricks&#39;s side.
 
 ### Parameters
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
-| **ConnectionInfo** | [**ConnectionInfo**](../Models/ConnectionInfo.md)| The delete connection payload. | |
-| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **DeleteConnectionRequest** | [**DeleteConnectionRequest**](../Models/DeleteConnectionRequest.md)| The delete connection payload. | |
+| **Accept-Language** | **String**| Preferred language | [optional] [default to en-US] |
 | **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 
 ### Return type
 
-null (empty response body)
+[**DeleteConnectionResponse**](../Models/DeleteConnectionResponse.md)
 
 ### Authorization
 
@@ -83,7 +83,7 @@ null (empty response body)
 |------------- | ------------- | ------------- | -------------|
 | **User-Agent** | **String**| The user agent making the call. This will be set to databricks. | [default to databricks] [enum: databricks] |
 | **ConnectionInfo** | [**ConnectionInfo**](../Models/ConnectionInfo.md)|  | |
-| **Accept-Language** | **String**| Prefered lanaguage | [optional] [default to en-US] |
+| **Accept-Language** | **String**| Preferred language | [optional] [default to en-US] |
 | **Content-Type** | **String**| Content type | [optional] [default to application/json; charset&#x3D;utf-8] |
 
 ### Return type

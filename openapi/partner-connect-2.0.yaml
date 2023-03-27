@@ -3,7 +3,7 @@ servers:
   - url: https://domainnameofpartner/
     description: Base address for the api server
 info:
-  version: "2.0.6"
+  version: "2.1.0"
   title: Partner Connect API
   description: |
     # Introduction
@@ -124,17 +124,18 @@ paths:
         - connection
       operationId: deleteConnection
       description:
-        "**Test Only** Delete the connection created by partner. Currently this API is only used for automated tests."
+        "Delete the connection created by partner. This API is used for automated tests and is optional in the Partner Connect experience.
+        In the Partner Connect experience, Databricks calls this API to notify partners about connection deletion from Databricks's side."
       requestBody:
         description: The delete connection payload.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ConnectionInfo'
+              $ref: '#/components/schemas/DeleteConnectionRequest'
       responses:
         '200':
-          description: Successfully delete the connection
+          $ref: '#/components/responses/DeleteConnectionResponse'
         '400':
           description: Bad Request
           content:
@@ -218,7 +219,7 @@ paths:
         the partner is expected to return the redirect uri for handling expired users.
          The account_status should be set to expired. This api is only used for automated verification of the
          partner connect flow for expired accounts. This api needs to be limited to databricks test
-         domain names (databricks-test.com and databricks-demo.com). Partners should return 400 bad request  if it's called for any other domain name."
+         domain names (databricks-test.com and databricks-demo.com). Partners should return 400 bad request if it's called for any other domain name."
       requestBody:
         required: true
         content:
@@ -306,7 +307,7 @@ components:
     accept_language:
       name: Accept-Language
       in: header
-      description: Prefered lanaguage
+      description: Preferred language
       schema:
         type: string
         default: en-US
@@ -332,7 +333,7 @@ components:
       properties:
         personal_access_token:
           type: string
-          description: Personal Access Token created for the Service Principal
+          description: Personal Access Token created for the Service Principal or the user
           example: "token"
         oauth_token:
           type: string
@@ -477,8 +478,15 @@ components:
           example: "Oracle"
         service_principal_id:
           type: string
-          description: The UUID (username) of the service principal identity that a partner product can use to call Databricks APIs. Note the format is different from the databricks_user_id field in user_info.
+          description: The UUID (username) of the service principal identity that a partner product can use to call Databricks APIs. Note the format is different from the databricks_user_id field in user_info. If empty, no service principal was created
           example: "a2a25a05-3d59-4515-a73b-b8bc5ab79e31"
+        connection_scope:
+          type: string
+          description: The scope of users that can use this connection. Workspace means all users in the same workspace. User means only the user creating it.
+          enum:
+            - workspace
+            - user
+          example: workspace
     Connection:
       type: object
       required:
@@ -559,6 +567,38 @@ components:
           type: string
           description: The connection id to use for the test.
           example: "7f2e4c43-9714-47cf-9011-d8148eaa27a2"
+    DeleteConnectionRequest:
+      type: object
+      required:
+        - connection_id
+        - cloud_provider
+        - databricks_organization_id
+      properties:
+        connection_id:
+          type: string
+          description: The partner connection id from initial connection.
+          example: "7f2e4c43-9714-47cf-9011-d8148eaa27a2"
+        cloud_provider:
+          type: string
+          description: The cloud provider for the Databricks workspace. Valid values are aws, azure, gcp.
+        databricks_organization_id:
+          type: integer
+          format: int64
+          description: Databricks organization id. This is the same as workspace_id.
+          example: 1234567890
+    DeleteConnectionResponse:
+      type: object
+      required:
+        - resource_status
+      properties:
+        resource_status:
+          type: string
+          description: Enum to classify the action taken by the partner.
+          enum:
+            - resources_deleted
+            - resources_pending_deletion
+            - deletion_acknowledged
+          example: resources_deleted
     TestResult:
       type: object
       required:
@@ -695,7 +735,7 @@ components:
         api_version:
           type: string
           description: The partner api version supported by the partner. Format major.minor.patch
-          example: 2.0.6
+          example: 2.1.0
         name:
           type: string
           description: Name of the partner
@@ -796,7 +836,7 @@ components:
           example: auto_add
         require_manual_signup:
           type: boolean
-          description: True if the partner requies a manual signup after connect api is called. When set to true,
+          description: True if the partner requires a manual signup after connect api is called. When set to true,
             connect api call with is_connection_established (sign in) is expected to return 404 account_not_found or connection_not_found until the user completes the manual signup step.
         trial_type:
           type: string
@@ -957,6 +997,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ConnectorResponse'
+    DeleteConnectionResponse:
+      description: Delete Connection Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteConnectionResponse'
   securitySchemes:
     basicAuth:
       type: http

@@ -307,9 +307,14 @@ class PartnerTestBase
     )
   }
 
-  def deleteConnection(id: String): ApiResponse[Unit] = {
+  def deleteConnection(
+      id: String,
+      cloudProvider: CloudProvider,
+      workspaceId: Long
+  ): ApiResponse[DeleteConnectionResponse] = {
     val request = connectionApi.deleteConnection(
-      connectionInfo = ConnectionInfo(id),
+      deleteConnectionRequest =
+        DeleteConnectionRequest(id, cloudProvider.toString, workspaceId),
       acceptLanguage = Some("en-US"),
       userAgent = "databricks",
       contentType = Some("application/json")
@@ -319,7 +324,7 @@ class PartnerTestBase
         PartnerConfigUtil.getBasicAuthPassword()
       )
     )
-    executeRequest[Unit](request)
+    executeRequest[DeleteConnectionResponse](request)
   }
 
   def deleteAccount(
