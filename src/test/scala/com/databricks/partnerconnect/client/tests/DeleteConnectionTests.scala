@@ -1,14 +1,14 @@
 package com.databricks.partnerconnect.client.tests
 
-import com.databricks.partnerconnect.example.util.PartnerConfigUtil.{
-  newEmail,
-  nextLong
-}
 import org.openapitools.client.core.{ApiError, ApiResponse, BasicCredentials}
 import org.openapitools.client.model.ConnectionEnums.RedirectValue
 import org.openapitools.client.model.ConnectionInfo
 import org.openapitools.client.model.ConnectRequestEnums.CloudProvider
 import org.openapitools.client.model.ErrorResponseEnums.ErrorReason
+import com.databricks.partnerconnect.example.util.PartnerConfigUtil.{
+  newEmail,
+  nextLong
+}
 
 class DeleteConnectionTests extends PartnerTestBase {
 
