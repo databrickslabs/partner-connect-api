@@ -1,0 +1,13 @@
+{
+  "partner": {
+    "name": "Test Partner",
+    "category": "DATA_PREP_AND_TRANSFORM",
+    "sign_up_url": "http://localhost/sign-up",
+    "connect_url": "http://localhost/read/connect",
+    "terms_of_service_url": "http://localhost/tos",
+    "privacy_policy_url": "http://localhost/privacy",
+    "hostname": "localhost",
+    "supported_features": ["UNITY_CATALOG"],
+    "integration_type": "WAREHOUSE_READ"
+  }
+}
