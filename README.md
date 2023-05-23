@@ -13,7 +13,8 @@
     - [1. Create partner config](#1-create-partner-config)
     - [2. Run certification tests](#2-run-certification-tests)
       - [Partner Certification test cases.](#partner-certification-test-cases)
-    - [3. Upload artifacts](#3-upload-artifacts)
+    - [3. Self-test the integration](#3-self-test-the-integration)
+    - [4. Upload artifacts](#4-upload-artifacts)
   - [Build and Run sample tests](#build-and-run-sample-tests)
     - [Using Docker](#using-docker)
       - [Setup Docker Environment](#setup-docker-environment)
@@ -50,7 +51,7 @@ An explanation of the sequence of events when connecting Databricks and a partne
 [Api Doc](api-doc/README.md)
 
 ## System Requirements.
-This project supports the following system.
+This project supports the following systems.
  - Linux (Tested with ubuntu-20.04)
  - macOS (Tested with BigSur 11.6.4)
 
@@ -58,10 +59,11 @@ This project supports the following system.
 In order to onboard as a partner in Databricks Partner Connect, we require partners to validate their API implementation
 using the test suites provided in this project. Before running the tests against your API,
 it is recommended that you run the [sample tests](#build-and-run-sample-tests) to make sure your environment is set up correctly.
-Follow the below steps to run the tests against your API.
+Follow the below steps to validate your API implementation.
 1. Create a partner config file.
 2. Run certification tests.
-3. Upload artifacts.
+3. Test using the self-testing partner CLI/APIs.
+4. Upload artifacts.
 
 ###  1. Create partner config
 Partners need to create a config file to specify the partner service endpoint, and other relevant details used by the tests in this repo.
@@ -149,8 +151,11 @@ partners are required to implement the test hooks like delete-connection, delete
 | P801 | TestConnection      | Test connection api returns failing test result if the connection on the partner side is deleted.                                                  | Yes        | TestConnectionApiTests            |
 | P900 | ConnectorList       | Get connector list returns list of source and target datasources the partner supports                                                              | Yes        | GetConnectorsTests                |
 
+### 3. Self-test the integration
+Using the [Self-Testing Partner CLI](self-testing-partner-cli/README.md) or underlying APIs, create and manage a testing tile visible only within your workspace.
+This will allow you to test your integration before uploading artifacts.
 
-### 3. Upload artifacts
+### 4. Upload artifacts
 The final step is to upload the test report and configuration files to the [partner intake form](https://docs.google.com/forms/d/e/1FAIpQLSc2vcAqAOVlE7Llo3GMhLrK3klzYXQ5LeWyqaR6L20RjHpygQ/viewform).
 The required artifacts from the certification steps are:
 - Test report: <project-root>/target/test-reports.zip
@@ -204,7 +209,7 @@ There are two options for building and running the sample tests in this project.
 
 #### Debug Tests
 - You can run or debug the tests in the IDE without additional flags. By default, it will run tests against the test.json partner config. To specify specific config file you can pass the -DCONFIG=file_name.json in the IDE. Example below is for IntelliJ.
-- ![](img/debug.png)
+- ![IntelliJ Run/Debug Configurations](img/debug.png)
 
 #### Generate test report
 - Test reports are auto generated when running test tasks under `target/test-reports`

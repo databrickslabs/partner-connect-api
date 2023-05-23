@@ -5,7 +5,6 @@
 - **Databricks Workspace:** This is the product-level object that users interact with when they use Databricks. All users, user-created content (for example dashboards, jobs, and notebooks), and access controls for that content are part of a workspace. Customer data is not tied to a workspace (with the exception of hive_metastore), and the same data can be made available in multiple workspaces. API calls from partners are made to a workspace.
 - **Databricks User:** A user's username is their email address.  They can belong to multiple Accounts, as well as multiple Workspaces within an Account.
 
-
 ### What's the Databricks data model?
 - **Unity Catalog (UC) Metastore:** A Databricks Account has multiple metastores.  Metastore are assigned to Workspaces.  A Metastore can be assigned to multiple Workspaces.  A Workspace can only have one Metastore assigned.  A Metastore contains many Catalogs.
 - **Catalog:** A logical container for schemas/databases.
@@ -41,7 +40,6 @@ Databricks and the partner may have different values for whether the connection 
     1. If the partner has no connection configured, the partner responds with 404 connection\_not\_found so that Databricks can tell the user to take action.
     2. If the partner has a connection configured, no new connection needs to be configured.
 
-
 ### What should happen if a second user from the same Databricks Workspace reuses a connection set up by another user?
 Note that the second user does not need to be an admin on the Databricks side.
 
@@ -57,7 +55,8 @@ The user's flow will continue from the link in their email inbox.  That landing 
 Since the test suite in this repository only tests the Connect API, many cases lose test coverage.
 
 ### How can the partner test new changes to the Connect API after GA?
-A supported solution for this is under development.  In the meantime, please reach out directly if you're hitting limitations.
+The partner can use the [Self-Testing Partner CLI](self-testing-partner-cli/README.md) to test new changes to their integration within their own workspace.
+However, the partner will have to be aware of problems that could arise from having multiple tiles. Please reach out directly if you're hitting limitations.
 
 ### Anything to know about special characters?
 Identifiers (like catalog and schema names) in Databricks may need to be escaped with backticks (`).  Read more [here](https://docs.databricks.com/sql/language-manual/sql-ref-identifiers.html).

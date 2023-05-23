@@ -23,10 +23,11 @@ While engineering development is in-progress, the following GTM requirements sho
 ## Onboarding
 
 1. Your team will implement the integration (both API and Frontend user flows).  You'll use the [Partner Connect Certification](README.md#partner-connect-certification) to test the correctness of your API.
-2. Your team will submit artifacts using the [Artifact submission form](https://docs.google.com/forms/d/e/1FAIpQLSc2vcAqAOVlE7Llo3GMhLrK3klzYXQ5LeWyqaR6L20RjHpygQ/viewform?usp=sf_link) to Databricks.
-3. The Databricks team will add your tile to Partner Connect.  We will provision a workspace for you to test end-to-end.  This workspace will be the only Production workspace where your tile is visible.
-4. Your team will complete validation.  You'll manually execute all the test cases in this documentation.
-5. The Databricks team will schedule a video-conference with you to manually run through all the test cases together.  If needed, we'll iterate on problems found and re-schedule another video conference.
+2. After discussing with the Databricks team, you may use the [Self-Testing Partner CLI](self-testing-partner-cli/README.md) to do initial testing of your Partner Connect integration.  The CLI will create a testing tile visible only in your workspace.
+3. Your team will submit artifacts using the [Artifact submission form](https://docs.google.com/forms/d/e/1FAIpQLSc2vcAqAOVlE7Llo3GMhLrK3klzYXQ5LeWyqaR6L20RjHpygQ/viewform?usp=sf_link) to Databricks.
+4. The Databricks team will add your tile to Partner Connect.  We will provision a workspace for you to test end-to-end.  This workspace will be the only Production workspace where your tile is visible.
+5. Your team will complete validation.  You'll manually execute all the test cases in this documentation.
+6. The Databricks team will schedule a video-conference with you to manually run through all the test cases together.  If needed, we'll iterate on problems found and re-schedule another video conference.
 
 ## Onboarding end-game
 

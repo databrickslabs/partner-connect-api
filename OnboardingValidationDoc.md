@@ -16,7 +16,13 @@ your product.
 We require partners to validate their API implementation using the test suites provided in this project.
 
 ### Manual testing
-We require partners to validate their end-to-end experience for all the applicable [test cases](OnboardingTestCases.md).  You may use either the Databricks workspace we provision or any other.  We can enable your tile in any workspace.
+We require partners to validate their end-to-end experience for all the applicable [test cases](OnboardingTestCases.md).
+
+Prior to artifact submission, testing can be done using the [Self-Testing Partner CLI](self-testing-partner-cli/README.md).
+This CLI will create a testing tile visible only within your workspace which will allow you to test your integration but lacks
+some configuration options (e.g. icons, descriptions).
+
+Once artifacts have been submitted, we can enable a full version of your tile in any workspace.
 
 ## How the Databricks engineering team will validate your integration
 We will schedule a one-hour video call to manually execute the [test cases](OnboardingTestCases.md) with you.  Your team should come 
