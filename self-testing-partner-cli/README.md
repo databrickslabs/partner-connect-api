@@ -37,16 +37,17 @@ Both options use personal access tokens. The Self-Testing Partner CLI does not s
 and password for authentication.
 
 ### Option 1: Configuration Profiles (recommend)
-This option consists of storing the host name (workspace URL) and token in a configuration profiles file.
+This option consists of storing the host name (workspace-instance URL, with https) and token in a configuration profiles file.
 
 Following the [Databricks Configuration Profiles documentation](https://docs.databricks.com/dev-tools/auth.html#configuration-profiles),
-set up a configuration profiles file using your personal access token. Profile names other than `[DEFAULT]` are also supported.
+set up a configuration profiles file using your personal access token. For profile names other than `[DEFAULT]`,
+see the `--profile` setting below.
 
 If the `DATABRICKS_CONFIG_FILE` environment variable is set, the CLI will use this path instead of the default path (`~/.databrickscfg`).
 `DATABRICKS_CONFIG_FILE` must be a full path.
 
 ### Option 2: Environment Variables
-This option consists of storing the host (workspace URL with the format `https://<instance-name>.cloud.databricks.com`)
+This option consists of storing the host (workspace-instance URL with the format `https://<instance-name>.cloud.databricks.com`)
 and personal access token in the `DATABRICKS_HOST` and `DATABRICKS_TOKEN` environment variables respectively.
 
 #### Example

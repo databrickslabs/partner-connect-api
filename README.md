@@ -69,7 +69,7 @@ Follow the below steps to validate your API implementation.
 Partners need to create a config file to specify the partner service endpoint, and other relevant details used by the tests in this repo.
 - See sample config files under `partners/test`
 - See the PartnerConfig definition under `openapi/partner-connect-2.0.yaml`
-- Create a config file under the `partners/test` directory and use the name of the file to run tests against it.
+- Create a config file under the `partners/prod` directory and use the name of the file to run tests against it.
 
 <details>
   <summary>Partner Configuration Properties</summary>
