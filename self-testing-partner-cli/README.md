@@ -25,7 +25,7 @@ file to use with a locally-installed application).
 1. Maven
    - Set up Maven following [these instructions](../README.md#setup-environment).
    - Maven is not required if you choose to use API directly
-2. [Databricks CLI](https://docs.databricks.com/dev-tools/cli/index.html) 
+2. [Databricks CLI](https://docs.databricks.com/dev-tools/cli/databricks-cli.html) 
    - The Databricks Secrets CLI is used to securely store endpoint credentials for the self-testing partner.
    - The Authentication setup can be reused for the Self-Testing Partner CLI configuration.
    - This CLI is optional as the underlying API can be called directly. (See [Authorization](Authorization.md))
