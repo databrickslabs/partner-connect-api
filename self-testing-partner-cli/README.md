@@ -25,7 +25,7 @@ file to use with a locally-installed application).
 1. Maven
    - Set up Maven following [these instructions](../README.md#setup-environment).
    - Maven is not required if you choose to use API directly
-2. [Databricks CLI](https://docs.databricks.com/dev-tools/cli/index.html) 
+2. [Databricks CLI](https://docs.databricks.com/dev-tools/cli/databricks-cli.html) 
    - The Databricks Secrets CLI is used to securely store endpoint credentials for the self-testing partner.
    - The Authentication setup can be reused for the Self-Testing Partner CLI configuration.
    - This CLI is optional as the underlying API can be called directly. (See [Authorization](Authorization.md))
@@ -75,7 +75,7 @@ All fields but `delete_url` and `supported_features` are required.
     "delete_url": "https://databricks.com/delete"
     "terms_of_service_url": "https://databricks.com/tos",
     "privacy_policy_url": "https://databricks.com/privacy",
-    "hostname": "databricks.com",
+    "hostnames": "integrations.dev.databricks.com,app.dev.databricks.com",
     "supported_features": ["UNITY_CATALOG"],
     "integration_type": "WAREHOUSE_READ"
   }
@@ -87,6 +87,9 @@ All fields but `delete_url` and `supported_features` are required.
 `[INGEST, DATA_PREP_AND_TRANSFORM, SECURITY_AND_GOVERNANCE, BI_AND_VIZ, ML, DATA_QUALITY, REVERSE_ETL, SEMANTIC_LAYER, DATA_GOVERNANCE]`.
 
 The category controls where the tile appears on the Partner Connect page.
+
+### Hostnames
+`hostnames` is a string that contains a comma-separated list of hostnames. Do not include the protocol in the hostname (e.g. no `https://` prefix)
 
 ### Supported Features
 `supported_features` is an array containing any of `[UNITY_CATALOG, NON_ADMIN, EXTERNAL_LOCATION]` and can be empty.
