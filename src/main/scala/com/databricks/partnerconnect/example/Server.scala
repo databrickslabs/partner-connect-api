@@ -100,7 +100,7 @@ case class Server(config: PartnerConfig) {
   }
 
   val deleteConnectionRoute: Route = path("delete-connection") {
-    delete {
+    post {
       entity(as[DeleteConnectionRequest]) { connection =>
         val validation =
           deleteConnectionRequestValidator.validate(connection)

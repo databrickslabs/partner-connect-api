@@ -119,7 +119,7 @@ paths:
       - $ref: '#/components/parameters/user_agent'
       - $ref: '#/components/parameters/accept_language'
       - $ref: '#/components/parameters/content_type'
-    delete:
+    post:
       tags:
         - connection
       operationId: deleteConnection

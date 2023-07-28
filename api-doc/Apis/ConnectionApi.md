@@ -5,7 +5,7 @@ All URIs are relative to *https://domainnameofpartner*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**connect**](ConnectionApi.md#connect) | **POST** /connect |  |
-| [**deleteConnection**](ConnectionApi.md#deleteConnection) | **DELETE** /delete-connection |  |
+| [**deleteConnection**](ConnectionApi.md#deleteConnection) | **POST** /delete-connection |  |
 | [**testConnection**](ConnectionApi.md#testConnection) | **POST** /test-connection |  |
 
 
