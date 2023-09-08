@@ -420,11 +420,11 @@ DELETE <partners/databricks/connection>:
 
 **Successful Responses:**
 
-The field **resource_status** is a String which identifies the action that the partner-side took, if any. Valid values are "resources_deleted",  "resources_pending_deletion", or "deletion_acknowledged".
+The field **resource_status** is a String which identifies the action that the partner-side took, if any. Valid values are "resources_deleted",  "resources_pending_deletion", "deletion_acknowledged", or "user_unauthorized". "user_unauthorized" indicates that resources were not deleted due to the user's (specified in the `user_info` request field) lack of permissions. 
 
 ```Status Code: 200
 {
-  "resource_status": "resources_deleted" [or resources_pending_deletion or deletion_acknowledged]
+  "resource_status": "resources_deleted" [or resources_pending_deletion or deletion_acknowledged or user_unauthorized]
 }
 ```
 

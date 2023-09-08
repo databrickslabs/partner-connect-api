@@ -22,12 +22,13 @@ While engineering development is in-progress, the following GTM requirements sho
 
 ## Onboarding
 
-1. Your team will implement the integration (both API and Frontend user flows).  You'll use the [Partner Connect Certification](README.md#partner-connect-certification) to test the correctness of your API.
-2. After discussing with the Databricks team, you may use the [Self-Testing Partner CLI](self-testing-partner-cli/README.md) to do initial testing of your Partner Connect integration.  The CLI will create a testing tile visible only in your workspace.
-3. Your team will submit artifacts using the [Artifact submission form](https://docs.google.com/forms/d/e/1FAIpQLSc2vcAqAOVlE7Llo3GMhLrK3klzYXQ5LeWyqaR6L20RjHpygQ/viewform?usp=sf_link) to Databricks.
-4. The Databricks team will add your tile to Partner Connect.  We will provision a workspace for you to test end-to-end.  This workspace will be the only Production workspace where your tile is visible.
-5. Your team will complete validation.  You'll manually execute all the test cases in this documentation.
-6. The Databricks team will schedule a video-conference with you to manually run through all the test cases together.  If needed, we'll iterate on problems found and re-schedule another video conference.
+1. Review the [UX Guidelines](#ux-guidelines) Once your design is available, please review the mocks or video with the Databricks team.
+2. Your team will implement the integration (both API and Frontend user flows).  You'll use the [Partner Connect Certification](README.md#partner-connect-certification) to test the correctness of your API.
+3. After discussing with the Databricks team, you may use the [Self-Testing Partner CLI](self-testing-partner-cli/README.md) to do initial testing of your Partner Connect integration.  The CLI will create a testing tile visible only in your workspace.
+4. Your team will submit artifacts using the [Artifact submission form](https://docs.google.com/forms/d/e/1FAIpQLSc2vcAqAOVlE7Llo3GMhLrK3klzYXQ5LeWyqaR6L20RjHpygQ/viewform?usp=sf_link) to Databricks.
+5. The Databricks team will add your tile to Partner Connect.  We will provision a workspace for you to test end-to-end.  This workspace will be the only Production workspace where your tile is visible.
+6. Your team will complete validation.  You'll manually execute all the test cases in this documentation.
+7. The Databricks team will schedule a video-conference with you to manually run through all the test cases together.  If needed, we'll iterate on problems found and re-schedule another video conference.
 
 ## Onboarding end-game
 
@@ -48,3 +49,36 @@ Databricks is always adding new features to both the general Databricks product 
 In addition, there are several regular maintenance tasks that may arise from time-to-time.  Examples may include rotating credentials, escalations, or changes in partner configuration (e.g. a partner adds support for GCP, a partner adds support for Unity Catalog, or a partner changes their hostname).
 
 Both parties are responsible for fixing bugs after launch. Please follow this [SOP](https://docs.google.com/document/d/1sZVMdGCHYrWFYUw-_uy8hPRzL-wJm9ActYh2L02SWjk/edit?usp=sharing) for handling Partner Connect integration issues. 
+
+
+## UX Guidelines
+
+These are guidelines for the experience after a user lands on your product through Partner Connect. The goal is for users to complete the signup process and start using your product as soon as possible. 
+
+1. Sign up guidelines
+   * Do:
+     * Keep it simple! Minimize the information the user needs to enter.
+       * Only collect what is necessary to start the trial (email and password)
+     * Use/pre-populate the user’s email address sent by Partner Connect
+   * Don’t:
+     * Collect info that is not needed for the trial such as address, domain name, etc.
+     * Direct the user to a sign-in page after they have filled in the signup information
+       * User should land on the product page after signup
+     * Have an email verification step that blocks further actions
+       * The email address you receive from Partner Connect has already been verified by Databricks
+       * If email verification is necessary, use a non-blocking method – let the user proceed and verify later
+     * Require two-factor authentication setup
+     * Collect payment information
+       * This should be done after the trial
+2. Homepage guidelines (i.e. landing page after signup)
+   * Do:
+     * Make it easy for the user to find the Databricks connection and/or access their data in Databricks
+       * Set Databricks as the first/default data source/destination for the trial session
+     * (Optional) Have a brief tutorial on how to use your product with the newly created connection to Databricks
+   * Don’t:
+     * Ask user to configure/update the Databricks connection created by Partner Connect
+       * The connection should be ready to use without further input. Partner Connect also provides other useful information such as cloud, region and catalogs.
+
+3. Environment setup guidelines
+   * If you need time to set up/provision an environment for the trial after signup, please minimize the setup time. Try to keep the wait time within 5 minutes.
+     * Consider using a warm pool to reduce the wait time if possible
