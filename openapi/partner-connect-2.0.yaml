@@ -3,7 +3,7 @@ servers:
   - url: https://domainnameofpartner/
     description: Base address for the api server
 info:
-  version: "2.1.0"
+  version: "2.1.1"
   title: Partner Connect API
   description: |
     # Introduction
@@ -440,14 +440,14 @@ components:
             - azure
             - gpc
           example: aws
+        cloud_provider_region:
+          type: string
+          description: The cloud provider region for the Databricks workspace. You can find list of supported regions [here.](https://docs.databricks.com/resources/supported-regions.html#supported-regions-list)
+          example: "us-west-2"
         is_free_trial:
           type: boolean
           description: Flag to indicate if this is a Databricks free trial.
           example: false
-        staging_location:
-          type: string
-          description: Optional staging location URI.  Unused today.
-          example: "<cloud>://<location_1>"
         destination_location:
           type: string
           description: Optional destination location URI
