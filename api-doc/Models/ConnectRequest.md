@@ -14,8 +14,8 @@
 | **workspace\_id** | **Long** | Workspace id for the Databricks connection. Same as the user_info.databricks_organization_id | [default to null] |
 | **demo** | **Boolean** | True if this is a demo experience. | [default to null] |
 | **cloud\_provider** | **String** | The cloud provider for the Databricks workspace. | [default to null] |
+| **cloud\_provider\_region** | **String** | The cloud provider region for the Databricks workspace. | [default to null] |
 | **is\_free\_trial** | **Boolean** | Flag to indicate if this is a Databricks free trial. | [default to null] |
-| **staging\_location** | **String** | Optional staging location URI.  Unused today. | [optional] [default to null] |
 | **destination\_location** | **String** | Optional destination location URI | [optional] [default to null] |
 | **catalog\_name** | **String** | Optional catalog name. It could be a custom name if using Unity Catalog, or \&quot;hive_metastore\&quot; if not.  Note that Databricks APIs often require identifiers like this to be escaped with backticks if there are special characters in it. | [optional] [default to null] |
 | **database\_name** | **String** | Optional Database name.  Unused today. | [optional] [default to null] |
