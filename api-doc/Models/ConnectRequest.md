@@ -24,6 +24,7 @@
 | **is\_sql\_warehouse** | **Boolean** | Determines whether cluster_id refers to Interactive Cluster or SQL warehouse. | [optional] [default to null] |
 | **data\_source\_connector** | **String** | For data connector tools, the name of the data source that the user should be referred to in their tool.  Unused today. | [optional] [default to null] |
 | **service\_principal\_id** | **String** | The UUID (username) of the service principal identity that a partner product can use to call Databricks APIs. Note the format is different from the databricks_user_id field in user_info. If empty, no service principal was created | [optional] [default to null] |
+| **service\_principal\_oauth\_secret** | **String** | The OAuth secret of the service principal identity that a partner product can use to call Databricks APIs (see [OAuth M2M](https://docs.databricks.com/en/dev-tools/auth/oauth-m2m.html)). It will be set only when the `auth_options` in the [PartnerConfig](PartnerConfig.md) contains the value `AUTH_OAUTH_M2M`. | [optional] [default to null] |
 | **connection\_scope** | **String** | The scope of users that can use this connection. Workspace means all users in the same workspace. User means only the user creating it. | [optional] [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

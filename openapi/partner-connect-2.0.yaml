@@ -333,7 +333,9 @@ components:
       properties:
         personal_access_token:
           type: string
-          description: Personal Access Token created for the Service Principal or the user
+          description: |
+            Personal Access Token created for the Service Principal or the users.
+            It will be null if the auth_options in PartnerConfig is not null and does not contain the value AUTH_PAT.
           example: "token"
         oauth_token:
           type: string
@@ -480,6 +482,12 @@ components:
           type: string
           description: The UUID (username) of the service principal identity that a partner product can use to call Databricks APIs. Note the format is different from the databricks_user_id field in user_info. If empty, no service principal was created
           example: "a2a25a05-3d59-4515-a73b-b8bc5ab79e31"
+        service_principal_oauth_secret:
+          type: string
+          description: |
+            The secret of the service principal identity that a partner product can use to call Databricks APIs. 
+            It will be set only when the auth_options in PartnerConfig contains the value AUTH_OAUTH_M2M.
+          example: "secret"
         connection_scope:
           type: string
           description: The scope of users that can use this connection. Workspace means all users in the same workspace. User means only the user creating it.

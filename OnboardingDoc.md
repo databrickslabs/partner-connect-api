@@ -15,7 +15,7 @@ Partner Connect is a destination inside a Databricks workspace that allows Datab
 
 We made Partner Connect for 2 reasons:
 
-1. We want to give our customers access to the value provided by the best data products in the market. Partner Connect removes the complexity from connecting products to Databricks by automatically configuring resources such as SQL Warehouses, clusters, PAT tokens, service principals, and connection files. It can also initiate a free trial of partner products.
+1. We want to give our customers access to the value provided by the best data products in the market. Partner Connect removes the complexity from connecting products to Databricks by automatically configuring resources such as SQL Warehouses, clusters, PAT tokens, service principals, OAuth secrets and connection files. It can also initiate a free trial of partner products.
 2. We want to help our partners build their businesses and incentivize them to create the best possible product experience for Databricks customers. For more on this topic, see [this blog post](https://databricks.com/blog/2021/11/18/build-your-business-on-databricks-with-partner-connect.html).
 
 ### Sample marketing materials and user experience demo
@@ -31,6 +31,9 @@ The following phrases will help you understand the Databricks product and this d
 - **Persona Switcher:** The component on the upper left of the UI that allows the user to choose the active Databricks product. This controls which features are available in the UI, and not all users have access to all 3 options. Partner Connect is available to all 3 personas.
 - **Personal Access Token (PAT):** A token that a partner product can use to authenticate with Databricks
 - **Service Principal:** An account that a partner product can use when calling Databricks APIs. Service Principals have access controls associated with them.
+- **OAuth M2M** It uses service principals to authenticate Databricks. It is also known as 2-legged OAuth and OAuth Client Credentials Flow. Partner product can use service principal UUD (client_id) and OAuth secret (client_secret) to authenticate with Databricks.
+- **Service Principal OAuth Secret**: The service principal's secret that a partner product use it along with service principal UUID to authenticate with Databricks.
+
 
 ![](img/persona.png)
 
@@ -83,10 +86,10 @@ While there's some customization available, most partners have one of the follow
 
 | Integration | Description |
 |------------- | -------------|
-| Read Partner | This is used by partners that purely need to read (select) data from the Lakehouse.  In Partner Connect, the user selects which data to grant access to your product.  Databricks provides the partner a SQL Warehouse and PAT with permissions to query that data.  This is often used by **Business Intelligence and Data Quality partners**.
-| Write Partner | This is used by partners that purely need to write (ingest) data into the Lakehouse.  In Partner Connect, the user selects which catalog to grant write access to your product.  Databricks provides the partner a SQL Warehouse and PAT with permissions to create schemas and tables in that catalog.  This is often used by **Ingestion partners**.
-| Read-Write Partner | This is used by partners that both need to read from and write to the Lakehouse.  In Partner Connect, the user selects which catalog to grant write access and which schemas to grant read access for your product.  Databricks provides the partner a SQL Warehouse and PAT with permissions to create schemas and tables in that catalog, as well as query the selected data.  This is often used by **Data Preparation partners**.
-| Notebook Partner | This is used by partners that want to demonstrate their integration with Databricks using a Databricks Notebook.  Databricks provides the partner an Interactive Cluster and PAT with permissions.  The partner can use the PAT to publish a Databricks Notebook and configure the Interactive Cluster.
+| Read Partner | This is used by partners that purely need to read (select) data from the Lakehouse.  In Partner Connect, the user selects which data to grant access to your product.  Databricks provides the partner a SQL Warehouse, PAT with permissions or OAuth secret of the service principal with permissions to query that data.  This is often used by **Business Intelligence and Data Quality partners**.
+| Write Partner | This is used by partners that purely need to write (ingest) data into the Lakehouse.  In Partner Connect, the user selects which catalog to grant write access to your product.  Databricks provides the partner a SQL Warehouse, PAT with permissions or OAuth secret of the service principal with permissions to create schemas and tables in that catalog.  This is often used by **Ingestion partners**.
+| Read-Write Partner | This is used by partners that both need to read from and write to the Lakehouse.  In Partner Connect, the user selects which catalog to grant write access and which schemas to grant read access for your product.  Databricks provides the partner a SQL Warehouse, PAT with permissions or OAuth secret of the service principal with permissions to create schemas and tables in that catalog, as well as query the selected data.  This is often used by **Data Preparation partners**.
+| Notebook Partner | This is used by partners that want to demonstrate their integration with Databricks using a Databricks Notebook.  Databricks provides the partner an Interactive Cluster, PAT with permissions or OAuth secret of the service principal with permissions.  The partner can use the PAT or service principal secret to publish a Databricks Notebook and configure the Interactive Cluster.
 | Desktop application Partner | This is used by partners that have a Desktop application (as opposed to a SaaS offering).  In this integration, the user selects either an Interactive Cluster or SQL Warehouse and downloads a connection file to the partner product.  This is often used by **Partners with Desktop applications**.<br /><br />N.B.  For this type of integration, there is no need for the partner to implement the SaaS APIs mentioned elsewhere throughout this documentation.
 
 ## Changelog

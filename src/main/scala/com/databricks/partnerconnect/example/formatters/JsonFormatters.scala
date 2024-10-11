@@ -20,7 +20,7 @@ import org.openapitools.client.model.PartnerConfigEnums.{
 import org.openapitools.client.model.ResourceToProvisionEnums.ResourceType
 import org.openapitools.client.model.TestResultEnums.Status
 import org.openapitools.client.model.{Connector, _}
-import spray.json.{DefaultJsonProtocol, RootJsonFormat}
+import spray.json._
 
 object JsonFormatters extends DefaultJsonProtocol {
   // Order of declaration matters. Enums need to be defined first otherwise ProductFormats.scala throws NPE.
@@ -75,12 +75,129 @@ object JsonFormatters extends DefaultJsonProtocol {
   implicit val errorResponse: RootJsonFormat[ErrorResponse] = jsonFormat3(
     ErrorResponse
   )
-  implicit val connectRequest: RootJsonFormat[ConnectRequest] = jsonFormat22(
-    ConnectRequest
-  )
-  implicit val connectionInfo: RootJsonFormat[ConnectionInfo] = jsonFormat1(
-    ConnectionInfo
-  )
+
+  // spray.json jsonFormat cannot parse more than 22 fields, custom format is needed
+  implicit object ConnectionRequestJsonFormat
+      extends RootJsonFormat[ConnectRequest] {
+    private def OptionJsString(value: Option[String]) =
+      value.map(JsString(_)).getOrElse(JsNull)
+    private def OptionJsBoolean(value: Option[Boolean]) =
+      value.map(JsBoolean(_)).getOrElse(JsNull)
+
+    private def getString(fields: Map[String, JsValue], name: String): String =
+      fields.get(name) match {
+        case Some(JsString(value)) => value
+        case _ => throw DeserializationException(s"$name should be string")
+      }
+
+    private def getNumber(
+        fields: Map[String, JsValue],
+        name: String
+    ): BigDecimal =
+      fields.get(name) match {
+        case Some(JsNumber(value)) => value
+        case _ => throw DeserializationException(s"$name should be number")
+      }
+
+    private def getBool(fields: Map[String, JsValue], name: String): Boolean =
+      fields.get(name) match {
+        case Some(JsBoolean(value)) => value
+        case _ => throw DeserializationException(s"$name should be boolean")
+      }
+
+    private def getOptionString(
+        fields: Map[String, JsValue],
+        name: String
+    ): Option[String] =
+      fields.get(name) match {
+        case Some(JsString(value)) => Some(value)
+        case Some(JsNull) | None   => None
+        case _ => throw DeserializationException(s"$name should be string")
+      }
+
+    private def getOptionBoolean(
+        fields: Map[String, JsValue],
+        name: String
+    ): Option[Boolean] =
+      fields.get(name) match {
+        case Some(JsBoolean(value)) => Some(value)
+        case Some(JsNull) | None    => None
+        case _ => throw DeserializationException(s"$name should be boolean")
+      }
+
+    def write(request: ConnectRequest): JsValue = JsObject(
+      "user_info" -> request.user_info.toJson,
+      "connection_id" -> OptionJsString(request.connection_id),
+      "hostname" -> JsString(request.hostname),
+      "port" -> JsNumber(request.port),
+      "workspace_url" -> JsString(request.workspace_url),
+      "http_path" -> OptionJsString(request.http_path),
+      "jdbc_url" -> OptionJsString(request.jdbc_url),
+      "databricks_jdbc_url" -> OptionJsString(request.databricks_jdbc_url),
+      "workspace_id" -> JsNumber(request.workspace_id),
+      "demo" -> JsBoolean(request.demo),
+      "cloud_provider" -> request.cloud_provider.toJson,
+      "cloud_provider_region" -> OptionJsString(request.cloud_provider_region),
+      "is_free_trial" -> JsBoolean(request.is_free_trial),
+      "destination_location" -> OptionJsString(request.destination_location),
+      "catalog_name" -> OptionJsString(request.catalog_name),
+      "database_name" -> OptionJsString(request.database_name),
+      "cluster_id" -> OptionJsString(request.cluster_id),
+      "is_sql_endpoint" -> OptionJsBoolean(request.is_sql_endpoint),
+      "is_sql_warehouse" -> OptionJsBoolean(request.is_sql_warehouse),
+      "data_source_connector" -> OptionJsString(request.data_source_connector),
+      "service_principal_id" -> OptionJsString(request.service_principal_id),
+      "service_principal_oauth_secret" -> OptionJsString(
+        request.service_principal_oauth_secret
+      ),
+      "connection_scope" -> request.connection_scope
+        .map(_.toJson)
+        .getOrElse(JsNull)
+    )
+
+    implicit val connectRequest: RootJsonFormat[ConnectRequest] =
+      ConnectionRequestJsonFormat
+
+    def read(value: JsValue): ConnectRequest = {
+      val fields = value.asJsObject.fields
+      val scoptOpt = fields.get("connection_scope") match {
+        case Some(JsNull) => None
+        case Some(v) => Some(v.convertTo[ConnectRequestEnums.ConnectionScope])
+        case None    => None
+      }
+
+      ConnectRequest(
+        user_info = fields("user_info").convertTo[UserInfo],
+        connection_id = getOptionString(fields, "connection_id"),
+        hostname = getString(fields, "hostname"),
+        port = getNumber(fields, "port").toInt,
+        workspace_url = getString(fields, "workspace_url"),
+        http_path = getOptionString(fields, "http_path"),
+        jdbc_url = getOptionString(fields, "jdbc_url"),
+        databricks_jdbc_url = getOptionString(fields, "databricks_jdbc_url"),
+        workspace_id = getNumber(fields, "workspace_id").toLong,
+        demo = getBool(fields, "demo"),
+        cloud_provider =
+          fields("cloud_provider").convertTo[ConnectRequestEnums.CloudProvider],
+        cloud_provider_region =
+          getOptionString(fields, "cloud_provider_region"),
+        is_free_trial = getBool(fields, "is_free_trial"),
+        destination_location = getOptionString(fields, "destination_location"),
+        catalog_name = getOptionString(fields, "catalog_name"),
+        database_name = getOptionString(fields, "database_name"),
+        cluster_id = getOptionString(fields, "cluster_id"),
+        is_sql_endpoint = getOptionBoolean(fields, "is_sql_endpoint"),
+        is_sql_warehouse = getOptionBoolean(fields, "is_sql_warehouse"),
+        data_source_connector =
+          getOptionString(fields, "data_source_connector"),
+        service_principal_id = getOptionString(fields, "service_principal_id"),
+        service_principal_oauth_secret =
+          getOptionString(fields, "service_principal_oauth_secret"),
+        connection_scope = scoptOpt
+      )
+    }
+  }
+
   implicit val deleteConnectionRequest
       : RootJsonFormat[DeleteConnectionRequest] = jsonFormat3(
     DeleteConnectionRequest

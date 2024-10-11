@@ -68,7 +68,7 @@ The Connect API is used to sign-in or sign-up a user with a partner with Databri
 The order of events when connecting Databricks to a partner is as follows:
 
 1. The user clicks the Partner tile.
-2. The user confirms the Databricks resources that will be provisioned for the connection (e.g. the Service Principal, the PAT, the SQL Warehouse).
+2. The user confirms the Databricks resources that will be provisioned for the connection (e.g. the Service Principal, the PAT or the service principal OAuth secret, the SQL Warehouse).
 3. The user clicks Connect.
     1. Databricks calls the partner&#39;s **Connect API** with all of the Databricks data that the partner needs.
     2. The partner provisions any accounts and resources needed. (e.g. persisting the Databricks workspace\_id, provisioning a Databricks output node).
@@ -138,9 +138,6 @@ POST <partners/databricks/v1/connect>: [example, can be customized]
      "is_connection_established" : true|false
      "auth": { [Only present if is_connection_established is false]
        "personal_access_token": "dapi..."
-       // or
-       "oauth_token": ..., [optional, reserved for future use]
-       "oauth_scope": ... [optional, reserved for future use]
       }
   }
   "hostname": "organization.cloud.databricks.com",
@@ -162,7 +159,8 @@ POST <partners/databricks/v1/connect>: [example, can be customized]
   "is_sql_endpoint" : true|false, [optional: same value as is_sql_warehouse]
   "is_sql_warehouse": true|false, [optional: set if cluster_id is set. Determines whether cluster_id refers to Interactive Cluster or SQL Warehouse]
   "data_source_connector": "Oracle", [optional, unused and reserved for future use: for data connector tools, the name of the data source that the user should be referred to in their tool]
-  "service_principal_id": "a2a25a05-3d59-4515-a73b-b8bc5ab79e31" [optional, the UUID (username) of the service principal identity]
+  "service_principal_id": "a2a25a05-3d59-4515-a73b-b8bc5ab79e31", [optional, the UUID (username) of the service principal identity]
+  "service_principal_oauth_secret": "dose..." [optional, the OAuth secret of the service principal identity, it will be passed only when partner config includes OAuth M2M auth option]
 }
 ```
 
