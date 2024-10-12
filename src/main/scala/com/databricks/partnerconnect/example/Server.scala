@@ -12,11 +12,8 @@ import akka.stream.{ActorMaterializer, Materializer}
 import com.databricks.partnerconnect.example.formatters.JsonFormatters._
 import com.databricks.partnerconnect.example.handlers.{
   ConnectHandler,
-  DeleteAccountHandler,
   DeleteConnectionHandler,
-  ExpireAccountHandler,
-  GetConnectorHandler,
-  TestConnectionHandler
+  GetConnectorHandler
 }
 import com.databricks.partnerconnect.example.service.{
   AccountService,
@@ -27,9 +24,7 @@ import com.databricks.partnerconnect.example.util.ServiceLogger.withRequestLoggi
 import com.databricks.partnerconnect.example.validators.{
   ConnectValidator,
   ConnectionInfoValidator,
-  DeleteAccountValidator,
-  DeleteConnectionRequestValidator,
-  ExpireAccountValidator
+  DeleteConnectionRequestValidator
 }
 import com.typesafe.scalalogging.Logger
 import org.openapitools.client.model.{
@@ -60,17 +55,10 @@ case class Server(config: PartnerConfig) {
   val connectionHandler =
     new ConnectHandler(accountService, connectionService, config)
   val deleteConnectionHandler = new DeleteConnectionHandler(connectionService)
-  val deleteAccountHandler =
-    new DeleteAccountHandler(accountService, connectionService)
-  val expireAccountHandler =
-    new ExpireAccountHandler(accountService)
   val connectValidator = new ConnectValidator(config)
   val connectionInfoValidator = new ConnectionInfoValidator()
   val deleteConnectionRequestValidator = new DeleteConnectionRequestValidator()
-  val deleteAccountValidator = new DeleteAccountValidator()
-  val testConnectionHandler = new TestConnectionHandler(connectionService)
   val getConnectorHandler = new GetConnectorHandler(config)
-  val expireAccountValidator = new ExpireAccountValidator()
 
   def startServer(): Unit = {
     val route = handleRejections(rejectionHandler) {
@@ -106,42 +94,6 @@ case class Server(config: PartnerConfig) {
           deleteConnectionRequestValidator.validate(connection)
         validate(validation.valid, validation.toString) {
           deleteConnectionHandler.handle(connection)
-        }
-      }
-    }
-  }
-
-  val deleteAccountRoute: Route = path("delete-account") {
-    delete {
-      entity(as[AccountInfo]) { account =>
-        val validation =
-          deleteAccountValidator.validate(account)
-        validate(validation.valid, validation.toString) {
-          deleteAccountHandler.handle(account)
-        }
-      }
-    }
-  }
-
-  val expireAccountRoute: Route = path("expire-account") {
-    put {
-      entity(as[AccountUserInfo]) { accountUser =>
-        val validation =
-          expireAccountValidator.validate(accountUser)
-        validate(validation.valid, validation.toString) {
-          expireAccountHandler.handle(accountUser)
-        }
-      }
-    }
-  }
-
-  val testConnectionRoute: Route = path("test-connection") {
-    post {
-      entity(as[ConnectionInfo]) { connectionInfo =>
-        val validation =
-          connectionInfoValidator.validate(connectionInfo)
-        validate(validation.valid, validation.toString) {
-          testConnectionHandler.handle(connectionInfo)
         }
       }
     }
@@ -185,9 +137,6 @@ case class Server(config: PartnerConfig) {
             concat(
               connectRoute,
               deleteConnectionRoute,
-              expireAccountRoute,
-              deleteAccountRoute,
-              testConnectionRoute,
               getConnectorsRoute
             )
           }
