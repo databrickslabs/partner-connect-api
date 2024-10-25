@@ -8,6 +8,7 @@
     "privacy_policy_url": "http://localhost/privacy",
     "hostname": "localhost",
     "supported_features": ["UNITY_CATALOG"],
-    "integration_type": "WAREHOUSE_READ"
+    "integration_type": "WAREHOUSE_READ",
+    "auth_options": ["AUTH_OAUTH_M2M"]
   }
 }
