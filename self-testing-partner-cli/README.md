@@ -62,7 +62,7 @@ The CLI uses Maven to create an executable Jar file.
 3. Run the jar with your specified subcommand and args. (e.g. `java -jar target/self-testing-partner-cli.jar create -f ./sampleConfig.json`)
 
 ### Config Specifications
-All fields but `delete_url` and `supported_features` are required.
+All fields but `delete_url`, `supported_features` and `auth_options` are required.
 
 #### Example
 ```
@@ -75,9 +75,10 @@ All fields but `delete_url` and `supported_features` are required.
     "delete_url": "https://databricks.com/delete"
     "terms_of_service_url": "https://databricks.com/tos",
     "privacy_policy_url": "https://databricks.com/privacy",
-    "hostname": "databricks.com",
+    "hostnames": "databricks1.com,databricks2.com",
     "supported_features": ["UNITY_CATALOG"],
-    "integration_type": "WAREHOUSE_READ"
+    "integration_type": "WAREHOUSE_READ",
+    "auth_options": ["AUTH_OAUTH_M2M"]
   }
 }
 ```
@@ -87,6 +88,9 @@ All fields but `delete_url` and `supported_features` are required.
 `[INGEST, DATA_PREP_AND_TRANSFORM, SECURITY_AND_GOVERNANCE, BI_AND_VIZ, ML, DATA_QUALITY, REVERSE_ETL, SEMANTIC_LAYER, DATA_GOVERNANCE]`.
 
 The category controls where the tile appears on the Partner Connect page.
+
+### Hostnames
+`hostnames` is a comma separated string, represent the list of hostnames that will used in the redirected urls.
 
 ### Supported Features
 `supported_features` is an array containing any of `[UNITY_CATALOG, NON_ADMIN, EXTERNAL_LOCATION]` and can be empty.
@@ -108,6 +112,13 @@ Use the below table to determine the integration type for the self-testing partn
 | WAREHOUSE_READ_WRITE | Used by partners that need to read from and write to the Lakehouse.<br/>In Partner Connect, the user selects which catalog to grant write access and which schemas to grant read access for your product.<br/>Databricks provides the partner a SQL Warehouse and PAT with permissions to create schemas and tables in that catalog, as well as query the selected data.<br/>This is often used by **Data Preparation partners**. |
 | WAREHOUSE_WRITE      | Used by partners that only need to write (ingest) data into the Lakehouse.<br/>In Partner Connect, the user selects which catalog to grant write access to your product.<br/>Databricks provides the partner a SQL Warehouse and PAT with permissions to create schemas and tables in that catalog.<br/>This is often used by **Ingestion partners**.                                                                             |
 | WORKSPACE_MANAGEMENT | Used by partners that need to create clusters and jobs.<br/>Databricks provides the partner with a PAT which can be used to call Databricks REST APIs on clusters in the workspace.<br/>This does not give the partner access to Databricks SQL warehouses.                                                                                                                                                                       |
+
+### Auth Options
+`auth_options` is an array containing one of `[AUTH_OAUTH_M2M, AUTH_PAT]` or can be empty. When absent or empty, `AUTH_PAT` will be used.
+
+More auth options are planned to be added in the future.
+
+`AUTH_OAUTH_M2M` and `AUTH_PAT` are mutually exclusive. They cannot be both present at the same time.
 
 ## Usage
 `java -jar target/self-testing-partner-cli.jar [subcommand] [flags]`
