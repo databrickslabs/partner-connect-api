@@ -1,3 +1,7 @@
 [DEFAULT]
 host = defaulthost
 token = defaulttoken
+
+[TRAILING_SLASH]
+host = https://anotherhost.com/
+token = defaulttoken

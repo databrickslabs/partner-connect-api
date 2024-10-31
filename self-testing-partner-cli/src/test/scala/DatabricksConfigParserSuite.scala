@@ -8,6 +8,7 @@ import org.scalatest.funsuite.AnyFunSuite
 
 class DatabricksConfigParserSuite extends AnyFunSuite {
   private val testHost = "defaulthost"
+  private val trailingSlashRemovedHost = "https://anotherhost.com"
   private val testToken = "defaulttoken"
 
   test("PROFILE - Successfully gets host/token from profile") {
@@ -43,6 +44,20 @@ class DatabricksConfigParserSuite extends AnyFunSuite {
           s"ERROR: Unable to find profile [$missingProfileName] in ${env(configFilePathEnvVariable)}"
         )
     )
+    stream.close()
+  }
+
+  test("PROFILE - Successfully remove host trailing slash from profile") {
+    val profileName = "TRAILING_SLASH"
+    val stream = new java.io.ByteArrayOutputStream()
+    val env =
+      Map(configFilePathEnvVariable -> getClass.getResource(".testcfg").getPath)
+    val (host, token) = Console.withErr(stream) {
+      getHostAndToken(useEnvVariables = false, profileName, env)
+    }
+    assert(stream.toString.isEmpty)
+    assert(host.get == trailingSlashRemovedHost)
+    assert(token.get == testToken)
     stream.close()
   }
 
@@ -85,6 +100,18 @@ class DatabricksConfigParserSuite extends AnyFunSuite {
         s"ERROR: Unable to read $tokenEnvVariable."
       )
     )
+    stream.close()
+  }
+
+  test("ENVIRONMENT VARIABLES - Successfully remove host trailing slash") {
+    val env = Map(hostEnvVariable -> s"$trailingSlashRemovedHost/", tokenEnvVariable -> testToken)
+    val stream = new java.io.ByteArrayOutputStream()
+    val (host, token) = Console.withOut(stream) {
+      getHostAndToken(useEnvVariables = true, "default", env)
+    }
+    assert(stream.toString.isEmpty)
+    assert(host.get == trailingSlashRemovedHost)
+    assert(token.get == testToken)
     stream.close()
   }
 }

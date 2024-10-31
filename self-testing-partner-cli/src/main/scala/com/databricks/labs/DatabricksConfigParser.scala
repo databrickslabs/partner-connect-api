@@ -27,11 +27,8 @@ object DatabricksConfigParser {
       configurationProfileName: String,
       sysEnv: Map[String, String]
   ): (Option[String], Option[String]) = {
-    if (useEnvVariables) {
-      getConfigFromEnvVariables(sysEnv)
-    } else {
-      getDatabricksConfigFromProfile(configurationProfileName, sysEnv)
-    }
+    val (host, token) = if (useEnvVariables) getConfigFromEnvVariables(sysEnv) else getDatabricksConfigFromProfile(configurationProfileName, sysEnv)
+    return (host.map(_.stripSuffix("/")), token)
   }
 
   /** Finds the value for a field in a line from a Databricks configuration
