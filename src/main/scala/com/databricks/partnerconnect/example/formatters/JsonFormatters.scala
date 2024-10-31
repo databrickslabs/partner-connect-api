@@ -67,7 +67,7 @@ object JsonFormatters extends DefaultJsonProtocol {
     new EnumJsonFormatter(TrialType)
   }
 
-  implicit val connectResponse: RootJsonFormat[Connection] = jsonFormat6(
+  implicit val connectResponse: RootJsonFormat[Connection] = jsonFormat7(
     Connection
   )
   implicit val auth: RootJsonFormat[Auth] = jsonFormat3(Auth)
@@ -152,7 +152,8 @@ object JsonFormatters extends DefaultJsonProtocol {
       ),
       "connection_scope" -> request.connection_scope
         .map(_.toJson)
-        .getOrElse(JsNull)
+        .getOrElse(JsNull),
+      "oauth_u2m_app_id" -> OptionJsString(request.oauth_u2m_app_id)
     )
 
     implicit val connectRequest: RootJsonFormat[ConnectRequest] =
@@ -193,7 +194,8 @@ object JsonFormatters extends DefaultJsonProtocol {
         service_principal_id = getOptionString(fields, "service_principal_id"),
         service_principal_oauth_secret =
           getOptionString(fields, "service_principal_oauth_secret"),
-        connection_scope = scoptOpt
+        connection_scope = scoptOpt,
+        oauth_u2m_app_id = getOptionString(fields, "oauth_u2m_app_id")
       )
     }
   }

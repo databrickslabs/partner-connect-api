@@ -26,6 +26,7 @@
 | **service\_principal\_id** | **String** | The UUID (username) of the service principal identity that a partner product can use to call Databricks APIs. Note the format is different from the databricks_user_id field in user_info. If empty, no service principal was created | [optional] [default to null] |
 | **service\_principal\_oauth\_secret** | **String** | The OAuth secret of the service principal identity that a partner product can use to call Databricks APIs (see [OAuth M2M](https://docs.databricks.com/en/dev-tools/auth/oauth-m2m.html)). It will be set only when the `auth_options` in the [PartnerConfig](PartnerConfig.md) contains the value `AUTH_OAUTH_M2M`. | [optional] [default to null] |
 | **connection\_scope** | **String** | The scope of users that can use this connection. Workspace means all users in the same workspace. User means only the user creating it. | [optional] [default to null] |
+| **oauth\_u2m\_app\_id** | **String** | The client ID of OAuth U2M app connection (created by Partner Connect) that a partner product can use to initiate Databricks OAuth U2M flow. It will be set only when the `auth_options` in the [PartnerConfig](PartnerConfig.md) contains the value `AUTH_OAUTH_U2M`. | [optional] [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

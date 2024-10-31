@@ -488,6 +488,12 @@ components:
             The secret of the service principal identity that a partner product can use to call Databricks APIs. 
             It will be set only when the auth_options in PartnerConfig contains the value AUTH_OAUTH_M2M.
           example: "secret"
+        oauth_u2m_app_id:
+          type: string
+          description: |
+            The client ID of OAuth U2M app connection (created by Partner Connect) that a partner product can use to initiate Databricks OAuth U2M flow. 
+            It will be set only when the auth_options in the PartnerConfig contains the value AUTH_OAUTH_U2M. 
+          example: "22c42f74-1dec-43d2-b649-3643f2e1e927"
         connection_scope:
           type: string
           description: The scope of users that can use this connection. Workspace means all users in the same workspace. User means only the user creating it.
@@ -543,6 +549,12 @@ components:
           type: boolean
           description: A boolean that represents whether the partner configured/persisted the Databricks resources on this Connect API request.  If the value is false and is_connection_established is false, Databricks will clean up the resources it provisioned
           example: true
+        oauth_redirect_uri:
+          type: string
+          description: |
+            The partner application's URL that handles Databricks OAuth redirect request in the OAuth U2M flow (Authorization code flow).
+            It should be set only when the partner is configured with OAuth U2M as auth option and does not have a pre-registered Databricks published OAuth app connection. 
+          example: https://www.partner.com/oauth/callback
     ErrorResponse:
       type: object
       required:

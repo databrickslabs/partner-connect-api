@@ -32,6 +32,10 @@ The following phrases will help you understand the Databricks product and this d
 - **Personal Access Token (PAT):** A token that a partner product can use to authenticate with Databricks
 - **Service Principal:** An account that a partner product can use when calling Databricks APIs. Service Principals have access controls associated with them.
 - **OAuth M2M** It uses service principals to authenticate Databricks. It is also known as 2-legged OAuth and OAuth Client Credentials Flow. Partner product can use service principal UUD (client_id) and OAuth secret (client_secret) to authenticate with Databricks.
+- **OAuth U2M** It allows users to access Databricks account and workspace resources via the partner application on behalf of a user. It is also known as 3-legged OAuth and OAuth Authorization Code Flow.
+- **Published OAuth application** The application that is pre-registered by Databricks and is available in all the Databricks accounts. For the app to be eligible for published application, it must meet the following requirements:
+  - The OAuth redirect URLs of the app should be fixed instead of account/customer/tenant specific
+  - The app cannot be confidential app (no client secret) and has to support [PKCE](https://oauth.net/2/pkce/)
 - **Service Principal OAuth Secret**: The service principal's secret that a partner product use it along with service principal UUID to authenticate with Databricks.
 
 
