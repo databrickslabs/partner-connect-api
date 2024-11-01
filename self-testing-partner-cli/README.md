@@ -120,6 +120,8 @@ More auth options are planned to be added in the future.
 
 `AUTH_OAUTH_M2M` and `AUTH_PAT` are mutually exclusive. They cannot be both present at the same time.
 
+If `NON_ADMIN` is in `supported_features`, `AUTH_OAUTH_M2M` is not supported and will fall back to `AUTH_PAT`. Before using the `NON_ADMIN` feature, contact your SA to discuss non-admin integrations.
+
 ## Usage
 `java -jar target/self-testing-partner-cli.jar [subcommand] [flags]`
 
