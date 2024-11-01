@@ -114,7 +114,7 @@ Use the below table to determine the integration type for the self-testing partn
 | WORKSPACE_MANAGEMENT | Used by partners that need to create clusters and jobs.<br/>Databricks provides the partner with a PAT which can be used to call Databricks REST APIs on clusters in the workspace.<br/>This does not give the partner access to Databricks SQL warehouses.                                                                                                                                                                       |
 
 ### Auth Options
-`auth_options` is an array containing one of `[AUTH_OAUTH_M2M, AUTH_PAT]` or can be empty. When absent or empty, `AUTH_PAT` will be used.
+`auth_options` is an array containing one of `[AUTH_OAUTH_M2M, AUTH_PAT, AUTH_OAUTH_U2M]` or can be empty. When absent or empty, `AUTH_PAT` will be used.
 
 More auth options are planned to be added in the future.
 

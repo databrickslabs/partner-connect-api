@@ -31,11 +31,9 @@ The following phrases will help you understand the Databricks product and this d
 - **Persona Switcher:** The component on the upper left of the UI that allows the user to choose the active Databricks product. This controls which features are available in the UI, and not all users have access to all 3 options. Partner Connect is available to all 3 personas.
 - **Personal Access Token (PAT):** A token that a partner product can use to authenticate with Databricks
 - **Service Principal:** An account that a partner product can use when calling Databricks APIs. Service Principals have access controls associated with them.
-- **OAuth M2M** It uses service principals to authenticate Databricks. It is also known as 2-legged OAuth and OAuth Client Credentials Flow. Partner product can use service principal UUD (client_id) and OAuth secret (client_secret) to authenticate with Databricks.
-- **OAuth U2M** It allows users to access Databricks account and workspace resources via the partner application on behalf of a user. It is also known as 3-legged OAuth and OAuth Authorization Code Flow.
-- **Published OAuth application** The application that is pre-registered by Databricks and is available in all the Databricks accounts. For the app to be eligible for published application, it must meet the following requirements:
-  - The OAuth redirect URLs of the app should be fixed instead of account/customer/tenant specific
-  - The app cannot be confidential app (no client secret) and has to support [PKCE](https://oauth.net/2/pkce/)
+- **OAuth M2M (machine-to-machine)** It uses service principals to authenticate Databricks. It is also known as 2-legged OAuth and OAuth Client Credentials Flow. Partner product can use service principal UUD (client_id) and OAuth secret (client_secret) to authenticate with Databricks.
+- **OAuth U2M (user-to-machine)** It allows users to access Databricks account and workspace resources via the partner application on behalf of a user. It is also known as 3-legged OAuth and OAuth Authorization Code Flow.
+- **Published OAuth application** The application that is pre-registered by Databricks and is available in all the Databricks accounts.
 - **Service Principal OAuth Secret**: The service principal's secret that a partner product use it along with service principal UUID to authenticate with Databricks.
 
 
@@ -85,6 +83,35 @@ See the API Specifications section for details on the above.
 
 We realize that the expected user experience above may not be optimal for all partner products, which is why we are giving partners the ability to respond with multiple URLs to the Connect API, depending on the context. We ask that you enumerate the scenarios and corresponding URLs when you provide Databricks with the required artifacts.
 
+### What authentication options should be configured and used?
+Partner Connect allows partners to specify which authorization methods that partners want to use to authenticate with Databricks. The following authentication methods are supported.
+
+  - **PAT (Personal access token)**: This is mainly used by the machine-to-machine flow where the partner uses the service principle (created by Partner Connect) and its personal access token to authenticate with Databricks and call the APIs. It is the legacy authentication method and will be deprecated soon, please use **OAuth M2M** or **OAuth U2M** instead.
+  - **OAuth M2M (machine-to-machine)**: This is mainly used by the machine-to-machine flow where the partner uses the service principal (created by Partner Connect) and its OAuth secret to authenticate with Databricks and call the APIs.
+  - **OAuth U2M (user-to-machine)**: This is used by the interactive flow where the partner wants to access Databricks resources on behalf of the end-user. OAuth authorization code flow is used to authenticate with Databricks.
+
+The authentication options can be configured with the [auth_options](self-testing-partner-cli/README.md#auth-options) when using the [Self-Testing Partner CLI](self-testing-partner-cli/README.md).
+
+
+#### OAuth M2M
+
+When the partner is configured with **OAuth M2M** as the authentication option, Partner Connect will create an OAuth secret for the service principal and place it in the `service_principal_oauth_secret` field of [ConnectionRequest](api-doc/Models/ConnectRequest.md) when calling [Connect API](api-doc/Apis/ConnectionApi.md). 
+
+The partner should store this secret in a secure store and use it (as the client secret) along with the service principal ID (as the client ID) to authenticate with Databricks via OAuth M2M.
+
+#### OAuth U2M
+
+When the partner is configured with **OAuth U2M** as the authentication option, the partner needs to contact Databricks if they want to create a pre-registered published Databricks OAuth app that will be available in all Databricks customer accounts or create an OAuth app per Databricks workspace. It is highly recommended to create a published Databricks OAuth app, but it must meet the following requirements:
+  - The OAuth redirect URLs of the app should be fixed instead of account/customer/tenant specific
+  - The app cannot be confidential app (no client secret) and has to support [PKCE](https://oauth.net/2/pkce/)
+
+Currently, Databricks does not support creating published OAuth app via API; partners need to contact Databricks for registration.
+
+If the partner decides to create OAuth app per Databricks workspace, Partner Connect will create it when the user creates the partner connection and pass its app ID via the field `oauth_u2m_app_id` of [ConnectionRequest](api-doc/Models/ConnectRequest.md) when calling [Connect API](api-doc/Apis/ConnectionApi.md). The partner needs to send back the OAuth redirect URLs of this customer account via the field `oauth_redirect_uri` in the [response](api-doc/Models/Connection.md) of the [Connect API](api-doc/Apis/ConnectionApi.md)
+
+The `is_published_app` field in the [PartnerConfig](api-doc/Models/PartnerConfig.md) is used to configure if the partner wants to use pre-registered published Databricks OAuth app.
+
+
 ### What types of integrations are supported by Partner Connect?
 While there's some customization available, most partners have one of the following integrations:
 
@@ -97,6 +124,14 @@ While there's some customization available, most partners have one of the follow
 | Desktop application Partner | This is used by partners that have a Desktop application (as opposed to a SaaS offering).  In this integration, the user selects either an Interactive Cluster or SQL Warehouse and downloads a connection file to the partner product.  This is often used by **Partners with Desktop applications**.<br /><br />N.B.  For this type of integration, there is no need for the partner to implement the SaaS APIs mentioned elsewhere throughout this documentation.
 
 ## Changelog
+
+### V2.2.0
+ - Add the field `service_principal_oauth_secret` in the [ConnectRequest](api-doc/Models/ConnectRequest.md) for OAuth M2M support
+ - Add the field `auth_options` in the [ParterConfig](api-doc/Models/PartnerConfig.md) to support configurable authentication options for the partner connection
+ - Added the field `oauth_u2m_app_id` in the [ConnectRequest](api-doc/Models/ConnectRequest.md) for OAuth U2M support
+ - Add the field `oauth_redirect_uri` in the [Connection](api-doc/Models//Connection.md) for OAuth U2M support
+ - Updated [Onboarding document](OnboardingDoc.md) and [API Spec](ApiSpecifications.md) with OAuth U2M and M2M support
+ - Updated the [Self-Testing Partner CLI document](self-testing-partner-cli/README.md) with OAuth U2M and M2M support
 
 ### V2.1.0
 - Added delete-connection API implementation on Databricks's side to notify partners about connection deletion.
