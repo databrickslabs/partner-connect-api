@@ -42,11 +42,12 @@ class JsonFormattersTest extends PartnerTestBase {
     service_principal_id = Some("test-service-principal-id"),
     service_principal_oauth_secret =
       Some("test-service-principal-oauth-secret"),
-    connection_scope = Some(ConnectRequestEnums.ConnectionScope.Workspace)
+    connection_scope = Some(ConnectRequestEnums.ConnectionScope.Workspace),
+    oauth_u2m_app_id = Some("test-oauth-u2m-app-id")
   )
 
   val connectionRequestJson =
-    """{"catalog_name":"test-catalog-name","cloud_provider":"aws","cloud_provider_region":"test-cloud-provider-region","cluster_id":"test-cluster-id","connection_id":"test-connection-id","connection_scope":"workspace","data_source_connector":"test-data-source-connector","database_name":"test-database-name","databricks_jdbc_url":"jdbc://test-databricks-jdbc-url","demo":true,"destination_location":"test-destination-location","hostname":"test-hostname","http_path":"test-http-path","is_free_trial":true,"is_sql_endpoint":true,"is_sql_warehouse":true,"jdbc_url":"jdbc://test-jdcc-url","port":443,"service_principal_id":"test-service-principal-id","service_principal_oauth_secret":"test-service-principal-oauth-secret","user_info":{"databricks_organization_id":4645065419173783088,"databricks_user_id":5845867166711048519,"email":"test@mail.com","first_name":"test-first-name","is_connection_established":false,"last_name":"test-last-name"},"workspace_id":1,"workspace_url":"https://test-workspace-url"}"""
+    """{"catalog_name":"test-catalog-name","cloud_provider":"aws","cloud_provider_region":"test-cloud-provider-region","cluster_id":"test-cluster-id","connection_id":"test-connection-id","connection_scope":"workspace","data_source_connector":"test-data-source-connector","database_name":"test-database-name","databricks_jdbc_url":"jdbc://test-databricks-jdbc-url","demo":true,"destination_location":"test-destination-location","hostname":"test-hostname","http_path":"test-http-path","is_free_trial":true,"is_sql_endpoint":true,"is_sql_warehouse":true,"jdbc_url":"jdbc://test-jdcc-url","oauth_u2m_app_id":"test-oauth-u2m-app-id","port":443,"service_principal_id":"test-service-principal-id","service_principal_oauth_secret":"test-service-principal-oauth-secret","user_info":{"databricks_organization_id":4645065419173783088,"databricks_user_id":5845867166711048519,"email":"test@mail.com","first_name":"test-first-name","is_connection_established":false,"last_name":"test-last-name"},"workspace_id":1,"workspace_url":"https://test-workspace-url"}"""
 
   test(
     "serialize and deserialize ConnectRequest: All the fields are provided"

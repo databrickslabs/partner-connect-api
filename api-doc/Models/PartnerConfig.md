@@ -23,8 +23,9 @@
 | **require\_manual\_signup** | **Boolean** | True if the partner requires a manual signup after connect api is called. When set to true, connect api call with is_connection_established (sign in) is expected to return 404 account_not_found or connection_not_found until the user completes the manual signup step. | [optional] [default to null] |
 | **trial\_type** | **String** | Enum describing the type of trials the partner support. Partners can chose to support trial account expiration at the individual user or account level. If trial level is user, expiring one user connection should not expire another user in the same account. | [optional] [default to null] |
 | **supports\_demo** | **Boolean** | True if partner supports the demo flag in the connect api call. | [optional] [default to null] |
-| **auth\_options** | **List** | The available authentication methods that a partner can use to authenticate with Databricks. If it is not specified, `AUTH_PAT` will be used. The allowed options include <ul><li><b>AUTH_PAT</b></li><li><b>AUTH_OAUTH_M2M</b></li></ul>| [optional] [default to null] |
+| **auth\_options** | **List** | The available authentication methods that a partner can use to authenticate with Databricks. If it is not specified, `AUTH_PAT` will be used. The allowed options include <ul><li><b>AUTH_PAT</b></li><li><b>AUTH_OAUTH_M2M</b></li><li><b>AUTH_OAUTH_U2M</b></li></ul>| [optional] [default to null] |
 | **test\_workspace\_detail** | [**PartnerConfig_test_workspace_detail**](PartnerConfig_test_workspace_detail.md) |  | [optional] [default to null] |
+| **is_published_app** |  **Boolean**  | True if the partner app is registered as Databricks published OAuth app | [optional] [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

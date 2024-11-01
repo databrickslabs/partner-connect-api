@@ -160,7 +160,8 @@ POST <partners/databricks/v1/connect>: [example, can be customized]
   "is_sql_warehouse": true|false, [optional: set if cluster_id is set. Determines whether cluster_id refers to Interactive Cluster or SQL Warehouse]
   "data_source_connector": "Oracle", [optional, unused and reserved for future use: for data connector tools, the name of the data source that the user should be referred to in their tool]
   "service_principal_id": "a2a25a05-3d59-4515-a73b-b8bc5ab79e31", [optional, the UUID (username) of the service principal identity]
-  "service_principal_oauth_secret": "dose..." [optional, the OAuth secret of the service principal identity, it will be passed only when partner config includes OAuth M2M auth option]
+  "service_principal_oauth_secret": "dose...", [optional, the OAuth secret of the service principal identity, it will be passed only when the partner config includes OAuth M2M auth option]
+  "oauth_u2m_app_id": "782b7906-20c4-4c12-8850-b26b77d125f5" [optional, the client ID of Databricks OAuth U2M app connection created by Partner Connect. It will be passed only when the partner config includes OAuth U2M auth option]
 }
 ```
 
@@ -174,7 +175,8 @@ Status Code: 200
   "connection_id": "7f2e4c43-9714-47cf-9011-d8148eaa27a2", [example, optional, see below]
   "user_status": "new", [example]
   "account_status": "existing", [example]
-  "configured_resources": true|false
+  "configured_resources": true|false,
+  "oauth_redirect_uri": "http://www.partner.com/oauth/callback [example, optional, see below]
  }
 ```
 Return values:
@@ -190,6 +192,7 @@ Return values:
 6. **configured\_resources** - a boolean that represents whether the partner configured/persisted the Databricks resources on this Connect API request.
     1. If **is\_connection\_established** is true, **configured\_resources** must be set, but will be ignored.
     2. If **is\_connection\_established** is false and **configured\_resources** is false, Databricks will delete the resources it provisioned.
+7. **oauth\_redirect\_uri** - the partner application's URL that handles Databricks OAuth redirect request in the OAuth U2M flow (Authorization code flow). It should be set only when the partner is configured with OAuth U2M as the auth option ([ParterConfig](./api-doc/Models/PartnerConfig.md) `auth_options` contains `AUTH_OAUTH_U2M`) and does not have a pre-registered Databricks published OAuth app connection ([ParterConfig](./api-doc/Models/PartnerConfig.md) `is_published_app` is `false` or `null`).
 
 **Failure Responses:**
 
