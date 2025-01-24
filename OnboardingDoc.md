@@ -28,18 +28,12 @@ The following phrases will help you understand the Databricks product and this d
 
 - **Databricks Account:** This is the customer-level object. Each customer has only 1 account. Customers can have multiple workspaces in an account.
 - **Databricks Workspace:** This is the product-level object that users interact with when they use Databricks. All users, user-created content (for example dashboards, jobs, and notebooks), and access controls for that content are part of a workspace. Customer data is not tied to a workspace, and the same data can be made available in multiple workspaces. API calls from partners are made to a workspace.
-- **Persona Switcher:** The component on the upper left of the UI that allows the user to choose the active Databricks product. This controls which features are available in the UI, and not all users have access to all 3 options. Partner Connect is available to all 3 personas.
 - **Personal Access Token (PAT):** A token that a partner product can use to authenticate with Databricks
 - **Service Principal:** An account that a partner product can use when calling Databricks APIs. Service Principals have access controls associated with them.
 - **OAuth M2M (machine-to-machine)** It uses service principals to authenticate Databricks. It is also known as 2-legged OAuth and OAuth Client Credentials Flow. Partner product can use service principal UUD (client_id) and OAuth secret (client_secret) to authenticate with Databricks.
 - **OAuth U2M (user-to-machine)** It allows users to access Databricks account and workspace resources via the partner application on behalf of a user. It is also known as 3-legged OAuth and OAuth Authorization Code Flow.
 - **Published OAuth application** The application that is pre-registered by Databricks and is available in all the Databricks accounts.
 - **Service Principal OAuth Secret**: The service principal's secret that a partner product use it along with service principal UUID to authenticate with Databricks.
-
-
-![](img/persona.png)
-
-The persona switcher can take on 1 of 3 values, which are a good categorization of the 3 broad types of Databricks usage:
 
 - **SQL** (aka **DBSQL** ), is primarily focused on SQL workloads and dashboarding. **SQL Warehouses** can be made available to partner products via JDBC/ODBC for SQL workloads.
 - **Data Science &amp; Engineering** is primarily focused on the notebook interface and scheduling jobs. SQL, Python, Scala, and R are available. The **All Purpose Clusters** API (aka **REST API 1.2** aka **Interactive Clusters** API) is typically used for development, and the **Databricks Jobs** API (aka **REST API 2.0** ) is typically used for scheduling production jobs, and partner products can call both these APIs. A **Cluster** is a compute resource that has been provisioned to execute both of the above categories of Data Science &amp; Engineering workloads.
@@ -124,6 +118,10 @@ While there's some customization available, most partners have one of the follow
 | Desktop application Partner | This is used by partners that have a Desktop application (as opposed to a SaaS offering).  In this integration, the user selects either an Interactive Cluster or SQL Warehouse and downloads a connection file to the partner product.  This is often used by **Partners with Desktop applications**.<br /><br />N.B.  For this type of integration, there is no need for the partner to implement the SaaS APIs mentioned elsewhere throughout this documentation.
 
 ## Changelog
+
+### v2.2.1
+
+- Updated images for Partner Connect UI migration into Marketplace
 
 ### V2.2.0
  - Add the field `service_principal_oauth_secret` in the [ConnectRequest](api-doc/Models/ConnectRequest.md) for OAuth M2M support
