@@ -56,6 +56,9 @@ This project supports the following systems.
  - macOS (Tested with BigSur 11.6.4)
 
 ## Partner Connect Certification
+
+**Note: This path is no longer supported for self-service onboarding**
+
 In order to onboard as a partner in Databricks Partner Connect, we require partners to validate their API implementation
 using the test suites provided in this project. Before running the tests against your API,
 it is recommended that you run the [sample tests](#build-and-run-sample-tests) to make sure your environment is set up correctly.
