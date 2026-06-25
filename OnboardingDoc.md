@@ -7,6 +7,9 @@
 - [Validation criteria](OnboardingValidationDoc.md)
 - [Technical FAQ](TechnicalFAQ.md)
 
+**Note: This path is no longer supported for self-service onboarding**
+
+
 ## What is Partner Connect?
 
 Partner Connect is a destination inside a Databricks workspace that allows Databricks customers to easily discover and connect a broad set of data and AI tools they know they can trust to their lakehouse.
